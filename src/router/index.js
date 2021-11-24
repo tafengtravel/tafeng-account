@@ -46,33 +46,161 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/profile',
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      path: 'profile',
+      name: 'Profile',
+      component: () => import('@/views/profile/index'),
+      meta: { title: '首頁', icon: 'home' }
     }]
   },
 
   {
-    path: '/example',
+    path: '/cs',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    redirect: '/cs/table',
+    name: '客服',
+    meta: { title: '客服', icon: 'list' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: 'new',
+        name: '新增報帳',
+        component: () => import('@/views/new/index'),
+        meta: { title: '新增報帳', icon: '' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'edit',
+        name: '修改報帳',
+        component: () => import('@/views/edit/index'),
+        meta: { title: '修改報帳', icon: '' }
+      },
+      {
+        path: 'table',
+        name: '表單全覽',
+        component: () => import('@/views/table/index'),
+        meta: { title: '表單全覽', icon: '' }
+      },
+      {
+        path: 'company-search',
+        name: '廠商搜尋',
+        component: () => import('@/views/company-search/index'),
+        meta: { title: '廠商搜尋', icon: '' }
+      },
+      {
+        path: 'today',
+        name: '當日業績',
+        component: () => import('@/views/today/index'),
+        meta: { title: '當日業績', icon: '' }
+      },
+      {
+        path: 'deadline',
+        name: '當日DL',
+        component: () => import('@/views/deadline/index'),
+        meta: { title: '當日DL', icon: '' }
+      }
+    ]
+  },
+
+  {
+    path: '/op',
+    component: Layout,
+    redirect: '/op/table',
+    name: 'OP',
+    meta: { title: 'OP', icon: 'list' },
+    children: [
+      {
+        path: 'edit',
+        name: '修改報帳',
+        component: () => import('@/views/edit/index'),
+        meta: { title: '修改報帳', icon: '' }
+      },
+      {
+        path: 'table',
+        name: '表單全覽',
+        component: () => import('@/views/table/index'),
+        meta: { title: '表單全覽', icon: '' }
+      },
+      {
+        path: 'company-search',
+        name: '廠商搜尋',
+        component: () => import('@/views/company-search/index'),
+        meta: { title: '廠商搜尋', icon: '' }
+      },
+      {
+        path: 'name-search',
+        name: '團名搜尋',
+        component: () => import('@/views/name-search/index'),
+        meta: { title: '團名搜尋', icon: '' }
+      },
+      {
+        path: 'income',
+        name: '當日收入',
+        component: () => import('@/views/income/index'),
+        meta: { title: '當日收入', icon: '' }
+      },
+      {
+        path: 'today',
+        name: '當日業績',
+        component: () => import('@/views/today/index'),
+        meta: { title: '當日業績', icon: '' }
+      },
+      {
+        path: 'deadline',
+        name: '當日DL',
+        component: () => import('@/views/deadline/index'),
+        meta: { title: '當日DL', icon: '' }
+      }
+    ]
+  },
+
+  {
+    path: '/admin',
+    component: Layout,
+    redirect: '/admin/table',
+    name: '管理員',
+    meta: { title: '管理員', icon: 'list' },
+    children: [
+      {
+        path: 'edit',
+        name: '修改報帳',
+        component: () => import('@/views/edit/index'),
+        meta: { title: '修改報帳', icon: '' }
+      },
+      {
+        path: 'table',
+        name: '表單全覽',
+        component: () => import('@/views/table/index'),
+        meta: { title: '表單全覽', icon: '' }
+      },
+      {
+        path: 'company-search',
+        name: '廠商搜尋',
+        component: () => import('@/views/company-search/index'),
+        meta: { title: '廠商搜尋', icon: '' }
+      },
+      {
+        path: 'name-search',
+        name: '團名搜尋',
+        component: () => import('@/views/name-search/index'),
+        meta: { title: '團名搜尋', icon: '' }
+      },
+      {
+        path: 'income',
+        name: '當日收入',
+        component: () => import('@/views/income/index'),
+        meta: { title: '當日收入', icon: '' }
+      },
+      {
+        path: 'today',
+        name: '當日業績',
+        component: () => import('@/views/today/index'),
+        meta: { title: '當日業績', icon: '' }
+      },
+      {
+        path: 'deadline',
+        name: '當日DL',
+        component: () => import('@/views/deadline/index'),
+        meta: { title: '當日DL', icon: '' }
       }
     ]
   },
@@ -149,16 +277,16 @@ export const constantRoutes = [
     ]
   },
 
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
+  // {
+  //   path: 'external-link',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+  //       meta: { title: 'External Link', icon: 'link' }
+  //     }
+  //   ]
+  // },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

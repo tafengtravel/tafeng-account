@@ -102,11 +102,12 @@ export default {
           firebaseApp.auth().signInWithEmailAndPassword(this.loginForm.email, this.loginForm.password).then(() => {
             console.log(firebaseApp.auth())
 
-              this.$router.push({ path: '/dashboard' })
+              this.$router.push({ path: '/profile' })
               console.log('OK');
 
 
           }).catch((error) => {
+              this.$message.error('帳密錯誤');
             console.log(error.message);
           });   
         } else {

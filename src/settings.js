@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: '大豐旅行社帳務系統',
 
   /**
    * @type {boolean} true | false

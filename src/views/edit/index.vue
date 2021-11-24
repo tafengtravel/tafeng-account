@@ -1,19 +1,32 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+    <div class="dashboard-text">帳號: {{ email }}</div>
   </div>
 </template>
 
 <script>
+import { email } from '@/db.js'
 import { mapGetters } from 'vuex'
+import '@/db.js'
+
 
 export default {
   name: 'Dashboard',
+  data() {
+    return {
+      email:'',
+    }
+  },
   computed: {
     ...mapGetters([
       'name'
     ])
+  },mounted(){
+    console.log(email)
+    this.email = email
+    // this.email = firebaseApp.auth().currentUser.email
   }
+  
 }
 </script>
 
