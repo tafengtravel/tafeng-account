@@ -2,23 +2,8 @@
   <div class="app-container">
     
     <el-row :gutters="20">
-      
-      <el-date-picker
-        v-model="month"
-        type="month"
-        placeholder="選擇月份">
-      </el-date-picker>
-      <el-select v-model="cs" placeholder="請選擇客服" style="width:120px">
-        <el-option
-          v-for="item in csOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-          >
-        </el-option>
-      </el-select>
+      <TableOption></TableOption>
       <el-button type="primary" @click="search">搜尋</el-button>
-      
     </el-row>
 
     <div class ="el-col-24">
@@ -53,66 +38,24 @@ import { db } from '@/db.js'
 import { firebaseApp } from '@/db.js'
 import '@/styles/common.css'
 import * as moment from "moment/moment";
+import TableOption from '@/components/TableOption.vue'
 
 export default {
+  components: {
+    TableOption
+  },
+  props:{
+    csOptions:{
+      type: String
+    },
+    
+  },
   data() {
     return {
       listLoading: false,
       itemData:[],
       month:'',
-      csOptions: [{
-        value: 'all',
-        label: '全部'
-      },{
-        value: 'A1',
-        label: 'A1'
-      },{
-        value: 'A2',
-        label: 'A2'
-      },{
-        value: 'A3',
-        label: 'A3'
-      },{
-        value: 'A4',
-        label: 'A4'
-      },{
-        value: 'B1',
-        label: 'B1'
-      },{
-        value: 'B2',
-        label: 'B2'
-      },{
-        value: 'B3',
-        label: 'B3'
-      },{
-        value: 'B4',
-        label: 'B4'
-      },{
-        value: 'B5',
-        label: 'B5'
-      },{
-        value: 'B6',
-        label: 'B6'
-      },{
-        value: 'B7',
-        label: 'B7'
-      },{
-        value: 'B8',
-        label: 'B8'
-      },{
-        value: 'B9',
-        label: 'B9'
-      },{
-        value: 'B10',
-        label: 'B10'
-      },{
-        value: 'B11',
-        label: 'B11'
-      },{
-        value: 'B12',
-        label: 'B12'
-      }],
-      cs: 'all'
+     
     }
   },
   created() {
@@ -126,38 +69,41 @@ export default {
       return '';
     },
     search() {
-      this.listLoading = true
-      let i = 0
-      let ref = db.collection((moment(this.month).format('YYYY-MM')).toString());
+      console.log(this.csOptions)
+      console.log(this.month)
 
-      if (this.cs == 'all'){
-        ref.onSnapshot((querySnapshot => {
-          this.itemData.length = 0
-          querySnapshot.forEach(doc => {  
+      // this.listLoading = true
+      // let i = 0
+      // let ref = db.collection((moment(this.month).format('YYYY-MM')).toString());
 
-            this.itemData[i] = doc.data()
-            i=i+1
-          }); 
-          this.itemData.reverse()
-          this.itemData.reverse() 
-          console.log(this.itemData)
-        }));
-      }else{
-        ref.where('客服','==',this.cs).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
-          this.itemData.length = 0
-          querySnapshot.forEach(doc => {  
+      // if (this.cs == 'all'){
+      //   ref.onSnapshot((querySnapshot => {
+      //     this.itemData.length = 0
+      //     querySnapshot.forEach(doc => {  
 
-            this.itemData[i] = doc.data()
-            i=i+1
-          }); 
-          this.itemData.reverse()
-          this.itemData.reverse() 
-          console.log(this.itemData)
-        }));
-      }
+      //       this.itemData[i] = doc.data()
+      //       i=i+1
+      //     }); 
+      //     this.itemData.reverse()
+      //     this.itemData.reverse() 
+      //     console.log(this.itemData)
+      //   }));
+      // }else{
+      //   ref.where('客服','==',this.cs).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
+      //     this.itemData.length = 0
+      //     querySnapshot.forEach(doc => {  
+
+      //       this.itemData[i] = doc.data()
+      //       i=i+1
+      //     }); 
+      //     this.itemData.reverse()
+      //     this.itemData.reverse() 
+      //     console.log(this.itemData)
+      //   }));
+      // }
       
-      this.listLoading = false
-      console.log()
+      // this.listLoading = false
+      // console.log()
     },
     edit(row){
       console.log(row)
