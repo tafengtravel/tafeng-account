@@ -45,7 +45,7 @@
         <el-row></el-row>
 
         <el-form-item label="代表人" prop="people">
-            <el-input v-model="ruleForm.people" disabled></el-input>
+            <el-input v-model="ruleForm.people"></el-input>
         </el-form-item>            
         <el-form-item label="人數" prop="amount">
             <el-input v-model="ruleForm.amount"></el-input>
@@ -57,13 +57,13 @@
         <el-row></el-row>
 
         <el-form-item label="出發日期" prop="depDate" label-width="80px">
-          <el-date-picker type="date" placeholder="選擇日期" v-model="ruleForm.depDate" style="width: 190px;"></el-date-picker>
+          <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.depDate" style="width: 190px;"></el-date-picker>
         </el-form-item>
         <el-form-item label="結束日期" prop="endDate" label-width="80px">
-          <el-date-picker type="date" placeholder="選擇日期" v-model="ruleForm.endDate" style="width: 190px;"></el-date-picker>
+          <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.endDate" style="width: 190px;"></el-date-picker>
         </el-form-item>
         <el-form-item label="報帳日期" prop="createDate" label-width="80px">
-          <el-date-picker type="date" placeholder="選擇日期" v-model="ruleForm.createDate" style="width: 190px;"></el-date-picker>
+          <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.createDate" style="width: 190px;"></el-date-picker>
         </el-form-item>
 
         <el-row></el-row>
@@ -78,7 +78,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="退業績日期" prop="cancelDate" label-width="90px">
-          <el-date-picker type="date" placeholder="選擇日期" v-model="ruleForm.cancelDate" style="width: 205px;"></el-date-picker>
+          <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.cancelDate" style="width: 205px;"></el-date-picker>
         </el-form-item>
 
         <el-row></el-row>
@@ -343,8 +343,8 @@ export default {
       }],
       ruleForm: {
         cancel:'false',
-        priceDetail:[{}],
-        priceExtraDetail:[{}],
+        priceDetail:[],
+        priceExtraDetail:[],
       },
       rules: {
           number: [
