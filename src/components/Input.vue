@@ -56,14 +56,14 @@
 
         <el-row></el-row>
 
-        <el-form-item label="出發日期" prop="depDate">
-          <el-date-picker type="date" placeholder="選擇日期" v-model="ruleForm.depDate" style="width: 205px;"></el-date-picker>
+        <el-form-item label="出發日期" prop="depDate" label-width="80px">
+          <el-date-picker type="date" placeholder="選擇日期" v-model="ruleForm.depDate" style="width: 190px;"></el-date-picker>
         </el-form-item>
-        <el-form-item label="結束日期" prop="endDate">
-          <el-date-picker type="date" placeholder="選擇日期" v-model="ruleForm.endDate" style="width: 205px;"></el-date-picker>
+        <el-form-item label="結束日期" prop="endDate" label-width="80px">
+          <el-date-picker type="date" placeholder="選擇日期" v-model="ruleForm.endDate" style="width: 190px;"></el-date-picker>
         </el-form-item>
-        <el-form-item label="報帳日期" prop="createDate">
-          <el-date-picker type="date" placeholder="選擇日期" v-model="ruleForm.createDate" style="width: 205px;"></el-date-picker>
+        <el-form-item label="報帳日期" prop="createDate" label-width="80px">
+          <el-date-picker type="date" placeholder="選擇日期" v-model="ruleForm.createDate" style="width: 190px;"></el-date-picker>
         </el-form-item>
 
         <el-row></el-row>
@@ -356,13 +356,25 @@ export default {
           location: [
               { required: true, message: '必填', trigger: 'blur'},
           ],
-          guest_name:[
+          cs:[
               { required: true, message: '必填', trigger: 'blur'},
           ],
-          birth:[
+          people:[
               { required: true, message: '必填', trigger: 'blur'},
           ],
-          ID:[
+          amount:[
+              { required: true, message: '必填', trigger: 'blur'},
+          ],
+          phone:[
+              { required: true, message: '必填', trigger: 'blur'},
+          ],
+          depDate:[
+              { required: true, message: '必填', trigger: 'blur'},
+          ],
+          endDate:[
+              { required: true, message: '必填', trigger: 'blur'},
+          ],
+          createDate:[
               { required: true, message: '必填', trigger: 'blur'},
           ]
       }
