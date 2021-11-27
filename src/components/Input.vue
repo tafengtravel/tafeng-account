@@ -92,21 +92,21 @@
         </el-row>
         <span v-for="(priceDetail,index) in ruleForm.priceDetail">
           <el-form-item :label="'品項'+(index+1).toString()" prop="item" label-width="60px">
-            <el-input v-model="priceDetail.item" style="width: 250px;" ></el-input>
+            <el-input v-model="priceDetail.item" style="width: 250px;" @input="count" ></el-input>
           </el-form-item>            
           <el-form-item label="單價" prop="itemPrice">
-            <el-input v-model="priceDetail.itemPrice" style="width: 100px;"></el-input>
+            <el-input v-model="priceDetail.itemPrice" style="width: 100px;" @input="count"></el-input>
           </el-form-item>
           <el-form-item label="x 人數" prop="itemAmount">
-            <el-input v-model="priceDetail.itemAmount" style="width: 100px;"></el-input>
+            <el-input v-model="priceDetail.itemAmount" style="width: 100px;" @input="count"></el-input>
           </el-form-item>
-          <el-form-item label="= 費用" prop="itemTotalPrice">
+          <el-form-item label="= 費用" prop="itemTotalPrice" @input="count">
             <el-input v-model="priceDetail.itemTotalPrice" disabled ></el-input>
           </el-form-item>
           <el-row></el-row>
         </span>
-        <el-button type="primary" icon="el-icon-circle-plus-outline" @click="priceDetailAdd"></el-button>
-        <el-button type="danger" icon="el-icon-remove-outline" @click="priceDetailRemove"></el-button>
+        <el-button type="primary" icon="el-icon-circle-plus-outline" @click="priceDetailAdd();count()"></el-button>
+        <el-button type="danger" icon="el-icon-remove-outline" @click="priceDetailRemove();count()"></el-button>
       
         <el-row></el-row>
 
@@ -115,24 +115,24 @@
         </el-row>
         <span v-for="(priceExtraDetail,index) in ruleForm.priceExtraDetail">
           <el-form-item :label="'品項'+(index+1).toString()" prop="item" label-width="60px">
-            <el-input v-model="priceExtraDetail.item" style="width: 250px;" ></el-input>
+            <el-input v-model="priceExtraDetail.item" style="width: 250px;" @input="count" ></el-input>
           </el-form-item>            
           <el-form-item label="單價" prop="itemPrice">
-            <el-input v-model="priceExtraDetail.itemPrice" style="width: 100px;"></el-input>
+            <el-input v-model="priceExtraDetail.itemPrice" style="width: 100px;" @input="count"></el-input>
           </el-form-item>
           <el-form-item label="x 數量" prop="itemAmount">
-            <el-input v-model="priceExtraDetail.itemAmount" style="width: 100px;"></el-input>
+            <el-input v-model="priceExtraDetail.itemAmount" style="width: 100px;" @input="count"></el-input>
           </el-form-item>
-          <el-form-item label="x 天數" prop="itemAmount">
-            <el-input v-model="priceExtraDetail.itemAmount" style="width: 100px;"></el-input>
+          <el-form-item label="x 天數" prop="itemDays">
+            <el-input v-model="priceExtraDetail.itemDays" style="width: 100px;" @input="count"></el-input>
           </el-form-item>
           <el-form-item label="= 費用" prop="itemTotalPrice">
             <el-input v-model="priceExtraDetail.itemTotalPrice" disabled ></el-input>
           </el-form-item>
           <el-row></el-row>
         </span>
-        <el-button type="primary" icon="el-icon-circle-plus-outline" @click="priceExtraDetailAdd"></el-button>
-        <el-button type="danger" icon="el-icon-remove-outline" @click="priceExtraDetailRemove"></el-button>
+        <el-button type="primary" icon="el-icon-circle-plus-outline" @click="priceExtraDetailAdd();count()"></el-button>
+        <el-button type="danger" icon="el-icon-remove-outline" @click="priceExtraDetailRemove();count()"></el-button>
 
         <el-row></el-row>
 
@@ -404,7 +404,16 @@ export default {
       this.$emit("searchChildEvent", searchChildEvent);
     },
     count(){
-
+      this.ruleForm.totalPrice = 0
+      for(let i=0;i<this.ruleForm.priceDetail.length;i++){
+        this.ruleForm.priceDetail[i].itemTotalPrice = parseInt(this.ruleForm.priceDetail[i].itemAmount) * parseInt(this.ruleForm.priceDetail[i].itemPrice)
+        this.ruleForm.totalPrice = parseInt(this.ruleForm.totalPrice) + parseInt(this.ruleForm.priceDetail[i].itemTotalPrice)
+      }
+      for(let i=0;i<this.ruleForm.priceExtraDetail.length;i++){
+        this.ruleForm.priceExtraDetail[i].itemTotalPrice = parseInt(this.ruleForm.priceExtraDetail[i].itemAmount) * parseInt(this.ruleForm.priceExtraDetail[i].itemPrice) * parseInt(this.ruleForm.priceExtraDetail[i].itemDays)
+        this.ruleForm.totalPrice = parseInt(this.ruleForm.totalPrice) + parseInt(this.ruleForm.priceExtraDetail[i].itemTotalPrice)
+      }
+      
     },
     submit(validRuleForm){
       this.$refs[validRuleForm].validate((valid) => {
