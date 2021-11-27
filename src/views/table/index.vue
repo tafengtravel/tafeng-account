@@ -1,30 +1,11 @@
 <template>
   <div class="app-container">
     
-    <el-row :gutters="20">
-      
-      <el-date-picker
-        v-model="month"
-        type="month"
-        placeholder="選擇月份">
-      </el-date-picker>
-      <el-select v-model="cs" placeholder="請選擇客服" style="width:120px">
-        <el-option
-          v-for="item in csOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-          >
-        </el-option>
-      </el-select>
-      <el-button type="primary" @click="search">搜尋</el-button>
-      
-    </el-row>
-
+    <TableOption @searchChildEvent="search"></TableOption>
     <div class ="el-col-24">
       <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :row-class-name="tableRowClassName" empty-text="沒有資料">
 
-        <el-table-column prop="author" label="筆數" width='75%' fixed sortable :sort-method = "(a,b)=>{return a.id - b.id}"></el-table-column>
+        <el-table-column prop="count" label="筆數" width='75%' fixed sortable :sort-method = "(a,b)=>{return a.id - b.id}"></el-table-column>
         <el-table-column prop="團號" label="團號" width='125%' sortable :sort-method = "(a,b)=>{return a.id - b.id}"></el-table-column>
         <el-table-column prop="author" label="團體" width='75%' sortable :sort-method = "(a,b)=>{return a.id - b.id}"></el-table-column>
         <el-table-column prop="客服" label="客服" width='75%' sortable :sort-method = "(a,b)=>{return a.id - b.id}"></el-table-column>
@@ -48,71 +29,25 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+
 import { db } from '@/db.js'
 import { firebaseApp } from '@/db.js'
 import '@/styles/common.css'
 import * as moment from "moment/moment";
+import TableOption from '@/components/TableOption.vue'
+
 
 export default {
+  components: {
+    TableOption
+  },
+  
   data() {
     return {
       listLoading: false,
       itemData:[],
       month:'',
-      csOptions: [{
-        value: 'all',
-        label: '全部'
-      },{
-        value: 'A1',
-        label: 'A1'
-      },{
-        value: 'A2',
-        label: 'A2'
-      },{
-        value: 'A3',
-        label: 'A3'
-      },{
-        value: 'A4',
-        label: 'A4'
-      },{
-        value: 'B1',
-        label: 'B1'
-      },{
-        value: 'B2',
-        label: 'B2'
-      },{
-        value: 'B3',
-        label: 'B3'
-      },{
-        value: 'B4',
-        label: 'B4'
-      },{
-        value: 'B5',
-        label: 'B5'
-      },{
-        value: 'B6',
-        label: 'B6'
-      },{
-        value: 'B7',
-        label: 'B7'
-      },{
-        value: 'B8',
-        label: 'B8'
-      },{
-        value: 'B9',
-        label: 'B9'
-      },{
-        value: 'B10',
-        label: 'B10'
-      },{
-        value: 'B11',
-        label: 'B11'
-      },{
-        value: 'B12',
-        label: 'B12'
-      }],
-      cs: 'all'
+      
     }
   },
   created() {
@@ -125,17 +60,18 @@ export default {
       }
       return '';
     },
-    search() {
+    search(e) {
+      
       this.listLoading = true
       let i = 0
-      let ref = db.collection((moment(this.month).format('YYYY-MM')).toString());
+      let ref = db.collection((moment(e.month).format('YYYY-MM')).toString());
 
-      if (this.cs == 'all'){
+      if (e.cs == 'all'){
         ref.onSnapshot((querySnapshot => {
           this.itemData.length = 0
           querySnapshot.forEach(doc => {  
 
-            this.itemData[i] = doc.data()
+            this.itemData[i] = {...doc.data(),'count':i+1}
             i=i+1
           }); 
           this.itemData.reverse()
@@ -143,11 +79,11 @@ export default {
           console.log(this.itemData)
         }));
       }else{
-        ref.where('客服','==',this.cs).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
+        ref.where('客服','==',e.cs).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
           this.itemData.length = 0
           querySnapshot.forEach(doc => {  
 
-            this.itemData[i] = doc.data()
+            this.itemData[i] = {...doc.data(),'count':i+1}
             i=i+1
           }); 
           this.itemData.reverse()
@@ -157,7 +93,6 @@ export default {
       }
       
       this.listLoading = false
-      console.log()
     },
     edit(row){
       console.log(row)
@@ -168,5 +103,6 @@ export default {
   }
 }
 </script>
+
 
 

@@ -1,29 +1,31 @@
 <template>
-  <div class="dashboard-container">
-    <div class="dashboard-text">帳號: {{ email }}</div>
+  <div class="app-container">
+    <Input></Input>
   </div>
 </template>
 
 <script>
-import { email } from '@/db.js'
-import { mapGetters } from 'vuex'
-import '@/db.js'
+import { db } from '@/db.js'
+import { firebaseApp } from '@/db.js'
+import '@/styles/common.css'
+import * as moment from "moment/moment";
+import Input from '@/components/Input.vue'
 
 
 export default {
-  name: 'Dashboard',
+  name: 'new',
+  components: {
+    Input
+  },
   data() {
     return {
-      email:'',
+
     }
   },
   computed: {
-    ...mapGetters([
-      'name'
-    ])
+    
   },mounted(){
-    console.log(email)
-    this.email = email
+
     // this.email = firebaseApp.auth().currentUser.email
   }
   

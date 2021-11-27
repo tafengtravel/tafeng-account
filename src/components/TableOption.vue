@@ -1,14 +1,13 @@
 <template>
   <div class="app-container">
-    
-
       
       <el-date-picker
         v-model="month"
         type="month"
-        placeholder="選擇月份">
+        placeholder="選擇月份"
+        style="width:120px">
       </el-date-picker>
-      <el-select v-model="cs" placeholder="請選擇客服" style="width:120px">
+      <el-select v-model="cs" placeholder="請選擇客服" style="width:100px">
         <el-option
           v-for="item in csOptions"
           :key="item.value"
@@ -17,8 +16,7 @@
           >
         </el-option>
       </el-select>
-      
-
+      <el-button type="primary" @click="search">搜尋</el-button>
 
   </div>
 </template>
@@ -88,7 +86,10 @@ export default {
     
   },
   methods: {
-    
+    search() {
+      let searchChildEvent = {'cs':this.cs,'month':this.month}
+      this.$emit("searchChildEvent", searchChildEvent);
+    },
   },
   mounted(){
     
