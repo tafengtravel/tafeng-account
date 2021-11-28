@@ -145,7 +145,7 @@
           </el-row>
           
           <el-form-item label="報帳日期" prop="incomeDetail.date">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="incomeDetail.date" style="width: 190px;"></el-date-picker>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="incomeDetail.date" style="width: 150px;"></el-date-picker>
           </el-form-item>
           <el-form-item label="品項" prop="incomeDetail.item">
             <el-input v-model="incomeDetail.item"></el-input>
@@ -170,8 +170,11 @@
               <el-option label="是" value="true"></el-option>
             </el-select>
           </el-form-item>
+
+          <el-row></el-row>
+
           <el-form-item label="收款日期" prop="incomeDetail.receiveDate">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="incomeDetail.receiveDate" style="width: 190px;"></el-date-picker>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="incomeDetail.receiveDate" style="width: 150px;"></el-date-picker>
           </el-form-item>
           <el-form-item label="收款證明" prop="incomeDetail.prove">
             <el-input v-model="incomeDetail.prov" ></el-input>
@@ -199,6 +202,78 @@
         <el-button type="danger" icon="el-icon-remove-outline" @click="incomeDetailRemove();count()"></el-button>
 
         <el-row></el-row>
+
+        <el-row :gutter="20">
+          <div class="font">支出</div>
+        </el-row>
+        <span v-for="(payDetail,index) in ruleForm.payDetail">
+          <el-row :gutter="20">
+            <div class="font">{{index+1}}.</div>
+          </el-row>
+          
+          <el-form-item label="報帳日期" prop="payDetail.date">
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="payDetail.date" style="width: 150px;"></el-date-picker>
+          </el-form-item>
+          <el-form-item label="廠商" prop="payDetail.company">
+            <el-input v-model="payDetail.company"></el-input>
+          </el-form-item> 
+          <el-form-item label="品項" prop="payDetail.item">
+            <el-input v-model="payDetail.item" @input="count" ></el-input>
+          </el-form-item> 
+          <el-form-item label="明細" prop="payDetail.detail">
+            <el-input v-model="payDetail.detail" @input="count" ></el-input>
+          </el-form-item> 
+          <el-form-item label="支出" prop="payDetail.pay">
+            <el-input v-model="payDetail.pay" @input="count" style="width: 130px;" ></el-input>
+          </el-form-item> 
+
+          <el-row></el-row>     
+
+          <el-form-item label="付款日期" prop="payDetail.paydate">
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="payDetail.paydate" style="width: 150px;"></el-date-picker>
+          </el-form-item>
+          <el-form-item label="付款方式" prop="payDetail.type" >
+            <el-select v-model="payDetail.type" placeholder="收款方式">
+              <el-option label="轉帳" value="轉帳"></el-option>
+              <el-option label="郵局" value="郵局"></el-option>
+              <el-option label="刷卡" value="刷卡"></el-option>
+              <el-option label="現金" value="現金"></el-option>
+              <el-option label="支票" value="支票"></el-option>
+              <el-option label="儲值金" value="儲值金"></el-option>
+              <el-option label="其他" value="其他"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="付款證明" prop="payDetail.prove">
+            <el-input v-model="payDetail.prove" @input="count" ></el-input>
+          </el-form-item>
+          <el-form-item label="OP核實" prop="payDetail.opCheck" >
+            <el-select v-model="payDetail.opCheck" placeholder="OP核實" style="width: 110px;">
+              <el-option label="否" value="false"></el-option>
+              <el-option label="是" value="true"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="財務核實" prop="payDetail.adminCheck" >
+            <el-select v-model="payDetail.adminCheck" placeholder="財務核實" style="width: 110px;">
+              <el-option label="否" value="false"></el-option>
+              <el-option label="是" value="true"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-divider></el-divider>
+          <el-form-item label="第一筆DL" prop="payDetail.dl1">
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="payDetail.dl1" style="width: 150px;"></el-date-picker>
+          </el-form-item>
+
+          <!-- 寫到這裡               資料編排需要重新編排 全部攤成arr 無法用arr-obj                      -->
+          
+          <el-row></el-row>
+        </span>
+        
+
+        <el-button type="primary" icon="el-icon-circle-plus-outline" @click="payDetailAdd();count()"></el-button>
+        <el-button type="danger" icon="el-icon-remove-outline" @click="payDetailRemove();count()"></el-button>
+
+        <el-row></el-row>
+
 
         <el-form-item>
           <el-button @click="count">試算</el-button>
@@ -354,9 +429,6 @@ export default {
           }]
         }],
         csOptions: [{
-        value: 'all',
-        label: '全部'
-      },{
         value: 'A1',
         label: 'A1'
       },{
@@ -410,6 +482,7 @@ export default {
         priceDetail:[],
         priceExtraDetail:[],
         incomeDetail:[],
+        payDetail:[],
       },
       rules: {
           number: [
@@ -449,6 +522,12 @@ export default {
      
   },
   methods: {
+    payDetailAdd(){
+      this.ruleForm.payDetail.push({opCheck:'false',adminCheck:'false'});
+    },
+    payDetailRemove(){
+      this.ruleForm.payDetail.pop({});
+    },
     incomeDetailAdd(){
       this.ruleForm.incomeDetail.push({opCheck:'false',adminCheck:'false',card:'false',type:'匯款'});
     },
@@ -504,5 +583,6 @@ export default {
   }
 }
 </script>
+
 
 
