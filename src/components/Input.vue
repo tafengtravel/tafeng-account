@@ -90,18 +90,18 @@
         <el-row :gutter="20">
           <div class="font">團費</div>
         </el-row>
-        <span v-for="(priceDetail,index) in ruleForm.priceDetail">
-          <el-form-item :label="'品項'+(index+1).toString()" prop="priceDetail.item" label-width="50px">
-            <el-input v-model="priceDetail.item" style="width: 250px;" @input="count" ></el-input>
+        <span v-for="(priceDetailItem,index) in ruleForm.priceDetailItem.length">
+          <el-form-item :label="'品項'+(index+1).toString()" label-width="50px">
+            <el-input v-model="ruleForm.priceDetailItem[index]" style="width: 250px;" @input="count" ></el-input>
           </el-form-item>            
-          <el-form-item label="單價" prop="priceDetail.price">
-            <el-input v-model="priceDetail.price" style="width: 100px;" @input="count"></el-input>
+          <el-form-item label="單價">
+            <el-input v-model="ruleForm.priceDetailPrice[index]" style="width: 100px;" @input="count"></el-input>
           </el-form-item>
-          <el-form-item label="x 人數" prop="priceDetail.amount">
-            <el-input v-model="priceDetail.amount" style="width: 100px;" @input="count"></el-input>
+          <el-form-item label="x 人數">
+            <el-input v-model="ruleForm.priceDetailAmount[index]" style="width: 100px;" @input="count"></el-input>
           </el-form-item>
-          <el-form-item label="= 費用" prop="priceDetail.totalPrice" @input="count">
-            <el-input v-model="priceDetail.totalPrice" disabled ></el-input>
+          <el-form-item label="= 費用" @input="count">
+            <el-input v-model="ruleForm.priceDetailTotalPrice[index]" disabled ></el-input>
           </el-form-item>
           <el-row></el-row>
         </span>
@@ -113,21 +113,21 @@
         <el-row :gutter="20">
           <div class="font">加購項目</div>
         </el-row>
-        <span v-for="(priceExtraDetail,index) in ruleForm.priceExtraDetail">
-          <el-form-item :label="'品項'+(index+1).toString()" prop="priceExtraDetail.item" label-width="50px">
-            <el-input v-model="priceExtraDetail.item" style="width: 250px;" @input="count" ></el-input>
+        <span v-for="(extraDetailItem,index) in ruleForm.extraDetailItem.length">
+          <el-form-item :label="'品項'+(index+1).toString()" label-width="50px">
+            <el-input v-model="ruleForm.extraDetailItem[index]" style="width: 250px;" @input="count" ></el-input>
           </el-form-item>            
-          <el-form-item label="單價" prop="priceExtraDetail.price">
-            <el-input v-model="priceExtraDetail.price" style="width: 100px;" @input="count"></el-input>
+          <el-form-item label="單價">
+            <el-input v-model="ruleForm.extraDetailPrice[index]" style="width: 100px;" @input="count"></el-input>
           </el-form-item>
-          <el-form-item label="x 數量" prop="priceExtraDetail.amount">
-            <el-input v-model="priceExtraDetail.amount" style="width: 100px;" @input="count"></el-input>
+          <el-form-item label="x 數量">
+            <el-input v-model="ruleForm.extraDetailAmount[index]" style="width: 100px;" @input="count"></el-input>
           </el-form-item>
-          <el-form-item label="x 天數" prop="priceExtraDetail.days">
-            <el-input v-model="priceExtraDetail.days" style="width: 100px;" @input="count"></el-input>
+          <el-form-item label="x 天數">
+            <el-input v-model="ruleForm.extraDetailDays[index]" style="width: 100px;" @input="count"></el-input>
           </el-form-item>
-          <el-form-item label="= 費用" prop="priceExtraDetail.totalPrice">
-            <el-input v-model="priceExtraDetail.totalPrice" disabled ></el-input>
+          <el-form-item label="= 費用">
+            <el-input v-model="ruleForm.extraDetailTotalPrice[index]" disabled ></el-input>
           </el-form-item>
           <el-row></el-row>
         </span>
@@ -139,22 +139,22 @@
         <el-row :gutter="20">
           <div class="font">收入</div>
         </el-row>
-        <span v-for="(incomeDetail,index) in ruleForm.incomeDetail">
+        <span v-for="(incomeDetailItem,index) in ruleForm.incomeDetailItem.length">
           <el-row :gutter="20">
             <div class="font">{{index+1}}.</div>
           </el-row>
           
-          <el-form-item label="報帳日期" prop="incomeDetail.date">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="incomeDetail.date" style="width: 150px;"></el-date-picker>
+          <el-form-item label="報帳日期">
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.incomeDetailDate[index]" style="width: 150px;"></el-date-picker>
           </el-form-item>
-          <el-form-item label="品項" prop="incomeDetail.item">
-            <el-input v-model="incomeDetail.item"></el-input>
+          <el-form-item label="品項">
+            <el-input v-model="ruleForm.incomeDetailItem[index]"></el-input>
           </el-form-item> 
-          <el-form-item label="收入" prop="incomeDetail.income">
-            <el-input v-model="incomeDetail.income" @input="count" ></el-input>
+          <el-form-item label="收入">
+            <el-input v-model="ruleForm.incomeDetailIncome[index]" @input="count" ></el-input>
           </el-form-item> 
-          <el-form-item label="收款方式" prop="incomeDetail.type" >
-            <el-select v-model="incomeDetail.type" placeholder="收款方式" style="width: 110px;">
+          <el-form-item label="收款方式">
+            <el-select v-model="ruleForm.incomeDetailType[index]" placeholder="收款方式" style="width: 110px;">
               <el-option label="匯款" value="匯款"></el-option>
               <el-option label="刷卡" value="刷卡"></el-option>
               <el-option label="現金" value="現金"></el-option>
@@ -164,8 +164,8 @@
               <el-option label="LINEPAY" value="LINEPAY"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="國旅卡" prop="incomeDetail.card" >
-            <el-select v-model="incomeDetail.card" placeholder="國旅卡" style="width: 110px;">
+          <el-form-item label="國旅卡">
+            <el-select v-model="ruleForm.incomeDetailCard[index]" placeholder="國旅卡" style="width: 110px;">
               <el-option label="否" value="false"></el-option>
               <el-option label="是" value="true"></el-option>
             </el-select>
@@ -173,23 +173,23 @@
 
           <el-row></el-row>
 
-          <el-form-item label="收款日期" prop="incomeDetail.receiveDate">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="incomeDetail.receiveDate" style="width: 150px;"></el-date-picker>
+          <el-form-item label="收款日期">
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.incomeDetailReceiveDate[index]" style="width: 150px;"></el-date-picker>
           </el-form-item>
-          <el-form-item label="收款證明" prop="incomeDetail.prove">
-            <el-input v-model="incomeDetail.prov" ></el-input>
+          <el-form-item label="收款證明">
+            <el-input v-model="ruleForm.incomeDetailProve[index]" ></el-input>
           </el-form-item> 
-          <el-form-item label="備註" prop="incomeDetail.other">
-            <el-input v-model="incomeDetail.other" ></el-input>
+          <el-form-item label="備註">
+            <el-input v-model="ruleForm.incomeDetailOther[index]" ></el-input>
           </el-form-item> 
-          <el-form-item label="OP核實" prop="incomeDetail.opCheck" >
-            <el-select v-model="incomeDetail.opCheck" placeholder="OP核實" style="width: 110px;">
+          <el-form-item label="OP核實" class="op">
+            <el-select v-model="ruleForm.incomeDetailOpCheck[index]" placeholder="OP核實" style="width: 110px;">
               <el-option label="否" value="false"></el-option>
               <el-option label="是" value="true"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="財務核實" prop="incomeDetail.adminCheck" >
-            <el-select v-model="incomeDetail.adminCheck" placeholder="財務核實" style="width: 110px;">
+          <el-form-item label="財務核實" class="admin">
+            <el-select v-model="ruleForm.incomeDetailAdminCheck[index]" placeholder="財務核實" style="width: 110px;">
               <el-option label="否" value="false"></el-option>
               <el-option label="是" value="true"></el-option>
             </el-select>
@@ -206,34 +206,34 @@
         <el-row :gutter="20">
           <div class="font">支出</div>
         </el-row>
-        <span v-for="(payDetail,index) in ruleForm.payDetail">
+        <span v-for="(payDetailCompany,index) in ruleForm.payDetailCompany.length">
           <el-row :gutter="20">
             <div class="font">{{index+1}}.</div>
           </el-row>
           
-          <el-form-item label="報帳日期" prop="payDetail.date">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="payDetail.date" style="width: 150px;"></el-date-picker>
+          <el-form-item label="報帳日期">
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDate[index]" style="width: 150px;"></el-date-picker>
           </el-form-item>
-          <el-form-item label="廠商" prop="payDetail.company">
-            <el-input v-model="payDetail.company"></el-input>
+          <el-form-item label="廠商">
+            <el-input v-model="ruleForm.payDetailCompany[index]"></el-input>
           </el-form-item> 
-          <el-form-item label="品項" prop="payDetail.item">
-            <el-input v-model="payDetail.item" @input="count" ></el-input>
+          <el-form-item label="品項">
+            <el-input v-model="ruleForm.payDetailItem[index]" @input="count" ></el-input>
           </el-form-item> 
-          <el-form-item label="明細" prop="payDetail.detail">
-            <el-input v-model="payDetail.detail" @input="count" ></el-input>
+          <el-form-item label="明細">
+            <el-input v-model="ruleForm.payDetailDetail[index]" @input="count" ></el-input>
           </el-form-item> 
-          <el-form-item label="支出" prop="payDetail.pay">
-            <el-input v-model="payDetail.pay" @input="count" style="width: 130px;" ></el-input>
+          <el-form-item label="支出">
+            <el-input v-model="ruleForm.payDetailPay[index]" @input="count" style="width: 130px;" ></el-input>
           </el-form-item> 
 
           <el-row></el-row>     
 
-          <el-form-item label="付款日期" prop="payDetail.paydate">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="payDetail.paydate" style="width: 150px;"></el-date-picker>
+          <el-form-item label="付款日期">
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailPayDate[index]" style="width: 150px;"></el-date-picker>
           </el-form-item>
-          <el-form-item label="付款方式" prop="payDetail.type" >
-            <el-select v-model="payDetail.type" placeholder="收款方式">
+          <el-form-item label="付款方式">
+            <el-select v-model="ruleForm.payDetailType[index]" placeholder="收款方式">
               <el-option label="轉帳" value="轉帳"></el-option>
               <el-option label="郵局" value="郵局"></el-option>
               <el-option label="刷卡" value="刷卡"></el-option>
@@ -243,34 +243,110 @@
               <el-option label="其他" value="其他"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="付款證明" prop="payDetail.prove">
-            <el-input v-model="payDetail.prove" @input="count" ></el-input>
+          <el-form-item label="付款證明">
+            <el-input v-model="ruleForm.payDetailProve[index]" @input="count" ></el-input>
           </el-form-item>
-          <el-form-item label="OP核實" prop="payDetail.opCheck" >
-            <el-select v-model="payDetail.opCheck" placeholder="OP核實" style="width: 110px;">
+          <el-form-item label="OP核實" class="op">
+            <el-select v-model="ruleForm.payDetailOpCheck[index]" placeholder="OP核實" style="width: 110px;">
               <el-option label="否" value="false"></el-option>
               <el-option label="是" value="true"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="財務核實" prop="payDetail.adminCheck" >
-            <el-select v-model="payDetail.adminCheck" placeholder="財務核實" style="width: 110px;">
+          <el-form-item label="財務核實" class="admin">
+            <el-select v-model="ruleForm.payDetailAdminCheck[index]" placeholder="財務核實" style="width: 110px;">
               <el-option label="否" value="false"></el-option>
               <el-option label="是" value="true"></el-option>
             </el-select>
           </el-form-item>
+          <el-row></el-row>
           <el-divider></el-divider>
-          <el-form-item label="第一筆DL" prop="payDetail.dl1">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="payDetail.dl1" style="width: 150px;"></el-date-picker>
+          <!-- 第一筆 -->     
+          <el-form-item label="第一筆DL" label-width="85px">
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDl1[index]" style="width: 150px;"></el-date-picker>
+          </el-form-item>
+          <el-row></el-row>
+          <el-form-item label="付款日期" label-width="80px">
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDlPayDate1[index]" style="width: 150px;"></el-date-picker>
+          </el-form-item>
+          <el-form-item label="金額">
+            <el-input v-model="ruleForm.payDetailDlPay1[index]" @input="count" style="width: 130px;" ></el-input>
+          </el-form-item> 
+          <el-form-item label="付款方式">
+            <el-select v-model="ruleForm.payDetailDlType1[index]" placeholder="付款方式" style="width: 110px;">
+              <el-option label="轉帳" value="轉帳"></el-option>
+              <el-option label="郵局" value="郵局"></el-option>
+              <el-option label="刷卡" value="刷卡"></el-option>
+              <el-option label="現金" value="現金"></el-option>
+              <el-option label="支票" value="支票"></el-option>
+              <el-option label="儲值金" value="儲值金"></el-option>
+              <el-option label="其他" value="其他"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="付款證明">
+            <el-input v-model="ruleForm.payDetailDlProve1[index]" @input="count" style="width: 110px;"></el-input>
           </el-form-item>
 
-          <!-- 寫到這裡               資料編排需要重新編排 全部攤成arr 無法用arr-obj                      -->
-          
+          <el-form-item label="OP核實" class="op">
+            <el-select v-model="ruleForm.payDetailDlOpCheck1[index]" placeholder="OP核實" style="width: 110px;">
+              <el-option label="否" value="false"></el-option>
+              <el-option label="是" value="true"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="財務核實" class="admin">
+            <el-select v-model="ruleForm.payDetailDlAdminCheck1[index]" placeholder="財務核實" style="width: 110px;">
+              <el-option label="否" value="false"></el-option>
+              <el-option label="是" value="true"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-row></el-row>
+          <!-- 第二筆 -->
+          <el-form-item label="第二筆DL" label-width="85px">
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDl2[index]" style="width: 150px;"></el-date-picker>
+          </el-form-item>
+          <el-row></el-row> 
+          <el-form-item label="付款日期" label-width="80px">
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDlPayDate2[index]" style="width: 150px;"></el-date-picker>
+          </el-form-item>
+          <el-form-item label="金額">
+            <el-input v-model="ruleForm.payDetailDlPay2[index]" @input="count" style="width: 130px;" ></el-input>
+          </el-form-item> 
+          <el-form-item label="付款方式">
+            <el-select v-model="ruleForm.payDetailDlType2[index]" placeholder="付款方式" style="width: 110px;">
+              <el-option label="轉帳" value="轉帳"></el-option>
+              <el-option label="郵局" value="郵局"></el-option>
+              <el-option label="刷卡" value="刷卡"></el-option>
+              <el-option label="現金" value="現金"></el-option>
+              <el-option label="支票" value="支票"></el-option>
+              <el-option label="儲值金" value="儲值金"></el-option>
+              <el-option label="其他" value="其他"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="付款證明">
+            <el-input v-model="ruleForm.payDetailDlProve2[index]" @input="count" style="width: 110px;"></el-input>
+          </el-form-item>
+          <el-form-item label="OP核實" class="op">
+            <el-select v-model="ruleForm.payDetailDlOpCheck2[index]" placeholder="OP核實" style="width: 110px;">
+              <el-option label="否" value="false"></el-option>
+              <el-option label="是" value="true"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="財務核實" class="admin">
+            <el-select v-model="ruleForm.payDetailDlAdminCheck2[index]" placeholder="財務核實" style="width: 110px;">
+              <el-option label="否" value="false"></el-option>
+              <el-option label="是" value="true"></el-option>
+            </el-select>
+          </el-form-item>
           <el-row></el-row>
         </span>
-        
-
         <el-button type="primary" icon="el-icon-circle-plus-outline" @click="payDetailAdd();count()"></el-button>
         <el-button type="danger" icon="el-icon-remove-outline" @click="payDetailRemove();count()"></el-button>
+
+        <el-row></el-row>
+
+        
+        <el-row :gutter="20">
+          <div class="font">保險</div>
+        </el-row>
 
         <el-row></el-row>
 
@@ -478,11 +554,58 @@ export default {
         label: 'B12'
       }],
       ruleForm: {
+        priceDetailItem:[],
+        priceDetailPrice:[],
+        priceDetailAmount:[],
+        priceDetailTotalPrice:[],
+
+        extraDetailItem:[],
+        extraDetailPrice:[],
+        extraDetailAmount:[],
+        extraDetailDays:[],
+        extraDetailTotalPrice:[],
+
+        incomeDetailDate:[],
+        incomeDetailItem:[],
+        incomeDetailIncome:[],
+        incomeDetailType:[],
+        incomeDetailCard:[],
+        incomeDetailReceiveDate:[],
+        incomeDetailProve:[],
+        incomeDetailOther:[],
+        incomeDetailOpCheck:[],
+        incomeDetailAdminCheck:[],
+
+        payDetailDate:[],
+        payDetailCompany:[],
+        payDetailItem:[],
+        payDetailDetail:[],
+        payDetailPay:[],
+        payDetailPayDate:[],
+        payDetailType:[],
+        payDetailProve:[],
+        payDetailOpCheck:[],
+        payDetailAdminCheck:[],
+        payDetailDl1:[],
+
+        payDetailDl1:[],
+        payDetailDlPayDate1:[],
+        payDetailDlPay1:[],
+        payDetailDlType1:[],
+        payDetailDlProve1:[],
+        payDetailDlOpCheck1:[],
+        payDetailDlAdminCheck1:[],
+
+        payDetailDl2:[],
+        payDetailDlPayDate2:[],
+        payDetailDlPay2:[],
+        payDetailDlType2:[],
+        payDetailDlProve2:[],
+        payDetailDlOpCheck2:[],
+        payDetailDlAdminCheck2:[],
+
+
         cancel:'false',
-        priceDetail:[],
-        priceExtraDetail:[],
-        incomeDetail:[],
-        payDetail:[],
       },
       rules: {
           number: [
@@ -523,28 +646,124 @@ export default {
   },
   methods: {
     payDetailAdd(){
-      this.ruleForm.payDetail.push({opCheck:'false',adminCheck:'false'});
+      this.ruleForm.payDetailDate.push('');
+      this.ruleForm.payDetailCompany.push('');
+      this.ruleForm.payDetailItem.push('');
+      this.ruleForm.payDetailDetail.push('');
+      this.ruleForm.payDetailPay.push('');
+      this.ruleForm.payDetailPayDate.push('');
+      this.ruleForm.payDetailType.push('');
+      this.ruleForm.payDetailProve.push('');
+      this.ruleForm.payDetailOpCheck.push('false');
+      this.ruleForm.payDetailAdminCheck.push('false');
+
+      this.ruleForm.payDetailDl1.push('');
+      this.ruleForm.payDetailDlPayDate1.push('');
+      this.ruleForm.payDetailDlPay1.push('');
+      this.ruleForm.payDetailDlType1.push('');
+      this.ruleForm.payDetailDlProve1.push('');
+      this.ruleForm.payDetailDlOpCheck1.push('false');
+      this.ruleForm.payDetailDlAdminCheck1.push('false');
+
+      this.ruleForm.payDetailDl2.push('');
+      this.ruleForm.payDetailDlPayDate2.push('');
+      this.ruleForm.payDetailDlPay2.push('');
+      this.ruleForm.payDetailDlType2.push('');
+      this.ruleForm.payDetailDlProve2.push('');
+      this.ruleForm.payDetailDlOpCheck2.push('false');
+      this.ruleForm.payDetailDlAdminCheck2.push('false');
     },
     payDetailRemove(){
-      this.ruleForm.payDetail.pop({});
+      if(this.ruleForm.payDetailOpCheck[this.ruleForm.payDetailOpCheck.length-1] == 'true' 
+      || this.ruleForm.payDetailAdminCheck[this.ruleForm.payDetailAdminCheck.length-1] == 'true' 
+      || this.ruleForm.payDetailDlOpCheck1[this.ruleForm.payDetailDlOpCheck1.length-1] == 'true'
+      || this.ruleForm.payDetailDlAdminCheck1[this.ruleForm.payDetailDlAdminCheck1.length-1] == 'true'
+      || this.ruleForm.payDetailDlOpCheck2[this.ruleForm.payDetailDlOpCheck2.length-1] == 'true'
+      || this.ruleForm.payDetailDlAdminCheck2[this.ruleForm.payDetailDlAdminCheck2.length-1] == 'true'){
+        this.$message.error('該項目已核實，無法刪除');
+        return 0;
+      }
+      this.ruleForm.payDetailDate.pop();
+      this.ruleForm.payDetailCompany.pop();
+      this.ruleForm.payDetailItem.pop();
+      this.ruleForm.payDetailDetail.pop();
+      this.ruleForm.payDetailPay.pop();
+      this.ruleForm.payDetailPayDate.pop();
+      this.ruleForm.payDetailType.pop();
+      this.ruleForm.payDetailProve.pop();
+      this.ruleForm.payDetailOpCheck.pop();
+      this.ruleForm.payDetailAdminCheck.pop();
+
+      this.ruleForm.payDetailDl1.pop();
+      this.ruleForm.payDetailDlPayDate1.pop();
+      this.ruleForm.payDetailDlPay1.pop();
+      this.ruleForm.payDetailDlType1.pop();
+      this.ruleForm.payDetailDlProve1.pop();
+      this.ruleForm.payDetailDlOpCheck1.pop();
+      this.ruleForm.payDetailDlAdminCheck1.pop();
+
+      this.ruleForm.payDetailDl2.pop();
+      this.ruleForm.payDetailDlPayDate2.pop();
+      this.ruleForm.payDetailDlPay2.pop();
+      this.ruleForm.payDetailDlType2.pop();
+      this.ruleForm.payDetailDlProve2.pop();
+      this.ruleForm.payDetailDlOpCheck2.pop();
+      this.ruleForm.payDetailDlAdminCheck2.pop();
     },
     incomeDetailAdd(){
-      this.ruleForm.incomeDetail.push({opCheck:'false',adminCheck:'false',card:'false',type:'匯款'});
+      this.ruleForm.incomeDetailDate.push('');
+      this.ruleForm.incomeDetailItem.push('');
+      this.ruleForm.incomeDetailIncome.push('');
+      this.ruleForm.incomeDetailType.push('匯款');
+      this.ruleForm.incomeDetailCard.push('false');
+      this.ruleForm.incomeDetailReceiveDate.push('');
+      this.ruleForm.incomeDetailProve.push('');
+      this.ruleForm.incomeDetailOther.push('');
+      this.ruleForm.incomeDetailOpCheck.push('false');
+      this.ruleForm.incomeDetailAdminCheck.push('false');
     },
     incomeDetailRemove(){
-      this.ruleForm.incomeDetail.pop({});
+      if(this.ruleForm.incomeDetailOpCheck[this.ruleForm.incomeDetailOpCheck.length-1] == 'true' || this.ruleForm.incomeDetailAdminCheck[this.ruleForm.incomeDetailAdminCheck.length-1] == 'true'){
+        this.$message.error('該項目已核實，無法刪除');
+        return 0;
+      }
+      this.ruleForm.incomeDetailDate.pop();
+      this.ruleForm.incomeDetailItem.pop();
+      this.ruleForm.incomeDetailIncome.pop();
+      this.ruleForm.incomeDetailType.pop();
+      this.ruleForm.incomeDetailCard.pop();
+      this.ruleForm.incomeDetailReceiveDate.pop();
+      this.ruleForm.incomeDetailProve.pop();
+      this.ruleForm.incomeDetailOther.pop();
+      this.ruleForm.incomeDetailOpCheck.pop();
+      this.ruleForm.incomeDetailAdminCheck.pop();
     },
     priceDetailAdd(){
-      this.ruleForm.priceDetail.push({});
+      this.ruleForm.priceDetailItem.push('');
+      this.ruleForm.priceDetailPrice.push('');
+      this.ruleForm.priceDetailAmount.push('');
+      this.ruleForm.priceDetailTotalPrice.push('');
+
     },
     priceDetailRemove(){
-      this.ruleForm.priceDetail.pop({});
+      this.ruleForm.priceDetailItem.pop();
+      this.ruleForm.priceDetailPrice.pop();
+      this.ruleForm.priceDetailAmount.pop();
+      this.ruleForm.priceDetailTotalPrice.pop();
     },
     priceExtraDetailAdd(){
-      this.ruleForm.priceExtraDetail.push({});
+      this.ruleForm.extraDetailItem.push('');
+      this.ruleForm.extraDetailPrice.push('');
+      this.ruleForm.extraDetailAmount.push('');
+      this.ruleForm.extraDetailDays.push('');
+      this.ruleForm.extraDetailTotalPrice.push('');
     },
     priceExtraDetailRemove(){
-      this.ruleForm.priceExtraDetail.pop({});
+      this.ruleForm.extraDetailItem.pop();
+      this.ruleForm.extraDetailPrice.pop();
+      this.ruleForm.extraDetailAmount.pop();
+      this.ruleForm.extraDetailDays.pop();
+      this.ruleForm.extraDetailTotalPrice.pop();
     },
     getNumber(){
 
@@ -555,13 +774,13 @@ export default {
     },
     count(){
       this.ruleForm.totalPrice = 0
-      for(let i=0;i<this.ruleForm.priceDetail.length;i++){
-        this.ruleForm.priceDetail[i].totalPrice = parseInt(this.ruleForm.priceDetail[i].amount) * parseInt(this.ruleForm.priceDetail[i].price)
-        this.ruleForm.totalPrice = parseInt(this.ruleForm.totalPrice) + parseInt(this.ruleForm.priceDetail[i].totalPrice)
+      for(let i=0;i<this.ruleForm.priceDetailTotalPrice.length;i++){
+        this.ruleForm.priceDetailTotalPrice[i] = parseInt(this.ruleForm.priceDetailPrice[i]) * parseInt(this.ruleForm.priceDetailAmount[i])
+        this.ruleForm.totalPrice = parseInt(this.ruleForm.totalPrice) + parseInt(this.ruleForm.priceDetailTotalPrice[i])
       }
-      for(let i=0;i<this.ruleForm.priceExtraDetail.length;i++){
-        this.ruleForm.priceExtraDetail[i].totalPrice = parseInt(this.ruleForm.priceExtraDetail[i].amount) * parseInt(this.ruleForm.priceExtraDetail[i].price) * parseInt(this.ruleForm.priceExtraDetail[i].days)
-        this.ruleForm.totalPrice = parseInt(this.ruleForm.totalPrice) + parseInt(this.ruleForm.priceExtraDetail[i].totalPrice)
+      for(let i=0;i<this.ruleForm.extraDetailItem.length;i++){
+        this.ruleForm.extraDetailTotalPrice[i] = parseInt(this.ruleForm.extraDetailAmount[i]) * parseInt(this.ruleForm.extraDetailPrice[i]) * parseInt(this.ruleForm.extraDetailDays[i])
+        this.ruleForm.totalPrice = parseInt(this.ruleForm.totalPrice) + parseInt(this.ruleForm.extraDetailTotalPrice[i])
       }
       
     },
@@ -583,6 +802,14 @@ export default {
   }
 }
 </script>
+<style>
+  .op .el-form-item__label{
+    color:rgb(84, 84, 255)
+  }
+  .admin .el-form-item__label{
+    color:rgb(255, 86, 86)
+  }
+</style>
 
 
 
