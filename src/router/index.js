@@ -65,13 +65,13 @@ export const constantRoutes = [
       {
         path: 'new',
         name: '新增報帳',
-        component: () => import('@/views/new/index'),
+        component: () => import('@/views/new/cs/index'),
         meta: { title: '新增報帳', icon: '' }
       },
       {
         path: 'edit',
         name: '修改報帳',
-        component: () => import('@/views/edit/index'),
+        component: () => import('@/views/edit/cs/index'),
         meta: { title: '修改報帳', icon: '' }
       },
       {
