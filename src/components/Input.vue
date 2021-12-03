@@ -114,24 +114,24 @@
           </el-row>
           <span v-for="(priceDetailItem,index) in ruleForm.priceDetailItem.length">
             <el-form-item :label="'品項'+(index+1).toString()" label-width="50px">
-              <span class="form-font-xl" v-if="ruleForm.priceDetailAdminCheck||ruleForm.lock">{{ruleForm.priceDetailItem[index]}}</span>
-              <el-input v-model="ruleForm.priceDetailItem[index]" v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)" style="width: 250px;" @input="count" :disabled="ruleForm.priceDetailAdminCheck||ruleForm.lock"></el-input>
+              <span class="form-font-xl" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.priceDetailItem[index]}}</span>
+              <el-input v-model="ruleForm.priceDetailItem[index]" v-else style="width: 250px;" @input="count" ></el-input>
             </el-form-item>            
             <el-form-item label="單價">
-              <span class="form-font-sm" v-if="ruleForm.priceDetailAdminCheck||ruleForm.lock">{{ruleForm.priceDetailPrice[index]}}</span>
-              <el-input v-model="ruleForm.priceDetailPrice[index]" v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)" style="width: 100px;" @input="count" :disabled="ruleForm.priceDetailAdminCheck||ruleForm.lock"></el-input>
+              <span class="form-font-sm" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.priceDetailPrice[index]}}</span>
+              <el-input v-model="ruleForm.priceDetailPrice[index]" v-else style="width: 100px;" @input="count" ></el-input>
             </el-form-item>
             <el-form-item label="x 人數">
-              <span class="form-font-sm" v-if="ruleForm.priceDetailAdminCheck||ruleForm.lock">{{ruleForm.priceDetailAmount[index]}}</span>
-              <el-input v-model="ruleForm.priceDetailAmount[index]" v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)" style="width: 100px;" @input="count" :disabled="ruleForm.priceDetailAdminCheck||ruleForm.lock"></el-input>
+              <span class="form-font-sm" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.priceDetailAmount[index]}}</span>
+              <el-input v-model="ruleForm.priceDetailAmount[index]" v-else style="width: 100px;" @input="count" ></el-input>
             </el-form-item>
             <el-form-item label="= 費用">
               <span class="form-font-sm">{{ruleForm.priceDetailTotalPrice[index]}}</span>
             </el-form-item>
             <el-row></el-row>
           </span>
-          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="priceDetailAdd();count()" :disabled="ruleForm.priceDetailAdminCheck||ruleForm.lock"></el-button>
-          <el-button type="danger" icon="el-icon-remove-outline" @click="priceDetailRemove();count()" :disabled="ruleForm.priceDetailAdminCheck||ruleForm.lock"></el-button>
+          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="priceDetailAdd();count()" ></el-button>
+          <el-button type="danger" icon="el-icon-remove-outline" @click="priceDetailRemove();count()" ></el-button>
         
           <el-row></el-row>
         </el-card>
@@ -141,28 +141,28 @@
           </el-row>
           <span v-for="(extraDetailItem,index) in ruleForm.extraDetailItem.length">
             <el-form-item :label="'品項'+(index+1).toString()" label-width="50px">
-              <span class="form-font-xl" v-if="ruleForm.priceDetailAdminCheck||ruleForm.lock">{{ruleForm.extraDetailItem[index]}}</span>
-              <el-input v-model="ruleForm.extraDetailItem[index]" v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)" style="width: 250px;" @input="count" :disabled="ruleForm.priceDetailAdminCheck||ruleForm.lock"></el-input>
+              <span class="form-font-xl" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.extraDetailItem[index]}}</span>
+              <el-input v-model="ruleForm.extraDetailItem[index]" v-else style="width: 250px;" @input="count" ></el-input>
             </el-form-item>            
             <el-form-item label="單價">
-              <span class="form-font-sm" v-if="ruleForm.priceDetailAdminCheck||ruleForm.lock">{{ruleForm.extraDetailPrice[index]}}</span>
-              <el-input v-model="ruleForm.extraDetailPrice[index]" v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)" style="width: 100px;" @input="count" :disabled="ruleForm.priceDetailAdminCheck||ruleForm.lock"></el-input>
+              <span class="form-font-sm" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.extraDetailPrice[index]}}</span>
+              <el-input v-model="ruleForm.extraDetailPrice[index]" v-else style="width: 100px;" @input="count" ></el-input>
             </el-form-item>
             <el-form-item label="x 數量">
-              <span class="form-font-sm" v-if="ruleForm.priceDetailAdminCheck||ruleForm.lock">{{ruleForm.extraDetailAmount[index]}}</span>
-              <el-input v-model="ruleForm.extraDetailAmount[index]" v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)" style="width: 100px;" @input="count" :disabled="ruleForm.priceDetailAdminCheck||ruleForm.lock"></el-input>
+              <span class="form-font-sm" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.extraDetailAmount[index]}}</span>
+              <el-input v-model="ruleForm.extraDetailAmount[index]" v-else style="width: 100px;" @input="count" ></el-input>
             </el-form-item>
             <el-form-item label="x 天數">
-              <span class="form-font-sm" v-if="ruleForm.priceDetailAdminCheck||ruleForm.lock">{{ruleForm.extraDetailDays[index]}}</span>
-              <el-input v-model="ruleForm.extraDetailDays[index]" v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)" style="width: 100px;" @input="count" :disabled="ruleForm.priceDetailAdminCheck||ruleForm.lock"></el-input>
+              <span class="form-font-sm" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.extraDetailDays[index]}}</span>
+              <el-input v-model="ruleForm.extraDetailDays[index]" v-else style="width: 100px;" @input="count" ></el-input>
             </el-form-item>
             <el-form-item label="= 費用">
               <span class="form-font-sm">{{ruleForm.extraDetailTotalPrice[index]}}</span>
             </el-form-item>
             <el-row></el-row>
           </span>
-          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="priceExtraDetailAdd();count()" :disabled="ruleForm.priceDetailAdminCheck||ruleForm.lock"></el-button>
-          <el-button type="danger" icon="el-icon-remove-outline" @click="priceExtraDetailRemove();count()" :disabled="ruleForm.priceDetailAdminCheck||ruleForm.lock"></el-button>
+          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="priceExtraDetailAdd();count()" ></el-button>
+          <el-button type="danger" icon="el-icon-remove-outline" @click="priceExtraDetailRemove();count()" ></el-button>
           <el-row></el-row>
           <el-form-item label="主管核實">
             <!-- csShow false 顯示label opShow false 顯示label adminShow false 顯示label adminShow true 顯示select -->
@@ -539,7 +539,8 @@
         </el-card>
         <el-form-item>
           <el-form-item label="鎖定" class="admin">
-            <el-select v-model="ruleForm.lock" placeholder="鎖定" style="width: 110px;">
+            <span class="form-font-sm" v-if="!adminShow">{{ruleForm.lock}}</span>
+            <el-select v-model="ruleForm.lock" placeholder="鎖定" v-else style="width: 110px;">
               <el-option label="否" :value= false ></el-option>
               <el-option label="是" :value= true ></el-option>
             </el-select>

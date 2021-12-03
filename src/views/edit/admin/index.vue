@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    客服 edit
+    管理員 edit
     <Input @readChildEvent="readParentEvent" ref="child"></Input>
   </div>
 </template>
@@ -44,8 +44,8 @@ export default {
   computed: {
     
   },mounted(){
-    this.$refs.child.adminShow = false
-    this.$refs.child.opShow = false
+    this.$refs.child.adminShow = true
+    this.$refs.child.opShow = true
     // this.email = firebaseApp.auth().currentUser.email
   }
   

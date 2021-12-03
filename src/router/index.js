@@ -111,7 +111,7 @@ export const constantRoutes = [
       {
         path: 'edit',
         name: '修改報帳',
-        component: () => import('@/views/edit/index'),
+        component: () => import('@/views/edit/op/index'),
         meta: { title: '修改報帳', icon: '' }
       },
       {
@@ -163,7 +163,7 @@ export const constantRoutes = [
       {
         path: 'edit',
         name: '修改報帳',
-        component: () => import('@/views/edit/index'),
+        component: () => import('@/views/edit/admin/index'),
         meta: { title: '修改報帳', icon: '' }
       },
       {
