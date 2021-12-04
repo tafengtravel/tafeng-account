@@ -18,16 +18,9 @@ const firebaseConfig = {
 };
 
 
+
 // Initialize Firebase
 export const firebaseApp =  firebase.initializeApp(firebaseConfig);
 export const db = firebaseApp.firestore()
 
-// firebaseApp.auth().onAuthStateChanged(function(user) {
 
-//     if (user) {
-//       // if is logged in, redirect to the home page
-//     }else{
-//       this.$router.push({ path: '/login' })
-//     }
-  
-// });

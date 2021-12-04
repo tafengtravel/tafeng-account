@@ -8,6 +8,7 @@
 import { email } from '@/db.js'
 import { mapGetters } from 'vuex'
 import '@/db.js'
+import { firebaseApp } from '@/db.js'
 
 
 export default {
@@ -22,7 +23,13 @@ export default {
       'name'
     ])
   },mounted(){
-    console.log(email)
+    firebaseApp.auth().onAuthStateChanged(user=>{
+      if (user) {
+        this.email = user.email
+      }else{
+        this.$router.push({ path: '/login' })
+      }
+    });
     this.email = email
     // this.email = firebaseApp.auth().currentUser.email
   }

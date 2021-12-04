@@ -1,18 +1,20 @@
 <template>
   <div class="wscn-http404-container">
     <div class="wscn-http404">
-      <div class="pic-404">
-        <img class="pic-404__parent" src="@/assets/404_images/404.png" alt="404">
-        <img class="pic-404__child left" src="@/assets/404_images/404_cloud.png" alt="404">
-        <img class="pic-404__child mid" src="@/assets/404_images/404_cloud.png" alt="404">
-        <img class="pic-404__child right" src="@/assets/404_images/404_cloud.png" alt="404">
-      </div>
-      <div class="bullshit">
-        <div class="bullshit__oops">OOPS!</div>
-        <div class="bullshit__headline">{{ message }}</div>
-        <div class="bullshit__info">Please check that the URL you entered is correct, or click the button below to return to the homepage.</div>
-        <a href="" class="bullshit__return-home">Back to home</a>
-      </div>
+      <el-row>
+        <div class="pic-404">
+          <img class="pic-404__parent" src="@/assets/404_images/404.png" alt="404">
+          <img class="pic-404__child left" src="@/assets/404_images/404_cloud.png" alt="404">
+          <img class="pic-404__child mid" src="@/assets/404_images/404_cloud.png" alt="404">
+          <img class="pic-404__child right" src="@/assets/404_images/404_cloud.png" alt="404">
+        </div>
+        <div class="bullshit ">
+          <div class="bullshit__oops">OOPS!</div>
+          <div class="bullshit__headline">你沒有權限訪問該頁面</div>
+          <div class="bullshit__info">請確認您訪問得網址是正確的，或者點擊重返首頁</div>
+          <a href="" class="bullshit__return-home">回到首頁</a>
+        </div>
+      </el-row>
     </div>
   </div>
 </template>
@@ -22,9 +24,7 @@
 export default {
   name: 'Page404',
   computed: {
-    message() {
-      return 'The webmaster said that you can not enter this page...'
-    }
+    
   }
 }
 </script>
@@ -38,16 +38,17 @@ export default {
 }
 .wscn-http404 {
   position: relative;
-  width: 1200px;
+  width: 500px;
   padding: 0 50px;
   overflow: hidden;
   .pic-404 {
+    margin-left: 30px;
     position: relative;
     float: left;
     width: 600px;
     overflow: hidden;
     &__parent {
-      width: 100%;
+      width: 80%;
     }
     &__child {
       position: absolute;
@@ -157,6 +158,7 @@ export default {
     float: left;
     width: 300px;
     padding: 30px 0;
+    margin-left: 40px;
     overflow: hidden;
     &__oops {
       font-size: 32px;
