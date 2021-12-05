@@ -27,7 +27,7 @@ export default {
       if (user) {
         this.email = user.email
       }else{
-        this.$router.push({ path: '/login' })
+        
       }
     });
     this.email = email

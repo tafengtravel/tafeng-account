@@ -26,29 +26,25 @@ import { firebaseApp } from '@/db.js'
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
  */
-
-/**
- * constantRoutes
- * a base page that does not have permission requirements
- * all roles can be accessed
- */
-export const constantRoutes = [
+export const csRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
-    hidden: true
+    hidden: true,
   },
 
   {
     path: '/404',
     component: () => import('@/views/404'),
-    hidden: true
+    hidden: true,
+    beforeEnter: checkAuth,
   },
 
   {
     path: '/',
     component: Layout,
     redirect: '/profile',
+    beforeEnter: checkAuth,
     children: [{
       path: 'profile',
       name: 'Profile',
@@ -63,6 +59,103 @@ export const constantRoutes = [
     redirect: '/cs/table',
     name: '客服',
     meta: { title: '客服', icon: 'list' },
+    beforeEnter: checkAuth,
+    children: [
+      {
+        path: 'new',
+        name: '新增報帳',
+        component: () => import('@/views/new/cs/index'),
+        meta: { title: '新增報帳', icon: '' }
+      },
+      {
+        path: 'edit',
+        name: '修改報帳',
+        component: () => import('@/views/edit/cs/index'),
+        meta: { title: '修改報帳', icon: '' }
+      },
+      {
+        path: 'table',
+        name: '表單全覽',
+        component: () => import('@/views/table/index'),
+        meta: { title: '表單全覽', icon: '' }
+      },
+      {
+        path: 'company-search',
+        name: '廠商搜尋',
+        component: () => import('@/views/company-search/index'),
+        meta: { title: '廠商搜尋', icon: '' }
+      },
+      {
+        path: 'today',
+        name: '當日業績',
+        component: () => import('@/views/today/index'),
+        meta: { title: '當日業績', icon: '' }
+      },
+      {
+        path: 'deadline',
+        name: '當日DL',
+        component: () => import('@/views/deadline/index'),
+        meta: { title: '當日DL', icon: '' }
+      }
+    ]
+  },
+
+  // {
+  //   path: 'external-link',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+  //       meta: { title: 'External Link', icon: 'link' }
+  //     }
+  //   ]
+  // },
+
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
+]
+
+
+/**
+ * constantRoutes
+ * a base page that does not have permission requirements
+ * all roles can be accessed
+ */
+export const constantRoutes = [
+  {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true,
+  },
+
+  {
+    path: '/404',
+    component: () => import('@/views/404'),
+    hidden: true,
+    beforeEnter: checkAuth,
+    
+  },
+
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/profile',
+    beforeEnter: checkAuth,
+    children: [{
+      path: 'profile',
+      name: 'Profile',
+      component: () => import('@/views/profile/index'),
+      meta: { title: '首頁', icon: 'home' }
+    }]
+  },
+
+  {
+    path: '/cs',
+    component: Layout,
+    redirect: '/cs/table',
+    name: '客服',
+    meta: { title: '客服', icon: 'list' },
+    beforeEnter: checkAuth,
     children: [
       {
         path: 'new',
@@ -106,21 +199,22 @@ export const constantRoutes = [
   {
     path: '/op',
     component: Layout,
-    beforeEnter: (to, from, next) => {
-
-      firebaseApp.auth().onAuthStateChanged(user=>{
-        console.log(user.uid)
-        if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83') {
-          next();
-        }else{
-          next('/404')
-        }
-      });
-
-    },
     redirect: '/op/table',
     name: 'OP',
     meta: { title: 'OP', icon: 'list' },
+    beforeEnter: (to, from, next) => {
+      firebaseApp.auth().onAuthStateChanged(user=>{
+        if (user) {
+          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83') {
+            next();
+          }else{
+            next('/404')
+          }
+        }else{
+          next('/login')
+        }
+      });
+    },
     children: [
       {
         path: 'edit',
@@ -171,17 +265,18 @@ export const constantRoutes = [
     path: '/admin',
     component: Layout,
     beforeEnter: (to, from, next) => {
-
       firebaseApp.auth().onAuthStateChanged(user=>{
-        console.log(user.uid)
-        if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83') {
-          next();
+        if (user) {
+          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83') {
+            next();
+          }else{
+            next('/404')
+          }
         }else{
-          next('/404')
+          next('/login')
         }
       });
-
-     },
+    },
     redirect: '/admin/table',
     name: '管理員',
     meta: { title: '管理員', icon: 'list' },
@@ -245,17 +340,46 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-const createRouter = () => new Router({
+let createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
 
-const router = createRouter()
+let router = createRouter()
 
-firebaseApp.auth().onAuthStateChanged(user=>{
-  console.log(user.uid)
-});
+function checkAuth(to, from, next){
+
+  firebaseApp.auth().onAuthStateChanged(user=>{
+    if (user) {
+      next();
+    }else{
+      next('/login')
+    }
+  });
+
+}
+
+router.beforeResolve((to, from, next) => {
+  firebaseApp.auth().onAuthStateChanged(user=>{
+    if (user) {
+      console.log('user')
+      if(user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83'){
+        console.log('admin')
+        // router.options.routes = constantRoutes
+        next()
+      }else{
+        router.options.routes = csRoutes
+        next()
+      }
+    }else{
+      console.log('no user')
+      next()
+    }
+  });
+  
+})
+
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {

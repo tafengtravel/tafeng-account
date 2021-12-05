@@ -49,16 +49,10 @@ export default {
     },
     async logout() {
       await firebaseApp.auth().signOut()  
+      this.$router.push({ path: '/login' })
     }
   },mounted(){
-    firebaseApp.auth().onAuthStateChanged(user=>{
-      if (user) {
-        // if is logged in, redirect to the home page
-      }else{
-        this.$router.push({ path: '/login' })
-        console.log('NO')
-      }
-    });
+
   }
 }
 </script>
