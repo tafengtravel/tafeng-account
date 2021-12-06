@@ -121,7 +121,7 @@ export const csRoutes = [
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [
+export const adminRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
@@ -343,7 +343,7 @@ export const constantRoutes = [
 let createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  routes: adminRoutes
 })
 
 let router = createRouter()
@@ -366,7 +366,7 @@ router.beforeResolve((to, from, next) => {
       console.log('user')
       if(user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83'){
         console.log('admin')
-        // router.options.routes = constantRoutes
+        router.options.routes = adminRoutes
         next()
       }else{
         router.options.routes = csRoutes

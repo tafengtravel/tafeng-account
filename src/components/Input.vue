@@ -67,16 +67,16 @@
 
           <el-row></el-row>
 
-          <el-form-item label="總團費" prop="totalPrice">
+          <el-form-item label="總團費">
               <span class="form-font-xl">{{ruleForm.price}}</span>
           </el-form-item> 
-          <el-form-item label="退業績" prop="cancel" >
+          <el-form-item label="退業績">
               <el-select v-model="ruleForm.cancel" placeholder="退業績" :disabled="ruleForm.lock" style="width: 185px;">
                 <el-option label="否" :value= false></el-option>
                 <el-option label="是" :value= true></el-option>
               </el-select>
           </el-form-item>
-          <el-form-item label="退業績日期" prop="cancelDate" label-width="90px">
+          <el-form-item label="退業績日期" label-width="90px">
             <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.cancelDate" :disabled="ruleForm.lock" style="width: 205px;"></el-date-picker>
           </el-form-item>
         </el-card>
@@ -90,7 +90,7 @@
           <el-form-item label="定金">
               <el-input v-model="ruleForm.contractDownPayment" :disabled="ruleForm.lock"></el-input>
           </el-form-item>
-          <el-form-item label="合約項目" prop="cancel" >
+          <el-form-item label="合約項目">
             <el-select v-model="ruleForm.contractType" placeholder="合約項目" :disabled="ruleForm.lock" style="width: 165px;">
               <el-option label="國內個別" value="國內個別"></el-option>
               <el-option label="國內團體" value="國內團體"></el-option>
@@ -289,7 +289,7 @@
             </el-form-item>
             <el-form-item label="付款方式">
               <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailType[index]}}</span>
-              <el-select v-model="ruleForm.payDetailType[index]" v-else placeholder="收款方式">
+              <el-select v-model="ruleForm.payDetailType[index]" v-else placeholder="付款方式">
                 <el-option label="轉帳" value="轉帳"></el-option>
                 <el-option label="郵局" value="郵局"></el-option>
                 <el-option label="刷卡" value="刷卡"></el-option>
@@ -502,6 +502,76 @@
             </el-select>
           </el-form-item>
         </el-card>
+        <!-- 退款 -->
+        <el-row :gutter="20">
+          <div class="sub_title">退款</div>
+        </el-row>
+        <el-card class="box-card">
+          <span v-for="(refundDetailItem,index) in ruleForm.refundDetailItem.length">
+            <el-row :gutter="20">
+              <div class="font">{{index+1}}.</div>
+            </el-row>
+            
+            <el-form-item label="報帳日期">
+              <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.refundDetailOpCheck[index]||ruleForm.refundDetailAdminCheck[index])&&!adminShow">{{ruleForm.refundDetailDate[index]}}</span>
+              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.refundDetailDate[index]" v-else style="width: 150px;"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="品項">
+              <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.refundDetailOpCheck[index]||ruleForm.refundDetailAdminCheck[index])&&!adminShow">{{ruleForm.refundDetailItem[index]}}</span>
+              <el-input v-model="ruleForm.refundDetailItem[index]" v-else></el-input>
+            </el-form-item> 
+            <el-form-item label="金額">
+              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.refundDetailOpCheck[index]||ruleForm.refundDetailAdminCheck[index])&&!adminShow">{{ruleForm.refundDetailRefund[index]}}</span>
+              <el-input v-model="ruleForm.refundDetailRefund[index]" v-else @input="count" ></el-input>
+            </el-form-item> 
+            <el-form-item label="退款方式">
+              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.refundDetailOpCheck[index]||ruleForm.refundDetailAdminCheck[index])&&!adminShow">{{ruleForm.refundDetailType[index]}}</span>
+              <el-select v-model="ruleForm.refundDetailType[index]" placeholder="退款方式" v-else @input="count" style="width: 110px;">
+                <el-option label="轉帳" value="轉帳"></el-option>
+                <el-option label="郵局" value="郵局"></el-option>
+                <el-option label="刷卡" value="刷卡"></el-option>
+                <el-option label="現金" value="現金"></el-option>
+                <el-option label="支票" value="支票"></el-option>
+                <el-option label="其他" value="其他"></el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-row></el-row>
+
+            <el-form-item label="退款日期">
+              <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.refundDetailOpCheck[index]||ruleForm.refundDetailAdminCheck[index])&&!adminShow">{{ruleForm.refundDetailRefundDate[index]}}</span>
+              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.refundDetailRefundDate[index]" v-else style="width: 150px;"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="退款證明">
+              <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.refundDetailOpCheck[index]||ruleForm.refundDetailAdminCheck[index])&&!adminShow">{{ruleForm.refundDetailProve[index]}}</span>
+              <el-input v-model="ruleForm.refundDetailProve[index]" v-else></el-input>
+            </el-form-item> 
+            <el-form-item label="備註">
+              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.refundDetailOpCheck[index]||ruleForm.refundDetailAdminCheck[index])&&!adminShow">{{ruleForm.refundDetailOther[index]}}</span>
+              <el-input v-model="ruleForm.refundDetailOther[index]" v-else></el-input>
+            </el-form-item> 
+            <el-form-item label="OP核實" class="op">
+              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.refundDetailOpCheck[index]||ruleForm.refundDetailAdminCheck[index]||!opShow)&&!adminShow">{{ruleForm.refundDetailOpCheck[index]}}</span>
+              <el-select v-model="ruleForm.refundDetailOpCheck[index]" v-else placeholder="OP核實" style="width: 110px;">
+                <el-option label="否" :value= false></el-option>
+                <el-option label="是" :value= true></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="財務核實" class="admin">
+              <span class="form-font-sm" v-if="!adminShow">{{ruleForm.refundDetailAdminCheck[index]}}</span>
+              <el-select v-model="ruleForm.refundDetailAdminCheck[index]" v-else placeholder="財務核實" style="width: 110px;">
+                <el-option label="否" :value= false></el-option>
+                <el-option label="是" :value= true></el-option>
+              </el-select>
+            </el-form-item>
+            <el-row></el-row>
+          </span>
+          
+          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="refundDetailAdd();count()" :disabled="ruleForm.lock"></el-button>
+          <el-button type="danger" icon="el-icon-remove-outline" @click="refundDetailRemove();count()" :disabled="ruleForm.lock"></el-button>
+        </el-card>
+        <el-row></el-row>
+
         <el-row :gutter="20">
           <div class="sub_title">其他</div>
         </el-row>
@@ -509,7 +579,7 @@
           <el-form-item label="進項代收轉付" label-width="100px">
             <el-input v-model="ruleForm.incollectpay" type="textarea" autosize style="width: 300px;"></el-input>
           </el-form-item> 
-          <el-form-item label="消項代收轉付" label-width="100px">
+          <el-form-item label="銷項代收轉付" label-width="100px">
             <el-input v-model="ruleForm.outcollectpay" type="textarea" autosize style="width: 300px;"></el-input>
           </el-form-item> 
           <el-form-item label="其他項目備註" label-width="100px">
@@ -816,9 +886,19 @@ export default {
         insuranceAdminCheck1:false,
         insuranceOpCheck2:false,
         insuranceAdminCheck2:false,
+
+        refundDetailDate:[],
+        refundDetailItem:[],
+        refundDetailRefund:[],
+        refundDetailType:[],
+        refundDetailRefundDate:[],
+        refundDetailProve:[],
+        refundDetailOther:[],
+        refundDetailOpCheck:[],
+        refundDetailAdminCheck:[],
+
         cancel:false,
         lock:false,
-
         price:0,
         tax:0,
         profit:0,
@@ -868,6 +948,32 @@ export default {
   methods: {
     setContract(){
 
+    },
+    refundDetailAdd(){
+      this.ruleForm.refundDetailDate.push('');
+      this.ruleForm.refundDetailItem.push('');
+      this.ruleForm.refundDetailRefund.push('');
+      this.ruleForm.refundDetailType.push('匯款');
+      this.ruleForm.refundDetailRefundDate.push('');
+      this.ruleForm.refundDetailProve.push('');
+      this.ruleForm.refundDetailOther.push('');
+      this.ruleForm.refundDetailOpCheck.push(false);
+      this.ruleForm.refundDetailAdminCheck.push(false);
+    },
+    refundDetailRemove(){
+      if(this.ruleForm.refundDetailOpCheck[this.ruleForm.refundDetailOpCheck.length-1]|| this.ruleForm.refundDetailAdminCheck[this.ruleForm.refundDetailAdminCheck.length-1]){
+        this.$message.error('該項目已核實，無法刪除');
+        return 0;
+      }
+      this.ruleForm.refundDetailDate.pop();
+      this.ruleForm.refundDetailItem.pop();
+      this.ruleForm.refundDetailRefund.pop();
+      this.ruleForm.refundDetailType.pop();
+      this.ruleForm.refundDetailRefundDate.pop();
+      this.ruleForm.refundDetailProve.pop();
+      this.ruleForm.refundDetailOther.pop();
+      this.ruleForm.refundDetailOpCheck.pop();
+      this.ruleForm.refundDetailAdminCheck.pop();
     },
     payDetailAdd(){
       this.ruleForm.payDetailDate.push('');
