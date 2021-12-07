@@ -76,13 +76,13 @@ export const csRoutes = [
       {
         path: 'table',
         name: '表單全覽',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/table/cs/index'),
         meta: { title: '表單全覽', icon: '' }
       },
       {
         path: 'company-search',
         name: '廠商搜尋',
-        component: () => import('@/views/company-search/index'),
+        component: () => import('@/views/company-search/cs/index'),
         meta: { title: '廠商搜尋', icon: '' }
       },
       {
@@ -172,13 +172,13 @@ export const adminRoutes = [
       {
         path: 'table',
         name: '表單全覽',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/table/cs/index'),
         meta: { title: '表單全覽', icon: '' }
       },
       {
         path: 'company-search',
         name: '廠商搜尋',
-        component: () => import('@/views/company-search/index'),
+        component: () => import('@/views/company-search/cs/index'),
         meta: { title: '廠商搜尋', icon: '' }
       },
       {
@@ -225,13 +225,13 @@ export const adminRoutes = [
       {
         path: 'table',
         name: '表單全覽',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/table/op/index'),
         meta: { title: '表單全覽', icon: '' }
       },
       {
         path: 'company-search',
         name: '廠商搜尋',
-        component: () => import('@/views/company-search/index'),
+        component: () => import('@/views/company-search/op/index'),
         meta: { title: '廠商搜尋', icon: '' }
       },
       {
@@ -290,13 +290,13 @@ export const adminRoutes = [
       {
         path: 'table',
         name: '表單全覽',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/table/admin/index'),
         meta: { title: '表單全覽', icon: '' }
       },
       {
         path: 'company-search',
         name: '廠商搜尋',
-        component: () => import('@/views/company-search/index'),
+        component: () => import('@/views/company-search/admin/index'),
         meta: { title: '廠商搜尋', icon: '' }
       },
       {

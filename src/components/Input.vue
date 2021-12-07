@@ -7,62 +7,72 @@
         </el-row>
         <el-card class="box-card">
           <el-form-item label="團號" prop="number">
-              <el-input v-model="ruleForm.number" :disabled="readNumber"></el-input>
+            <span class="form-font-xl" v-if="(ruleForm.lock||readNumber)&&!adminShow">{{ruleForm.number}}</span>
+            <el-input v-model="ruleForm.number" v-else :disabled="readNumber"></el-input>
           </el-form-item>            
           <el-form-item label="團名" prop="name">
-              <el-input v-model="ruleForm.name" :disabled="ruleForm.lock"></el-input>
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.name}}</span>
+            <el-input v-model="ruleForm.name" v-else></el-input>
           </el-form-item>
           <el-form-item label="客服" prop="cs" >
-              <el-select v-model="ruleForm.cs" placeholder="客服" style="width:100px" :disabled="ruleForm.lock">
-                <el-option
-                  v-for="item in csOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.cs}}</span>
+            <el-select v-model="ruleForm.cs" v-else placeholder="客服" style="width:100px" >
+              <el-option
+                v-for="item in csOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="read">讀取團號</el-button>
           </el-form-item>
           <el-form-item label="地點" prop="location" >
-              <el-select v-model="ruleForm.location" placeholder="地點" :disabled="ruleForm.lock">
-                <el-option-group
-                  v-for="group in locationOptions"
-                  :key="group.label"
-                  :label="group.label">
-                  <el-option
-                    v-for="item in group.options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-option-group>
-              </el-select>
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.location}}</span>
+            <el-select v-model="ruleForm.location" v-else placeholder="地點">
+              <el-option-group
+                v-for="group in locationOptions"
+                :key="group.label"
+                :label="group.label">
+                <el-option
+                  v-for="item in group.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-option-group>
+            </el-select>
           </el-form-item>
 
           <el-row></el-row>
 
           <el-form-item label="代表人" prop="people">
-              <el-input v-model="ruleForm.people" :disabled="ruleForm.lock"></el-input>
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.people}}</span>
+            <el-input v-model="ruleForm.people" v-else></el-input>
           </el-form-item>            
           <el-form-item label="人數" prop="amount">
-              <el-input v-model="ruleForm.amount" :disabled="ruleForm.lock"></el-input>
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.amount}}</span>
+            <el-input v-model="ruleForm.amount" v-else></el-input>
           </el-form-item>
           <el-form-item label="電話" prop="phone">
-              <el-input v-model="ruleForm.phone" :disabled="ruleForm.lock"></el-input>
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.phone}}</span>
+            <el-input v-model="ruleForm.phone" v-else></el-input>
           </el-form-item>
 
           <el-row></el-row>
 
           <el-form-item label="出發日期" prop="depDate" label-width="80px">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.depDate" :disabled="ruleForm.lock" style="width: 190px;"></el-date-picker>
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.depDate}}</span>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.depDate" v-else style="width: 190px;"></el-date-picker>
           </el-form-item>
           <el-form-item label="結束日期" prop="endDate" label-width="80px">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.endDate" :disabled="ruleForm.lock" style="width: 190px;"></el-date-picker>
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.endDate}}</span>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.endDate" v-else style="width: 190px;"></el-date-picker>
           </el-form-item>
           <el-form-item label="報帳日期" prop="createDate" label-width="80px">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.createDate" :disabled="ruleForm.lock" style="width: 190px;" :picker-options="createDateDisable"></el-date-picker>
+            <span class="form-font-xl" v-if="(ruleForm.lock||createDate)&&!adminShow">{{ruleForm.createDate}}</span>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.createDate" v-else style="width: 190px;" :picker-options="createDateDisable"></el-date-picker>
           </el-form-item>
 
           <el-row></el-row>
@@ -71,13 +81,15 @@
               <span class="form-font-xl">{{ruleForm.price}}</span>
           </el-form-item> 
           <el-form-item label="退業績">
-              <el-select v-model="ruleForm.cancel" placeholder="退業績" :disabled="ruleForm.lock" style="width: 185px;">
-                <el-option label="否" :value= false></el-option>
-                <el-option label="是" :value= true></el-option>
-              </el-select>
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.cancel}}</span>
+            <el-select v-model="ruleForm.cancel" v-else placeholder="退業績" style="width: 185px;">
+              <el-option label="否" :value= false></el-option>
+              <el-option label="是" :value= true></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="退業績日期" label-width="90px">
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.cancelDate" :disabled="ruleForm.lock" style="width: 205px;"></el-date-picker>
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.cancelDate}}</span>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.cancelDate" v-else style="width: 205px;"></el-date-picker>
           </el-form-item>
         </el-card>
         <el-card class="box-card">
@@ -100,7 +112,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="setContract" :disabled="ruleForm.lock">生成合約</el-button>
+            <el-button type="primary" @click="setContract" v-if="!ruleForm.lock||adminShow">生成合約</el-button>
           </el-form-item>
           <el-row></el-row>
         </el-card>
@@ -130,8 +142,8 @@
             </el-form-item>
             <el-row></el-row>
           </span>
-          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="priceDetailAdd();count()" ></el-button>
-          <el-button type="danger" icon="el-icon-remove-outline" @click="priceDetailRemove();count()" ></el-button>
+          <el-button type="primary" icon="el-icon-circle-plus-outline"  v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)||adminShow" @click="priceDetailAdd();count()" ></el-button>
+          <el-button type="danger" icon="el-icon-remove-outline" v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)||adminShow" @click="priceDetailRemove();count()" ></el-button>
         
           <el-row></el-row>
         </el-card>
@@ -161,8 +173,8 @@
             </el-form-item>
             <el-row></el-row>
           </span>
-          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="priceExtraDetailAdd();count()" ></el-button>
-          <el-button type="danger" icon="el-icon-remove-outline" @click="priceExtraDetailRemove();count()" ></el-button>
+          <el-button type="primary" icon="el-icon-circle-plus-outline" v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)||adminShow" @click="priceExtraDetailAdd();count()" ></el-button>
+          <el-button type="danger" icon="el-icon-remove-outline" v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)||adminShow" @click="priceExtraDetailRemove();count()" ></el-button>
           <el-row></el-row>
           <el-form-item label="主管核實">
             <!-- csShow false 顯示label opShow false 顯示label adminShow false 顯示label adminShow true 顯示select -->
@@ -185,7 +197,7 @@
             
             <el-form-item label="報帳日期">
               <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.incomeDetailOpCheck[index]||ruleForm.incomeDetailAdminCheck[index])&&!adminShow">{{ruleForm.incomeDetailDate[index]}}</span>
-              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.incomeDetailDate[index]" v-else style="width: 150px;"></el-date-picker>
+              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.incomeDetailDate[index]" v-else style="width: 150px;" :picker-options="createDateDisable"></el-date-picker>
             </el-form-item>
             <el-form-item label="品項">
               <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.incomeDetailOpCheck[index]||ruleForm.incomeDetailAdminCheck[index])&&!adminShow">{{ruleForm.incomeDetailItem[index]}}</span>
@@ -246,8 +258,8 @@
             <el-row></el-row>
           </span>
           
-          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="incomeDetailAdd();count()" :disabled="ruleForm.lock"></el-button>
-          <el-button type="danger" icon="el-icon-remove-outline" @click="incomeDetailRemove();count()" :disabled="ruleForm.lock"></el-button>
+          <el-button type="primary" icon="el-icon-circle-plus-outline" v-if="!ruleForm.lock||adminShow" @click="incomeDetailAdd();count()" :disabled="ruleForm.lock"></el-button>
+          <el-button type="danger" icon="el-icon-remove-outline" v-if="!ruleForm.lock||adminShow" @click="incomeDetailRemove();count()" :disabled="ruleForm.lock"></el-button>
         </el-card>
         <el-row></el-row>
         
@@ -262,7 +274,7 @@
             
             <el-form-item label="報帳日期">
               <span class="form-font-md" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailDate[index]}}</span>
-              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDate[index]" v-else style="width: 150px;"></el-date-picker>
+              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDate[index]" v-else style="width: 150px;" :picker-options="createDateDisable"></el-date-picker>
             </el-form-item>
             <el-form-item label="廠商">
               <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailCompany[index]}}</span>
@@ -322,7 +334,7 @@
             <!-- 第一筆 -->     
             <el-form-item label="第一筆DL" label-width="85px">
               <span class="form-font-md" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck1[index]||ruleForm.payDetailDlAdminCheck1[index])&&!adminShow">{{ruleForm.payDetailDl1[index]}}</span>
-              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDl1[index]" v-else style="width: 150px;"></el-date-picker>
+              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDl1[index]" v-else style="width: 150px;" :picker-options="dlDisable"></el-date-picker>
             </el-form-item>
             <el-form-item label="匯費 $15">
               <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck1[index]||ruleForm.payDetailDlAdminCheck1[index])&&!adminShow">{{ruleForm.payDetailFee1[index]}}</span>
@@ -372,7 +384,7 @@
             <!-- 第二筆 -->
             <el-form-item label="第二筆DL" label-width="85px">
               <span class="form-font-md" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck2[index]||ruleForm.payDetailDlAdminCheck2[index])&&!adminShow">{{ruleForm.payDetailDl2[index]}}</span>
-              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDl2[index]" v-else style="width: 150px;"></el-date-picker>
+              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDl2[index]" v-else style="width: 150px;" :picker-options="dlDisable"></el-date-picker>
             </el-form-item>
             <el-form-item label="匯費 $15">
               <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck2[index]||ruleForm.payDetailDlAdminCheck2[index])&&!adminShow">{{ruleForm.payDetailFee2[index]}}</span>
@@ -419,8 +431,8 @@
             </el-form-item>
             <el-row></el-row>
           </span>
-          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="payDetailAdd();count()" :disabled="ruleForm.lock"></el-button>
-          <el-button type="danger" icon="el-icon-remove-outline" @click="payDetailRemove();count()" :disabled="ruleForm.lock"></el-button>
+          <el-button type="primary" icon="el-icon-circle-plus-outline" v-if="!ruleForm.lock||adminShow" @click="payDetailAdd();count()" :disabled="ruleForm.lock"></el-button>
+          <el-button type="danger" icon="el-icon-remove-outline" v-if="!ruleForm.lock||adminShow" @click="payDetailRemove();count()" :disabled="ruleForm.lock"></el-button>
         </el-card>  
         <!-- 保險 -->
         <el-row :gutter="20">
@@ -514,7 +526,7 @@
             
             <el-form-item label="報帳日期">
               <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.refundDetailOpCheck[index]||ruleForm.refundDetailAdminCheck[index])&&!adminShow">{{ruleForm.refundDetailDate[index]}}</span>
-              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.refundDetailDate[index]" v-else style="width: 150px;"></el-date-picker>
+              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.refundDetailDate[index]" v-else style="width: 150px;" :picker-options="createDateDisable"></el-date-picker>
             </el-form-item>
             <el-form-item label="品項">
               <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.refundDetailOpCheck[index]||ruleForm.refundDetailAdminCheck[index])&&!adminShow">{{ruleForm.refundDetailItem[index]}}</span>
@@ -567,8 +579,8 @@
             <el-row></el-row>
           </span>
           
-          <el-button type="primary" icon="el-icon-circle-plus-outline" @click="refundDetailAdd();count()" :disabled="ruleForm.lock"></el-button>
-          <el-button type="danger" icon="el-icon-remove-outline" @click="refundDetailRemove();count()" :disabled="ruleForm.lock"></el-button>
+          <el-button type="primary" icon="el-icon-circle-plus-outline" v-if="!ruleForm.lock||adminShow" @click="refundDetailAdd();count()" :disabled="ruleForm.lock"></el-button>
+          <el-button type="danger" icon="el-icon-remove-outline" v-if="!ruleForm.lock||adminShow" @click="refundDetailRemove();count()" :disabled="ruleForm.lock"></el-button>
         </el-card>
         <el-row></el-row>
 
@@ -637,6 +649,11 @@ export default {
       createDateDisable:{
         disabledDate(time) {
           return time.getTime() < new Date().getTime() - 24*60*60*1000 || time.getTime() > new Date().getTime()
+        }
+      },
+      dlDisable:{
+        disabledDate(time) {
+          return time.getTime() < new Date().getTime() - 24*60*60*1000 
         }
       },
       locationOptions:[{
@@ -940,6 +957,7 @@ export default {
       readNumber:false,
       opShow:true,
       adminShow:true,
+      createDate:false
     }
   },
   created() {
@@ -1119,6 +1137,7 @@ export default {
       this.ruleForm.insuranceTotalPrice2 = 0
       let cardTotal = 0
       let linepayTotal = 0
+      let refundTotal = 0
       for(let i=0;i<this.ruleForm.priceDetailTotalPrice.length;i++){
         this.ruleForm.priceDetailTotalPrice[i] = parseFloat(this.ruleForm.priceDetailPrice[i]) * parseFloat(this.ruleForm.priceDetailAmount[i])
         this.ruleForm.price = parseFloat(this.ruleForm.price) + parseFloat(this.ruleForm.priceDetailTotalPrice[i])
@@ -1126,6 +1145,9 @@ export default {
       for(let i=0;i<this.ruleForm.extraDetailItem.length;i++){
         this.ruleForm.extraDetailTotalPrice[i] = parseFloat(this.ruleForm.extraDetailAmount[i]) * parseFloat(this.ruleForm.extraDetailPrice[i]) * parseFloat(this.ruleForm.extraDetailDays[i])
         this.ruleForm.price = parseFloat(this.ruleForm.price) + parseFloat(this.ruleForm.extraDetailTotalPrice[i])
+      }
+      for(let i=0;i<this.ruleForm.refundDetailRefund.length;i++){
+        refundTotal = parseFloat(this.ruleForm.refundDetailRefund[i]) + parseFloat(refundTotal)
       }
       for(let i=0;i<this.ruleForm.incomeDetailIncome.length;i++){
         if(this.ruleForm.incomeDetailType[i] == '刷卡'){
@@ -1150,13 +1172,16 @@ export default {
       if(this.ruleForm.insurance2){
         this.ruleForm.insuranceTotalPrice2 = parseFloat(this.ruleForm.insurancePrice2)*parseFloat(this.ruleForm.insuranceDays2)*parseFloat(this.ruleForm.insuranceAmount2)
       }
-      
+      this.ruleForm.income = this.ruleForm.income - refundTotal 
+      //總收扣除退款
       this.ruleForm.net = Math.ceil(this.ruleForm.net + cardTotal + linepayTotal + this.ruleForm.insuranceTotalPrice1 + this.ruleForm.insuranceTotalPrice2)
+      //NET = NET + 卡手續費 + 保險
       this.ruleForm.profit = parseFloat(this.ruleForm.price) - parseFloat(this.ruleForm.net)
       if(this.ruleForm.profit > 9999){
         this.ruleForm.tax = (this.ruleForm.profit*0.05).toFixed(0);
         this.ruleForm.profit = (this.ruleForm.profit*0.95).toFixed(0);
       }
+      //利潤>9999 5%稅金
     },
     submit(validRuleForm){
       let ref = db.collection((this.ruleForm.depDate).substring(0,7).toString()).doc(this.ruleForm.number);

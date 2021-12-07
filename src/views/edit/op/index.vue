@@ -37,6 +37,8 @@ export default {
           return 0;
         }
         this.$refs.child.ruleForm = doc.data()
+        this.$refs.child.readNumber = true
+        this.$refs.child.createDate = true
       })
       this.$refs.child.$forceUpdate() // 重新渲染dom
     }
@@ -46,6 +48,11 @@ export default {
   },mounted(){
     this.$refs.child.adminShow = false
     this.$refs.child.opShow = true
+    if(Object.keys(this.$route.query).length > 0){
+      this.$refs.child.ruleForm.depDate = this.$route.query.depDate
+      this.$refs.child.ruleForm.number = this.$route.query.number
+      this.readParentEvent()
+    }
     // this.email = firebaseApp.auth().currentUser.email
   }
   

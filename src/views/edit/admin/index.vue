@@ -46,7 +46,12 @@ export default {
   },mounted(){
     this.$refs.child.adminShow = true
     this.$refs.child.opShow = true
-    // this.email = firebaseApp.auth().currentUser.email
+    if(Object.keys(this.$route.query).length > 0){
+      this.$refs.child.ruleForm.depDate = this.$route.query.depDate
+      this.$refs.child.ruleForm.number = this.$route.query.number
+      this.readParentEvent()
+    }
+    
   }
   
 }
