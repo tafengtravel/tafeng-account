@@ -88,13 +88,13 @@ export const csRoutes = [
       {
         path: 'today',
         name: '當日業績',
-        component: () => import('@/views/today/index'),
+        component: () => import('@/views/today/cs/index'),
         meta: { title: '當日業績', icon: '' }
       },
       {
         path: 'deadline',
         name: '當日DL',
-        component: () => import('@/views/deadline/index'),
+        component: () => import('@/views/deadline/cs/index'),
         meta: { title: '當日DL', icon: '' }
       }
     ]
@@ -184,13 +184,13 @@ export const adminRoutes = [
       {
         path: 'today',
         name: '當日業績',
-        component: () => import('@/views/today/index'),
+        component: () => import('@/views/today/cs/index'),
         meta: { title: '當日業績', icon: '' }
       },
       {
         path: 'deadline',
         name: '當日DL',
-        component: () => import('@/views/deadline/index'),
+        component: () => import('@/views/deadline/cs/index'),
         meta: { title: '當日DL', icon: '' }
       }
     ]
@@ -249,13 +249,13 @@ export const adminRoutes = [
       {
         path: 'today',
         name: '當日業績',
-        component: () => import('@/views/today/index'),
+        component: () => import('@/views/today/op/index'),
         meta: { title: '當日業績', icon: '' }
       },
       {
         path: 'deadline',
         name: '當日DL',
-        component: () => import('@/views/deadline/index'),
+        component: () => import('@/views/deadline/op/index'),
         meta: { title: '當日DL', icon: '' }
       }
     ]
@@ -314,13 +314,13 @@ export const adminRoutes = [
       {
         path: 'today',
         name: '當日業績',
-        component: () => import('@/views/today/index'),
+        component: () => import('@/views/today/admin/index'),
         meta: { title: '當日業績', icon: '' }
       },
       {
         path: 'deadline',
         name: '當日DL',
-        component: () => import('@/views/deadline/index'),
+        component: () => import('@/views/deadline/admin/index'),
         meta: { title: '當日DL', icon: '' }
       }
     ]
