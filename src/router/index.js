@@ -249,18 +249,18 @@ export const adminRoutes = [
       }
     ]
   },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/profile',
-    beforeEnter: checkAuth,
-    children: [{
-      path: 'profile',
-      name: 'Profile',
-      component: () => import('@/views/profile/index'),
-      meta: { title: '團體', icon: 'group' }
-    }]
-  },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/profile',
+  //   beforeEnter: checkAuth,
+  //   children: [{
+  //     path: 'profile',
+  //     name: 'Profile',
+  //     component: () => import('@/views/profile/index'),
+  //     meta: { title: '團體', icon: 'group' }
+  //   }]
+  // },
   {
     path: '/admin',
     component: Layout,
