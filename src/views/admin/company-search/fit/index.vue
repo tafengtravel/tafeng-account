@@ -112,7 +112,7 @@ export default {
       console.log(row)
 
       let route = this.$router.resolve({
-        path: '/admin/edit',
+        path: '/admin/edit/fit',
         query: { number:row.number,depDate:this.month }
       })
       window.open(route.href, '_blank');

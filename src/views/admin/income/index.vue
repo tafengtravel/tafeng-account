@@ -158,7 +158,7 @@ export default {
       console.log(row)
       
       let route = this.$router.resolve({
-        path: '/admin/edit',
+        path: '/admin/edit/fit',
         query: { number:row.number,depDate:moment(row.depDate).format('YYYY-MM-DD')}
       })
       window.open(route.href, '_blank');
