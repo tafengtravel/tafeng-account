@@ -10,12 +10,11 @@ import { mapGetters } from 'vuex'
 import '@/db.js'
 import { firebaseApp } from '@/db.js'
 
-
 export default {
   name: 'Dashboard',
   data() {
     return {
-      email:'',
+      email:' ',
     }
   },
   computed: {
