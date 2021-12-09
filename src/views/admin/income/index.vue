@@ -19,7 +19,7 @@
         <el-table-column prop="depDate" label="出發日期" width='100%' sortable :sort-method = "(a,b) =>a.depDate.localeCompare(b.depDate)"></el-table-column>
         <el-table-column prop="endDate" label="結束日期" width='100%' sortable :sort-method = "(a,b) =>a.endDate.localeCompare(b.endDate)"></el-table-column>
         <el-table-column prop="name" label="團名" width='125%' sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
-        <el-table-column prop="people" label="代表人" width='150%' sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
+        <el-table-column prop="people" label="代表人" width='100%' sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
         <el-table-column prop="item" label="品項" width='75%'></el-table-column>
         <el-table-column prop="income" label="收入" sortable :sort-method = "(a,b)=>{return a.phone - b.phone}"></el-table-column>
         <el-table-column prop="incomeType" label="收款方式" width='80%'></el-table-column>

@@ -2,13 +2,13 @@
   <div class="app-container">
     
     <el-date-picker
-      v-model="date"
-      type="date"
-      placeholder="選擇日期"
-      style="width:150px"
-      value-format="yyyy-MM-dd">
+      v-model="month"
+      type="month"
+      placeholder="選擇月份"
+      style="width:120px"
+      value-format="yyyy-MM">
     </el-date-picker>
-    <el-input v-model="name" style="width:250px" placeholder="請輸入團名"></el-input>
+    <el-input v-model="company" style="width:250px" placeholder="請輸入廠商"></el-input>
     <el-button type="primary" @click="search">搜尋</el-button>
 
     <div class ="el-col-24">
@@ -21,11 +21,13 @@
         <el-table-column prop="endDate" label="結束日期" width='100%' sortable :sort-method = "(a,b) =>a.endDate.localeCompare(b.endDate)"></el-table-column>
         <el-table-column prop="name" label="團名"  sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
         <el-table-column prop="people" label="代表人" width='100%' sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
-        <el-table-column prop="amount" label="人數" width='75%'></el-table-column>
-        <el-table-column prop="phone" label="聯絡電話" width='125%' sortable :sort-method = "(a,b)=>{return a.phone - b.phone}"></el-table-column>
-        <el-table-column prop="income" label="總收入" width='80%'></el-table-column>
-        <el-table-column prop="priceInsufficient" label="未收尾款" width='100%' ></el-table-column>
-        <el-table-column prop="other" label="備註" width='100%' ></el-table-column>
+        <el-table-column prop="company" label="廠商" width='75%'></el-table-column>
+        <el-table-column prop="item" label="品項" width='125%' sortable :sort-method = "(a,b)=>{return a.phone - b.phone}"></el-table-column>
+        <el-table-column prop="pay" label="支出" width='80%'></el-table-column>
+        <el-table-column prop="dl1" label="第一筆DL" width='100%' ></el-table-column>
+        <el-table-column prop="dlpay1" label="第一筆金額" width='100%' ></el-table-column>
+        <el-table-column prop="dl2" label="第二筆DL" width='100%' ></el-table-column>
+        <el-table-column prop="dlpay2" label="第二筆金額" width='100%' ></el-table-column>
         <el-table-column prop="" label="編輯" width='50%'>
           <template slot-scope="scope">
             <el-button @click="edit(scope.row)" type="text" >編輯</el-button>
@@ -34,12 +36,6 @@
         
       </el-table>
     </div>
-    <div class ="el-col-24">
-      <el-row></el-row>
-      <span style="font-size: 15px;font-family: Microsoft JhengHei;font-weight: bold;padding-right:30px;">總收入：{{incomeTotal}}</span>
-      <span style="font-size: 15px;font-family: Microsoft JhengHei;font-weight: bold;">總人數：{{amountTotal}}</span>
-    </div>
-
   </div>
 </template>
 
@@ -60,10 +56,9 @@ export default {
     return {
       listLoading: false,
       itemData:[],
-      date:'',
-      name:'',
-      incomeTotal:0,
-      amountTotal:0,
+      month:'',
+      company:'',
+      
     }
   },
   created() {
@@ -79,27 +74,38 @@ export default {
     search() {
       this.listLoading = true
       let i = 0
-      let ref = db.collection(moment(this.date).format('YYYY-MM'));
+      let ref = db.collection(this.month);
       let priceInsufficient = 0
-      this.incomeTotal = 0
-      this.amountTotal = 0
+      // payDetailCompany
 
-      ref.where('depDate','==',this.date).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
+      ref.where('payDetailCompany','array-contains',this.company).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
         this.itemData.length = 0
         querySnapshot.forEach(doc => {  
-          console.log(doc.data())
-          if(doc.data().name == this.name){
-            console.log('有的'+doc.data())
-            this.incomeTotal = this.incomeTotal + parseInt(doc.data().income)
-            this.amountTotal = this.amountTotal + parseInt(doc.data().amount)
-            priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData[i] = {...doc.data(),'priceInsufficient':priceInsufficient}
-            i=i+1
+
+          for(let j=0;j<doc.data().payDetailCompany.length;j++){
+            if(doc.data().payDetailCompany[j] == this.company){
+              this.itemData[i] = {
+                ...doc.data(),
+                'count':i+1,
+                'company':doc.data().payDetailCompany[j],
+                'item':doc.data().payDetailItem[j],
+                'pay':doc.data().payDetailPay[j],
+                'dl1':doc.data().payDetailDl1[j],
+                'dlpay1':doc.data().payDetailDlPay1[j],
+                'dl2':doc.data().payDetailDl2[j],
+                'dlpay2':doc.data().payDetailDlPay2[j],
+              }
+              console.log(this.itemData[i].number,this.itemData[i].pay)
+              i=i+1
+            }
           }
+          // console.log(doc.data().number)
         }); 
         this.itemData.reverse()
         this.itemData.reverse() 
       }));
+      
+      
       this.listLoading = false
     },
     edit(row){

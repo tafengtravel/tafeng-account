@@ -58,7 +58,7 @@ export const csRoutes = [
     component: Layout,
     redirect: '/cs/table',
     name: '客服',
-    meta: { title: '客服', icon: 'list' },
+    meta: { title: '客服', icon: 'cs' },
     beforeEnter: checkAuth,
     children: [
       {
@@ -143,7 +143,7 @@ export const adminRoutes = [
     component: Layout,
     redirect: '/cs/table',
     name: '客服',
-    meta: { title: '客服', icon: 'list' },
+    meta: { title: '客服', icon: 'cs' },
     beforeEnter: checkAuth,
     children: [
       {
@@ -190,7 +190,7 @@ export const adminRoutes = [
     component: Layout,
     redirect: '/op/edit',
     name: 'OP',
-    meta: { title: 'OP', icon: 'list' },
+    meta: { title: 'OP', icon: 'op' },
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
@@ -250,6 +250,18 @@ export const adminRoutes = [
     ]
   },
   {
+    path: '/',
+    component: Layout,
+    redirect: '/profile',
+    beforeEnter: checkAuth,
+    children: [{
+      path: 'profile',
+      name: 'Profile',
+      component: () => import('@/views/profile/index'),
+      meta: { title: '團體', icon: 'group' }
+    }]
+  },
+  {
     path: '/admin',
     component: Layout,
     redirect: '/admin/edit',
@@ -267,7 +279,7 @@ export const adminRoutes = [
         }
       });
     },
-    meta: {title: '管理員', icon: 'list'},
+    meta: {title: '管理員', icon: 'admin'},
     children: [
       {
         path: 'edit',
@@ -293,13 +305,41 @@ export const adminRoutes = [
         path: 'table',
         name: '表單全覽',
         component: () => import('@/views/admin/table/index'),
-        meta: { title: '表單全覽', icon: '' }
+        meta: { title: '表單全覽', icon: '' },
+        children: [
+          {
+            path: 'fit',
+            component: () => import('@/views/admin/table/fit'),
+            name: '散客',
+            meta: { title: '散客' }
+          },
+          {
+            path: 'group',
+            component: () => import('@/views/admin/table/group'),
+            name: '團體',
+            meta: { title: '團體' }
+          }
+        ]
       },
       {
         path: 'company-search',
         name: '廠商搜尋',
         component: () => import('@/views/admin/company-search/index'),
-        meta: { title: '廠商搜尋', icon: '' }
+        meta: { title: '廠商搜尋', icon: '' },
+        children: [
+          {
+            path: 'fit',
+            component: () => import('@/views/admin/company-search/fit'),
+            name: '散客',
+            meta: { title: '散客' }
+          },
+          {
+            path: 'group',
+            component: () => import('@/views/admin/company-search/group'),
+            name: '團體',
+            meta: { title: '團體' }
+          }
+        ]
       },
       {
         path: 'name-search',
@@ -327,8 +367,7 @@ export const adminRoutes = [
       }
     ]
   },
-
-
+  
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
 import { db } from '@/db.js'
 import { firebaseApp } from '@/db.js'
 
@@ -84,9 +83,6 @@ export default {
   },
   methods: {
     showPwd() {
-      firebaseApp.auth().signOut()
-      console.log(firebaseApp.auth())
-
       if (this.passwordType === 'password') {
         this.passwordType = ''
       } else {
@@ -102,12 +98,11 @@ export default {
           firebaseApp.auth().signInWithEmailAndPassword(this.loginForm.email, this.loginForm.password).then(() => {
             console.log(firebaseApp.auth())
 
-              this.$router.push({ path: '/profile' })
-              console.log('OK');
-
+            this.$router.push({ path: '/profile' })
+            console.log('OK');
 
           }).catch((error) => {
-              this.$message.error('帳密錯誤');
+            this.$message.error('帳密錯誤');
             console.log(error.message);
           });   
         } else {
