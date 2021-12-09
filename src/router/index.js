@@ -64,52 +64,41 @@ export const csRoutes = [
       {
         path: 'new',
         name: '新增報帳',
-        component: () => import('@/views/new/cs/index'),
+        component: () => import('@/views/cs/new/index'),
         meta: { title: '新增報帳', icon: '' }
       },
       {
         path: 'edit',
         name: '修改報帳',
-        component: () => import('@/views/edit/cs/index'),
+        component: () => import('@/views/cs/edit/index'),
         meta: { title: '修改報帳', icon: '' }
       },
       {
         path: 'table',
         name: '表單全覽',
-        component: () => import('@/views/table/cs/index'),
+        component: () => import('@/views/cs/table/index'),
         meta: { title: '表單全覽', icon: '' }
       },
       {
         path: 'company-search',
         name: '廠商搜尋',
-        component: () => import('@/views/company-search/cs/index'),
+        component: () => import('@/views/cs/company-search/index'),
         meta: { title: '廠商搜尋', icon: '' }
       },
       {
         path: 'today',
         name: '當日業績',
-        component: () => import('@/views/today/cs/index'),
+        component: () => import('@/views/cs/today/index'),
         meta: { title: '當日業績', icon: '' }
       },
       {
         path: 'deadline',
         name: '當日DL',
-        component: () => import('@/views/deadline/cs/index'),
+        component: () => import('@/views/cs/deadline/index'),
         meta: { title: '當日DL', icon: '' }
       }
     ]
   },
-
-  // {
-  //   path: 'external-link',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-  //       meta: { title: 'External Link', icon: 'link' }
-  //     }
-  //   ]
-  // },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
@@ -160,37 +149,37 @@ export const adminRoutes = [
       {
         path: 'new',
         name: '新增報帳',
-        component: () => import('@/views/new/cs/index'),
+        component: () => import('@/views/cs/new/index'),
         meta: { title: '新增報帳', icon: '' }
       },
       {
         path: 'edit',
         name: '修改報帳',
-        component: () => import('@/views/edit/cs/index'),
+        component: () => import('@/views/cs/edit/index'),
         meta: { title: '修改報帳', icon: '' }
       },
       {
         path: 'table',
         name: '表單全覽',
-        component: () => import('@/views/table/cs/index'),
+        component: () => import('@/views/cs/table/index'),
         meta: { title: '表單全覽', icon: '' }
       },
       {
         path: 'company-search',
         name: '廠商搜尋',
-        component: () => import('@/views/company-search/cs/index'),
+        component: () => import('@/views/cs/company-search/index'),
         meta: { title: '廠商搜尋', icon: '' }
       },
       {
         path: 'today',
         name: '當日業績',
-        component: () => import('@/views/today/cs/index'),
+        component: () => import('@/views/cs/today/index'),
         meta: { title: '當日業績', icon: '' }
       },
       {
         path: 'deadline',
         name: '當日DL',
-        component: () => import('@/views/deadline/cs/index'),
+        component: () => import('@/views/cs/deadline/index'),
         meta: { title: '當日DL', icon: '' }
       }
     ]
@@ -199,7 +188,7 @@ export const adminRoutes = [
   {
     path: '/op',
     component: Layout,
-    redirect: '/op/table',
+    redirect: '/op/edit',
     name: 'OP',
     meta: { title: 'OP', icon: 'list' },
     beforeEnter: (to, from, next) => {
@@ -219,51 +208,52 @@ export const adminRoutes = [
       {
         path: 'edit',
         name: '修改報帳',
-        component: () => import('@/views/edit/op/index'),
+        component: () => import('@/views/op/edit/index'),
         meta: { title: '修改報帳', icon: '' }
       },
       {
         path: 'table',
         name: '表單全覽',
-        component: () => import('@/views/table/op/index'),
+        component: () => import('@/views/op/table/index'),
         meta: { title: '表單全覽', icon: '' }
       },
       {
         path: 'company-search',
         name: '廠商搜尋',
-        component: () => import('@/views/company-search/op/index'),
+        component: () => import('@/views/op/company-search/index'),
         meta: { title: '廠商搜尋', icon: '' }
       },
       {
         path: 'name-search',
         name: '團名搜尋',
-        component: () => import('@/views/name-search/index'),
+        component: () => import('@/views/op/name-search/index'),
         meta: { title: '團名搜尋', icon: '' }
       },
       {
         path: 'income',
         name: '當日收入',
-        component: () => import('@/views/income/index'),
+        component: () => import('@/views/op/income/index'),
         meta: { title: '當日收入', icon: '' }
       },
       {
         path: 'today',
         name: '當日業績',
-        component: () => import('@/views/today/op/index'),
+        component: () => import('@/views/op/today/index'),
         meta: { title: '當日業績', icon: '' }
       },
       {
         path: 'deadline',
         name: '當日DL',
-        component: () => import('@/views/deadline/op/index'),
+        component: () => import('@/views/op/deadline/index'),
         meta: { title: '當日DL', icon: '' }
       }
     ]
   },
-
   {
     path: '/admin',
     component: Layout,
+    redirect: '/admin/edit',
+    name: '管理員',
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
@@ -277,64 +267,67 @@ export const adminRoutes = [
         }
       });
     },
-    redirect: '/admin/table',
-    name: '管理員',
-    meta: { title: '管理員', icon: 'list' },
+    meta: {title: '管理員', icon: 'list'},
     children: [
       {
         path: 'edit',
+        component: () => import('@/views/admin/edit/index'), // Parent router-view
         name: '修改報帳',
-        component: () => import('@/views/edit/admin/index'),
-        meta: { title: '修改報帳', icon: '' }
+        meta: { title: '修改報帳' },
+        children: [
+          {
+            path: 'fit',
+            component: () => import('@/views/admin/edit/fit'),
+            name: '散客',
+            meta: { title: '散客' }
+          },
+          {
+            path: 'group',
+            component: () => import('@/views/admin/edit/group'),
+            name: '團體',
+            meta: { title: '團體' }
+          }
+        ]
       },
       {
         path: 'table',
         name: '表單全覽',
-        component: () => import('@/views/table/admin/index'),
+        component: () => import('@/views/admin/table/index'),
         meta: { title: '表單全覽', icon: '' }
       },
       {
         path: 'company-search',
         name: '廠商搜尋',
-        component: () => import('@/views/company-search/admin/index'),
+        component: () => import('@/views/admin/company-search/index'),
         meta: { title: '廠商搜尋', icon: '' }
       },
       {
         path: 'name-search',
         name: '團名搜尋',
-        component: () => import('@/views/name-search/index'),
+        component: () => import('@/views/admin/name-search/index'),
         meta: { title: '團名搜尋', icon: '' }
       },
       {
         path: 'income',
         name: '當日收入',
-        component: () => import('@/views/income/index'),
+        component: () => import('@/views/admin/income/index'),
         meta: { title: '當日收入', icon: '' }
       },
       {
         path: 'today',
         name: '當日業績',
-        component: () => import('@/views/today/admin/index'),
+        component: () => import('@/views/admin/today/index'),
         meta: { title: '當日業績', icon: '' }
       },
       {
         path: 'deadline',
         name: '當日DL',
-        component: () => import('@/views/deadline/admin/index'),
+        component: () => import('@/views/admin/deadline/index'),
         meta: { title: '當日DL', icon: '' }
       }
     ]
   },
-  // {
-  //   path: 'external-link',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-  //       meta: { title: 'External Link', icon: 'link' }
-  //     }
-  //   ]
-  // },
+
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
