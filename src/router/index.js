@@ -194,7 +194,7 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83') {
+          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2') {
             next();
           }else{
             next('/404')
