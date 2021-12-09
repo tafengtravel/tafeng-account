@@ -1,8 +1,4 @@
-module.exports = {
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/tafeng-account/'
-    : '/'
-}
+
 
 'use strict'
 const path = require('path')
@@ -30,7 +26,10 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/',
+  runtimeCompiler: true,
+  publicPath: process.env.NODE_ENV === 'production'
+  ? '/tafeng-account/'
+  : '/',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
