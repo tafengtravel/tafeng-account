@@ -138,7 +138,8 @@
                 :file-list="ruleForm.priceUrl"
                 :on-preview="imagePreview"
                 :auto-upload="false"
-                multiple>
+                multiple
+                accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG">
                 <el-button slot="trigger" size="small" type="primary">選取照片</el-button>
               </el-upload>
             </el-col>
@@ -156,7 +157,8 @@
                 :file-list="ruleForm.netUrl"
                 :on-preview="imagePreview"
                 :auto-upload="false"
-                multiple>
+                multiple
+                accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG">
                 <el-button slot="trigger" size="small" type="primary">選取照片</el-button>
               </el-upload>
             </el-col>
@@ -174,7 +176,8 @@
                 :file-list="ruleForm.itineraryUrl"
                 :on-preview="imagePreview"
                 :auto-upload="false"
-                multiple>
+                multiple
+                accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG">
                 <el-button slot="trigger" size="small" type="primary">選取照片</el-button>
               </el-upload>
             </el-col>
@@ -192,7 +195,8 @@
                 :file-list="ruleForm.downPayUrl"
                 :on-preview="imagePreview"
                 :auto-upload="false"
-                multiple>
+                multiple
+                accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG">
                 <el-button slot="trigger" size="small" type="primary">選取照片</el-button>
               </el-upload>
             </el-col>
@@ -210,7 +214,8 @@
                 :file-list="ruleForm.priceOutUrl"
                 :on-preview="imagePreview"
                 :auto-upload="false"
-                multiple>
+                multiple
+                accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG">
                 <el-button slot="trigger" size="small" type="primary">選取照片</el-button>
               </el-upload>
             </el-col>
