@@ -55,9 +55,11 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
+      console.log(this.itineraryUrl)
     },
     handleDownload(file) {
       console.log(file);
+
 
     }
   },

@@ -122,70 +122,109 @@
         </el-row>
         <el-card class="box-card">
           <el-row :gutter="20">
-            <div class="font">團費</div>
+            <span class="font">團費</span>
+
           </el-row>
-          <span v-for="(priceDetailItem,index) in ruleForm.priceDetailItem.length">
-            <el-form-item :label="'品項'+(index+1).toString()" label-width="50px">
-              <span class="form-font-xl" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.priceDetailItem[index]}}</span>
-              <el-input v-model="ruleForm.priceDetailItem[index]" v-else style="width: 250px;" @input="count" ></el-input>
-            </el-form-item>            
-            <el-form-item label="單價">
-              <span class="form-font-sm" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.priceDetailPrice[index]}}</span>
-              <el-input v-model="ruleForm.priceDetailPrice[index]" v-else style="width: 100px;" @input="count" ></el-input>
-            </el-form-item>
-            <el-form-item label="x 人數">
-              <span class="form-font-sm" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.priceDetailAmount[index]}}</span>
-              <el-input v-model="ruleForm.priceDetailAmount[index]" v-else style="width: 100px;" @input="count" ></el-input>
-            </el-form-item>
-            <el-form-item label="= 費用">
-              <span class="form-font-sm">{{ruleForm.priceDetailTotalPrice[index]}}</span>
-            </el-form-item>
-            <el-row></el-row>
-          </span>
-          <el-button type="primary" icon="el-icon-circle-plus-outline"  v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)||adminShow" :disabled="ruleForm.lock" @click="priceDetailAdd();count()" ></el-button>
-          <el-button type="danger" icon="el-icon-remove-outline" v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)||adminShow" :disabled="ruleForm.lock" @click="priceDetailRemove();count()" ></el-button>
-        
-          <el-row></el-row>
-        </el-card>
-        <el-card class="box-card">
+
           <el-row :gutter="20">
-            <div class="font">加購項目</div>
+            <el-col class ="el-col el-col-xs-24 el-col-sm-24 el-col-md-10 el-col-lg-8 el-col-xl-8">
+              <font class ="font"><span>客報</span></font>
+              <el-upload
+                class="upload-demo"
+                action= ""
+                ref="priceUrl"
+                :on-remove="handleRemove"
+                list-type="picture"
+                :file-list="ruleForm.priceUrl"
+                :on-preview="imagePreview"
+                :auto-upload="false"
+                multiple>
+                <el-button slot="trigger" size="small" type="primary">選取照片</el-button>
+              </el-upload>
+            </el-col>
           </el-row>
-          <span v-for="(extraDetailItem,index) in ruleForm.extraDetailItem.length">
-            <el-form-item :label="'品項'+(index+1).toString()" label-width="50px">
-              <span class="form-font-xl" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.extraDetailItem[index]}}</span>
-              <el-input v-model="ruleForm.extraDetailItem[index]" v-else style="width: 250px;" @input="count" ></el-input>
-            </el-form-item>            
-            <el-form-item label="單價">
-              <span class="form-font-sm" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.extraDetailPrice[index]}}</span>
-              <el-input v-model="ruleForm.extraDetailPrice[index]" v-else style="width: 100px;" @input="count" ></el-input>
-            </el-form-item>
-            <el-form-item label="x 數量">
-              <span class="form-font-sm" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.extraDetailAmount[index]}}</span>
-              <el-input v-model="ruleForm.extraDetailAmount[index]" v-else style="width: 100px;" @input="count" ></el-input>
-            </el-form-item>
-            <el-form-item label="x 天數">
-              <span class="form-font-sm" v-if="(ruleForm.priceDetailAdminCheck||ruleForm.lock)&&!adminShow">{{ruleForm.extraDetailDays[index]}}</span>
-              <el-input v-model="ruleForm.extraDetailDays[index]" v-else style="width: 100px;" @input="count" ></el-input>
-            </el-form-item>
-            <el-form-item label="= 費用">
-              <span class="form-font-sm">{{ruleForm.extraDetailTotalPrice[index]}}</span>
-            </el-form-item>
-            <el-row></el-row>
-          </span>
-          <el-button type="primary" icon="el-icon-circle-plus-outline" v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)||adminShow" :disabled="ruleForm.lock" @click="priceExtraDetailAdd();count()" ></el-button>
-          <el-button type="danger" icon="el-icon-remove-outline" v-if="!(ruleForm.priceDetailAdminCheck||ruleForm.lock)||adminShow" :disabled="ruleForm.lock" @click="priceExtraDetailRemove();count()" ></el-button>
-          <el-row></el-row>
-          <el-form-item label="主管核實">
-            <!-- csShow false 顯示label opShow false 顯示label adminShow false 顯示label adminShow true 顯示select -->
-            <span class="form-font-sm" v-if="!adminShow">{{ruleForm.priceDetailAdminCheck}}</span>
-            <el-select v-model="ruleForm.priceDetailAdminCheck" placeholder="核實" style="width: 110px;" v-else >
-              <el-option label="否" :value= false></el-option>
-              <el-option label="是" :value= true></el-option>
-            </el-select>
-          </el-form-item>
-          <el-row></el-row>
+
+          <el-row :gutter="20">
+            <el-col class ="el-col el-col-xs-24 el-col-sm-24 el-col-md-10 el-col-lg-8 el-col-xl-8">
+              <font class ="font"><span>NET</span></font>
+              <el-upload
+                class="upload-demo"
+                action= ""
+                ref="netUrl"
+                :on-remove="handleRemove"
+                list-type="picture"
+                :file-list="ruleForm.netUrl"
+                :on-preview="imagePreview"
+                :auto-upload="false"
+                multiple>
+                <el-button slot="trigger" size="small" type="primary">選取照片</el-button>
+              </el-upload>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="20">
+            <el-col class ="el-col el-col-xs-24 el-col-sm-24 el-col-md-10 el-col-lg-8 el-col-xl-8">
+              <font class ="font"><span>行程</span></font>
+              <el-upload
+                class="upload-demo"
+                action= ""
+                ref="itineraryUrl"
+                :on-remove="handleRemove"
+                list-type="picture"
+                :file-list="ruleForm.itineraryUrl"
+                :on-preview="imagePreview"
+                :auto-upload="false"
+                multiple>
+                <el-button slot="trigger" size="small" type="primary">選取照片</el-button>
+              </el-upload>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="20">
+            <el-col class ="el-col el-col-xs-24 el-col-sm-24 el-col-md-10 el-col-lg-8 el-col-xl-8">
+              <font class ="font"><span>尾款</span></font>
+              <el-upload
+                class="upload-demo"
+                action= ""
+                ref="downPayUrl"
+                :on-remove="handleRemove"
+                list-type="picture"
+                :file-list="ruleForm.downPayUrl"
+                :on-preview="imagePreview"
+                :auto-upload="false"
+                multiple>
+                <el-button slot="trigger" size="small" type="primary">選取照片</el-button>
+              </el-upload>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="20">
+            <el-col class ="el-col el-col-xs-24 el-col-sm-24 el-col-md-10 el-col-lg-8 el-col-xl-8">
+              <font class ="font"><span>團費攜出表</span></font>
+              <el-upload
+                class="upload-demo"
+                action= ""
+                ref="priceOutUrl"
+                :on-remove="handleRemove"
+                list-type="picture"
+                :file-list="ruleForm.priceOutUrl"
+                :on-preview="imagePreview"
+                :auto-upload="false"
+                multiple>
+                <el-button slot="trigger" size="small" type="primary">選取照片</el-button>
+              </el-upload>
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="20">
+            <el-button style="margin-left: 10px;" size="small" type="success" @click="imgUploadAll()" >全部上傳</el-button>
+          </el-row>
+          <el-dialog :visible.sync="dialogVisible" width="80%">
+            <img width="100%"  :src="dialogImageUrl" alt="">
+          </el-dialog>
+          
         </el-card>
+
         <el-row :gutter="20">
           <div class="sub_title">收入</div>
         </el-row>
@@ -845,16 +884,6 @@ export default {
       false:false,
       true:true,
       ruleForm: {
-        priceDetailItem:[],
-        priceDetailPrice:[],
-        priceDetailAmount:[],
-        priceDetailTotalPrice:[],
-
-        extraDetailItem:[],
-        extraDetailPrice:[],
-        extraDetailAmount:[],
-        extraDetailDays:[],
-        extraDetailTotalPrice:[],
 
         incomeDetailDate:[],
         incomeDetailItem:[],
@@ -915,6 +944,12 @@ export default {
         refundDetailOpCheck:[],
         refundDetailAdminCheck:[],
 
+        priceUrl:[],
+        netUrl:[],
+        itineraryUrl:[],
+        downPayUrl:[],
+        priceOutUrl:[],
+
         cancel:false,
         lock:false,
         price:0,
@@ -958,15 +993,70 @@ export default {
       readNumber:false,
       opShow:true,
       adminShow:true,
-      createDate:false
+      createDate:false,
+      dialogImageUrl: '',
+      dialogVisible: false,
     }
   },
   created() {
      
   },
   methods: {
-    setContract(){
+    async imgUploadAll(){
+      await this.$notify({
+        title: '上傳中，請稍後',
+        message: '喝杯咖啡，休息一會兒！',
+        type: 'warning',
+      });
+      
+      const oldCount = [this.ruleForm.priceUrl.length,this.ruleForm.netUrl.length,this.ruleForm.itineraryUrl.length,this.ruleForm.downPayUrl.length,this.ruleForm.priceOutUrl.length]
+      const newRefs = [this.$refs.priceUrl.uploadFiles,this.$refs.netUrl.uploadFiles,this.$refs.itineraryUrl.uploadFiles,this.$refs.downPayUrl.uploadFiles,this.$refs.priceOutUrl.uploadFiles]
+      const ruleFormUrl = [this.ruleForm.priceUrl,this.ruleForm.netUrl,this.ruleForm.itineraryUrl,this.ruleForm.downPayUrl,this.ruleForm.priceOutUrl]
 
+      for(let j=0;j<5;j++){
+        try { // statements to try
+          for(let i=0;i<newRefs[j].length-oldCount[j];i++){
+            const name = newRefs[j][oldCount[j]+i].name;
+            const storageRef = firebaseApp.storage().ref('test/'+name); //路徑測試 尚未修正
+            const task = await storageRef.put(newRefs[j][oldCount[j]+i].raw);
+            
+            task.ref.getDownloadURL().then((downloadURL)=>{
+              ruleFormUrl[j].push({'name':name,'url':downloadURL})
+            });
+          }
+        }
+        catch (e) {
+          await this.$notify.error({
+            title: '上傳失敗',
+            message: '不要動！請通知Leo來！',
+          });
+          console.log(e)
+          return 0
+        }
+      }
+      this.ruleForm.priceUrl = ruleFormUrl[0]
+      this.ruleForm.netUrl = ruleFormUrl[1]
+      this.ruleForm.itineraryUrl = ruleFormUrl[2]
+      this.ruleForm.downPayUrl = ruleFormUrl[3]
+      this.ruleForm.priceOutUrl = ruleFormUrl[4]
+
+      await this.$notify({
+        title: '上傳成功',
+        message: '挖呼！上傳成功！',
+        type: 'success',
+      });
+    },
+    handleRemove(file, fileList) {
+      //尚未刪除
+      console.log(file);
+      console.log(fileList);
+    },
+    imagePreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    setContract(){
+      //尚未新增
     },
     refundDetailAdd(){
       this.ruleForm.refundDetailDate.push('');
