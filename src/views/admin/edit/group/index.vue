@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    管理員 edit group
-    <InputGroup @readChildEvent="readParentEvent" ref="child"></InputGroup>
+    upload test
+    <Upload ref="child"></Upload>
   </div>
 </template>
 
@@ -10,13 +10,13 @@ import { db } from '@/db.js'
 import { firebaseApp } from '@/db.js'
 import '@/styles/common.css'
 import * as moment from "moment/moment";
-import InputGroup from '@/components/InputGroup.vue'
+import Upload from '@/components/Upload.vue'
 
 
 export default {
   name: 'new',
   components: {
-    InputGroup
+    Upload
   },
   data() {
     return {
@@ -24,33 +24,12 @@ export default {
     }
   },
   methods:{
-    async readParentEvent(){
-      if(this.$refs.child.ruleForm.depDate == null || this.$refs.child.ruleForm.number == null){
-        this.$message.error('請輸入團號及出發日期')
-        return 0
-      }
-      let ref = db.collection((this.$refs.child.ruleForm.depDate).substring(0,7).toString()).doc(this.$refs.child.ruleForm.number);
-      
-      await ref.onSnapshot(doc => { 
-        if(typeof(doc.data()) == 'undefined'){
-          this.$message.error('請輸入正確團號')
-          return 0;
-        }
-        this.$refs.child.ruleForm = doc.data()
-      })
-      this.$refs.child.$forceUpdate() // 重新渲染dom
-    }
+
   },
   computed: {
     
   },mounted(){
-    this.$refs.child.adminShow = true
-    this.$refs.child.opShow = true
-    if(Object.keys(this.$route.query).length > 0){
-      this.$refs.child.ruleForm.depDate = this.$route.query.depDate
-      this.$refs.child.ruleForm.number = this.$route.query.number
-      this.readParentEvent()
-    }
+
     
   }
   

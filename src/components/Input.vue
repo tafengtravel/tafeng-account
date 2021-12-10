@@ -922,7 +922,9 @@ export default {
         profit:0,
         income:0,  
         net:0,
+        record:[],
       },
+      email:'',
       rules: {
           number: [
               // { required: true, message: '必填', trigger: 'blur'},
@@ -1128,6 +1130,7 @@ export default {
     read() {
       let readChildEvent = {'cs':this.cs,'month':this.month}
       this.$emit("readChildEvent", readChildEvent);
+      console.log(this.email + ' '+moment().format('YYYY-MM-DD HH:mm'))
     },
     count(){
       this.ruleForm.price = 0
@@ -1185,11 +1188,12 @@ export default {
       //利潤>9999 5%稅金
     },
     submit(validRuleForm){
+      this.ruleForm.record.push(this.email + ' '+moment().format('YYYY-MM-DD HH:mm'))
+
       let ref = db.collection((this.ruleForm.depDate).substring(0,7).toString()).doc(this.ruleForm.number);
       console.log(ref)
       this.$refs[validRuleForm].validate((valid) => {
         if (valid) {
-          
           ref.set(this.ruleForm).then(() => {
           console.log('set data successful');
           this.$message.success('新增成功');
@@ -1203,7 +1207,13 @@ export default {
     }
   },
   mounted(){
-    
+    firebaseApp.auth().onAuthStateChanged(user=>{
+        if (user) {
+          this.email = user.email
+        }else{
+          
+        }
+      });
   }
 }
 </script>
