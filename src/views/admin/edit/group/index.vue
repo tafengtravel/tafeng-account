@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    管理員 edit
-    <Input @readChildEvent="readParentEvent" ref="child"></Input>
+    管理員 edit group
+    <InputGroup @readChildEvent="readParentEvent" ref="child"></InputGroup>
   </div>
 </template>
 
@@ -10,13 +10,13 @@ import { db } from '@/db.js'
 import { firebaseApp } from '@/db.js'
 import '@/styles/common.css'
 import * as moment from "moment/moment";
-import Input from '@/components/Input.vue'
+import InputGroup from '@/components/InputGroup.vue'
 
 
 export default {
   name: 'new',
   components: {
-    Input
+    InputGroup
   },
   data() {
     return {
