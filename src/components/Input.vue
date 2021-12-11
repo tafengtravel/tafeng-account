@@ -1171,11 +1171,14 @@ export default {
         }
         this.ruleForm.net = parseFloat(this.ruleForm.payDetailPay[i]) + parseFloat(this.ruleForm.net)
       }
+      //保險計算
       if(this.ruleForm.insurance1){
         this.ruleForm.insuranceTotalPrice1 = parseFloat(this.ruleForm.insurancePrice1)*parseFloat(this.ruleForm.insuranceDays1)*parseFloat(this.ruleForm.insuranceAmount1)
+        this.ruleForm.insuranceTotalPrice1 = parseFloat((this.ruleForm.insuranceTotalPrice1).toFixed(1))
       }
       if(this.ruleForm.insurance2){
         this.ruleForm.insuranceTotalPrice2 = parseFloat(this.ruleForm.insurancePrice2)*parseFloat(this.ruleForm.insuranceDays2)*parseFloat(this.ruleForm.insuranceAmount2)
+        this.ruleForm.insuranceTotalPrice2 = parseFloat((this.ruleForm.insuranceTotalPrice2).toFixed(1))
       }
       this.ruleForm.income = this.ruleForm.income - refundTotal 
       //總收扣除退款
@@ -1197,10 +1200,10 @@ export default {
       this.$refs[validRuleForm].validate((valid) => {
         if (valid) {
           ref.set(this.ruleForm).then(() => {
-          console.log('set data successful');
-          this.$message.success('新增成功');
-          this.$router.push({ path: '/profile' })
-        });
+            console.log('set data successful');
+            this.$message.success('新增成功');
+            this.$router.push({ path: '/profile' })
+          });
         } else {
           console.log('error submit!!');
           return false;

@@ -177,10 +177,10 @@
               <el-upload
                 class="upload-demo"
                 action= ""
-                ref="downPayUrl"
+                ref="finalPayUrl"
                 :on-remove="handleRemove"
                 list-type="picture"
-                :file-list="ruleForm.downPayUrl"
+                :file-list="ruleForm.finalPayUrl"
                 :on-preview="imagePreview"
                 :auto-upload="false"
                 multiple
@@ -950,7 +950,7 @@ export default {
         priceUrl:[],
         netUrl:[],
         itineraryUrl:[],
-        downPayUrl:[],
+        finalPayUrl:[],
         priceOutUrl:[],
 
         cancel:false,
@@ -967,9 +967,6 @@ export default {
               // { required: true, message: '必填', trigger: 'blur'},
           ],
           name: [
-              { required: true, message: '必填', trigger: 'blur'},
-          ],
-          company: [
               { required: true, message: '必填', trigger: 'blur'},
           ],
           cs:[
@@ -1015,9 +1012,9 @@ export default {
         type: 'warning',
       });
       
-      const oldCount = [this.ruleForm.priceUrl.length,this.ruleForm.netUrl.length,this.ruleForm.itineraryUrl.length,this.ruleForm.downPayUrl.length,this.ruleForm.priceOutUrl.length]
-      const newRefs = [this.$refs.priceUrl.uploadFiles,this.$refs.netUrl.uploadFiles,this.$refs.itineraryUrl.uploadFiles,this.$refs.downPayUrl.uploadFiles,this.$refs.priceOutUrl.uploadFiles]
-      const ruleFormUrl = [this.ruleForm.priceUrl,this.ruleForm.netUrl,this.ruleForm.itineraryUrl,this.ruleForm.downPayUrl,this.ruleForm.priceOutUrl]
+      const oldCount = [this.ruleForm.priceUrl.length,this.ruleForm.netUrl.length,this.ruleForm.itineraryUrl.length,this.ruleForm.finalPayUrl.length,this.ruleForm.priceOutUrl.length]
+      const newRefs = [this.$refs.priceUrl.uploadFiles,this.$refs.netUrl.uploadFiles,this.$refs.itineraryUrl.uploadFiles,this.$refs.finalPayUrl.uploadFiles,this.$refs.priceOutUrl.uploadFiles]
+      const ruleFormUrl = [this.ruleForm.priceUrl,this.ruleForm.netUrl,this.ruleForm.itineraryUrl,this.ruleForm.finalPayUrl,this.ruleForm.priceOutUrl]
 
       for(let j=0;j<5;j++){
         try { // statements to try
@@ -1043,7 +1040,7 @@ export default {
       this.ruleForm.priceUrl = ruleFormUrl[0]
       this.ruleForm.netUrl = ruleFormUrl[1]
       this.ruleForm.itineraryUrl = ruleFormUrl[2]
-      this.ruleForm.downPayUrl = ruleFormUrl[3]
+      this.ruleForm.finalPayUrl = ruleFormUrl[3]
       this.ruleForm.priceOutUrl = ruleFormUrl[4]
 
       await this.$notify({
@@ -1066,9 +1063,9 @@ export default {
             }else if(this.ruleForm.itineraryUrl.some(arr=> arr.name === file.name)){
               this.ruleForm.itineraryUrl.length = 0
               this.ruleForm.itineraryUrl = fileList
-            }else if(this.ruleForm.downPayUrl.some(arr=> arr.name === file.name)){
-              this.ruleForm.downPayUrl.length = 0
-              this.ruleForm.downPayUrl = fileList
+            }else if(this.ruleForm.finalPayUrl.some(arr=> arr.name === file.name)){
+              this.ruleForm.finalPayUrl.length = 0
+              this.ruleForm.finalPayUrl = fileList
             }else if(this.ruleForm.priceOutUrl.some(arr=> arr.name === file.name)){
               this.ruleForm.priceOutUrl.length = 0
               this.ruleForm.priceOutUrl = fileList
@@ -1293,11 +1290,14 @@ export default {
         }
         this.ruleForm.net = parseFloat(this.ruleForm.payDetailPay[i]) + parseFloat(this.ruleForm.net)
       }
+      //保險計算
       if(this.ruleForm.insurance1){
         this.ruleForm.insuranceTotalPrice1 = parseFloat(this.ruleForm.insurancePrice1)*parseFloat(this.ruleForm.insuranceDays1)*parseFloat(this.ruleForm.insuranceAmount1)
+        this.ruleForm.insuranceTotalPrice1 = parseFloat((this.ruleForm.insuranceTotalPrice1).toFixed(1))
       }
       if(this.ruleForm.insurance2){
         this.ruleForm.insuranceTotalPrice2 = parseFloat(this.ruleForm.insurancePrice2)*parseFloat(this.ruleForm.insuranceDays2)*parseFloat(this.ruleForm.insuranceAmount2)
+        this.ruleForm.insuranceTotalPrice2 = parseFloat((this.ruleForm.insuranceTotalPrice2).toFixed(1))
       }
       this.ruleForm.income = this.ruleForm.income - refundTotal 
       //總收扣除退款
@@ -1317,12 +1317,11 @@ export default {
       console.log(ref)
       this.$refs[validRuleForm].validate((valid) => {
         if (valid) {
-          
           ref.set(this.ruleForm).then(() => {
-          console.log('set data successful');
-          this.$message.success('新增成功');
-          this.$router.push({ path: '/profile' })
-        });
+            console.log('set data successful');
+            this.$message.success('新增成功');
+            this.$router.push({ path: '/profile' })
+          });
         } else {
           console.log('error submit!!');
           return false;
