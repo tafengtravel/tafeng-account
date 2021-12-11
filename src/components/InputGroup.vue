@@ -28,21 +28,9 @@
           <el-form-item>
             <el-button type="primary" @click="read">讀取團號</el-button>
           </el-form-item>
-          <el-form-item label="地點" prop="location" >
-            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.location}}</span>
-            <el-select v-model="ruleForm.location" v-else placeholder="地點">
-              <el-option-group
-                v-for="group in locationOptions"
-                :key="group.label"
-                :label="group.label">
-                <el-option
-                  v-for="item in group.options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-option-group>
-            </el-select>
+          <el-form-item label="公司" prop="company" >
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.company}}</span>
+            <el-input v-model="ruleForm.company" v-else></el-input>
           </el-form-item>
 
           <el-row></el-row>
@@ -224,6 +212,10 @@
           <el-row :gutter="20">
             <el-button style="margin-left: 10px;" size="small" type="success" @click="imgUploadAll()" >全部上傳</el-button>
           </el-row>
+          <el-form-item label="總團費">
+              <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.price}}</span>
+              <el-input v-model="ruleForm.price" @input="count" v-else></el-input>
+          </el-form-item>
           <el-dialog :visible.sync="dialogVisible" width="80%">
             <img width="100%"  :src="dialogImageUrl" alt="">
           </el-dialog>
@@ -328,13 +320,13 @@
               <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailItem[index]}}</span>
               <el-input v-model="ruleForm.payDetailItem[index]" v-else></el-input>
             </el-form-item> 
-            <el-form-item label="明細">
-              <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailDetail[index]}}</span>
-              <el-input v-model="ruleForm.payDetailDetail[index]" v-else></el-input>
-            </el-form-item> 
             <el-form-item label="支出">
               <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailPay[index]}}</span>
               <el-input v-model="ruleForm.payDetailPay[index]" v-else @input="count" style="width: 130px;" ></el-input>
+            </el-form-item> 
+            <el-form-item label="報帳單號">
+              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailAccountNumber[index]}}</span>
+              <el-input v-model="ruleForm.payDetailAccountNumber[index]" v-else @input="count"></el-input>
             </el-form-item> 
 
             <el-row></el-row>     
@@ -372,6 +364,11 @@
                 <el-option label="否" :value= false></el-option>
                 <el-option label="是" :value= true></el-option>
               </el-select>
+            </el-form-item>
+            <el-row></el-row>
+            <el-form-item label="明細">
+              <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailDetail[index]}}</span>
+              <el-input type="textarea" autosize resize style="width: 300px;" v-model="ruleForm.payDetailDetail[index]" v-else></el-input>
             </el-form-item>
             <el-row></el-row>
             <el-divider></el-divider>
@@ -673,7 +670,7 @@
             </el-select>
           </el-form-item>
           <el-button @click="count">試算</el-button>
-          <el-button type="primary" @click="submit('ruleForm')">提交</el-button>
+          <el-button type="primary" v-if="submitShow" @click="submit('ruleForm')">提交</el-button>
         </el-form-item>
       </el-form>
 
@@ -906,6 +903,7 @@ export default {
         payDetailItem:[],
         payDetailDetail:[],
         payDetailPay:[],
+        payDetailAccountNumber:[],
         payDetailPayDate:[],
         payDetailType:[],
         payDetailProve:[],
@@ -962,6 +960,7 @@ export default {
         profit:0,
         income:0,  
         net:0,
+        record:[],
       },
       rules: {
           number: [
@@ -970,7 +969,7 @@ export default {
           name: [
               { required: true, message: '必填', trigger: 'blur'},
           ],
-          location: [
+          company: [
               { required: true, message: '必填', trigger: 'blur'},
           ],
           cs:[
@@ -998,9 +997,11 @@ export default {
       readNumber:false,
       opShow:true,
       adminShow:true,
+      submitShow:false,
       createDate:false,
       dialogImageUrl: '',
       dialogVisible: false,
+      
     }
   },
   created() {
@@ -1022,7 +1023,7 @@ export default {
         try { // statements to try
           for(let i=0;i<newRefs[j].length-oldCount[j];i++){
             const name = newRefs[j][oldCount[j]+i].name;
-            const storageRef = firebaseApp.storage().ref('test/'+name); //路徑測試 尚未修正
+            const storageRef = firebaseApp.storage().ref(moment(this.ruleForm.depDate).format('YYYY-MM')+'/'+this.ruleForm.number+'/'+name); //路徑測試 尚未修正
             const task = await storageRef.put(newRefs[j][oldCount[j]+i].raw);
             
             task.ref.getDownloadURL().then((downloadURL)=>{
@@ -1054,7 +1055,7 @@ export default {
     async handleRemove(file, fileList) {
       if(file.status == 'success'){
         try { // statements to try
-          let storageRef = firebaseApp.storage().ref('test/'+file.name); //尚未修改路徑
+          let storageRef = firebaseApp.storage().ref(moment(this.ruleForm.depDate).format('YYYY-MM')+'/'+this.ruleForm.number+'/'+file.name); //尚未修改路徑
           await storageRef.delete().then(doc =>{
             if(this.ruleForm.priceUrl.some(arr=> arr.name === file.name)){
               this.ruleForm.priceUrl.length = 0
@@ -1128,6 +1129,7 @@ export default {
       this.ruleForm.payDetailItem.push('');
       this.ruleForm.payDetailDetail.push('');
       this.ruleForm.payDetailPay.push('');
+      this.ruleForm.payDetailAccountNumber.push('');
       this.ruleForm.payDetailPayDate.push('');
       this.ruleForm.payDetailType.push('');
       this.ruleForm.payDetailProve.push('');
@@ -1165,6 +1167,7 @@ export default {
       this.ruleForm.payDetailItem.pop();
       this.ruleForm.payDetailDetail.pop();
       this.ruleForm.payDetailPay.pop();
+      this.ruleForm.payDetailAccountNumber.pop();
       this.ruleForm.payDetailPayDate.pop();
       this.ruleForm.payDetailType.pop();
       this.ruleForm.payDetailProve.pop();
@@ -1258,7 +1261,6 @@ export default {
       this.$emit("readChildEvent", readChildEvent);
     },
     count(){
-      this.ruleForm.price = 0
       this.ruleForm.income = 0
       this.ruleForm.net = 0
       this.ruleForm.tax = 0
@@ -1267,14 +1269,7 @@ export default {
       let cardTotal = 0
       let linepayTotal = 0
       let refundTotal = 0
-      for(let i=0;i<this.ruleForm.priceDetailTotalPrice.length;i++){
-        this.ruleForm.priceDetailTotalPrice[i] = parseFloat(this.ruleForm.priceDetailPrice[i]) * parseFloat(this.ruleForm.priceDetailAmount[i])
-        this.ruleForm.price = parseFloat(this.ruleForm.price) + parseFloat(this.ruleForm.priceDetailTotalPrice[i])
-      }
-      for(let i=0;i<this.ruleForm.extraDetailItem.length;i++){
-        this.ruleForm.extraDetailTotalPrice[i] = parseFloat(this.ruleForm.extraDetailAmount[i]) * parseFloat(this.ruleForm.extraDetailPrice[i]) * parseFloat(this.ruleForm.extraDetailDays[i])
-        this.ruleForm.price = parseFloat(this.ruleForm.price) + parseFloat(this.ruleForm.extraDetailTotalPrice[i])
-      }
+      
       for(let i=0;i<this.ruleForm.refundDetailRefund.length;i++){
         refundTotal = parseFloat(this.ruleForm.refundDetailRefund[i]) + parseFloat(refundTotal)
       }
@@ -1284,7 +1279,10 @@ export default {
         }else if(this.ruleForm.incomeDetailType[i] == 'LINEPAY'){
           linepayTotal = linepayTotal + parseFloat(this.ruleForm.incomeDetailIncome[i])*0.0231
         }
+        
         this.ruleForm.income = parseFloat(this.ruleForm.incomeDetailIncome[i]) + parseFloat(this.ruleForm.income)
+        console.log(this.ruleForm.incomeDetailIncome[i])
+        console.log(this.ruleForm.income)
       }
       for(let i=0;i<this.ruleForm.payDetailPay.length;i++){
         if(this.ruleForm.payDetailFee1[i]){
@@ -1313,7 +1311,9 @@ export default {
       //利潤>9999 5%稅金
     },
     submit(validRuleForm){
-      let ref = db.collection((this.ruleForm.depDate).substring(0,7).toString()).doc(this.ruleForm.number);
+      this.ruleForm.record.push(this.email + ' '+moment().format('YYYY-MM-DD HH:mm'))
+
+      let ref = db.collection(moment(this.ruleForm.depDate).format('YYYY-MM')+'G').doc(this.ruleForm.number);
       console.log(ref)
       this.$refs[validRuleForm].validate((valid) => {
         if (valid) {
@@ -1321,6 +1321,7 @@ export default {
           ref.set(this.ruleForm).then(() => {
           console.log('set data successful');
           this.$message.success('新增成功');
+          this.$router.push({ path: '/profile' })
         });
         } else {
           console.log('error submit!!');
@@ -1331,7 +1332,13 @@ export default {
     }
   },
   mounted(){
-    
+    firebaseApp.auth().onAuthStateChanged(user=>{
+      if (user) {
+        this.email = user.email
+      }else{
+        
+      }
+    });
   }
 }
 </script>

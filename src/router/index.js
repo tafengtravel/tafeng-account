@@ -249,18 +249,45 @@ export const adminRoutes = [
       }
     ]
   },
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   redirect: '/profile',
-  //   beforeEnter: checkAuth,
-  //   children: [{
-  //     path: 'profile',
-  //     name: 'Profile',
-  //     component: () => import('@/views/profile/index'),
-  //     meta: { title: '團體', icon: 'group' }
-  //   }]
-  // },
+  {
+    path: '/group',
+    component: Layout,
+    redirect: '/group/new',
+    beforeEnter: (to, from, next) => {
+      firebaseApp.auth().onAuthStateChanged(user=>{
+        if (user) {
+          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2') {
+            next();
+          }else{
+            next('/404')
+          }
+        }else{
+          next('/login')
+        }
+      });
+    },
+    meta: { title: '團體', icon: 'group' },
+    children: [
+      {
+        path: 'new',
+        name: '新增報帳',
+        component: () => import('@/views/group/new/index'),
+        meta: { title: '新增報帳', icon: '' }
+      },
+      {
+        path: 'edit',
+        name: '修改報帳',
+        component: () => import('@/views/group/edit/index'),
+        meta: { title: '修改報帳', icon: '' }
+      },
+      {
+        path: 'table',
+        name: '表單全覽',
+        component: () => import('@/views/group/table/index'),
+        meta: { title: '表單全覽', icon: '' }
+      },
+    ]
+  },
   {
     path: '/admin',
     component: Layout,

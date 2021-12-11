@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    管理員 edit group
+    edit group
     <InputGroup @readChildEvent="readParentEvent" ref="child"></InputGroup>
   </div>
 </template>
@@ -37,6 +37,8 @@ export default {
           return 0;
         }
         this.$refs.child.ruleForm = doc.data()
+        this.$refs.child.readNumber = true
+        this.$refs.child.createDate = true
         this.$refs.child.submitShow = true
         this.$message.success('讀取成功');
       })
@@ -46,7 +48,7 @@ export default {
   computed: {
     
   },mounted(){
-    this.$refs.child.adminShow = true
+    this.$refs.child.adminShow = false
     this.$refs.child.opShow = true
     if(Object.keys(this.$route.query).length > 0){
       this.$refs.child.ruleForm.depDate = this.$route.query.depDate

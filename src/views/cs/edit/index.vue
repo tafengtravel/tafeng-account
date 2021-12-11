@@ -29,7 +29,7 @@ export default {
         this.$message.error('請輸入團號及出發日期')
         return 0
       }
-      let ref = db.collection((this.$refs.child.ruleForm.depDate).substring(0,7).toString()).doc(this.$refs.child.ruleForm.number);
+      let ref = db.collection(moment(this.$refs.child.ruleForm.depDate).format('YYYY-MM')).doc(this.$refs.child.ruleForm.number);
       
       await ref.onSnapshot(doc => { 
         if(typeof(doc.data()) == 'undefined'){
@@ -39,7 +39,8 @@ export default {
         this.$refs.child.ruleForm = doc.data()
         this.$refs.child.readNumber = true
         this.$refs.child.createDate = true
-
+        this.$refs.child.submitShow = true
+        this.$message.success('讀取成功');
       })
       this.$refs.child.$forceUpdate() // 重新渲染dom
     }

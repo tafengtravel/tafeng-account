@@ -37,6 +37,8 @@ export default {
           return 0;
         }
         this.$refs.child.ruleForm = doc.data()
+        this.$refs.child.submitShow = true
+        this.$message.success('讀取成功');
       })
       this.$refs.child.$forceUpdate() // 重新渲染dom
     }

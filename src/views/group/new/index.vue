@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    客服 new
-    <Input @readChildEvent="readParentEvent" ref="child"></Input>
+    new group
+    <InputGroup @readChildEvent="readParentEvent" ref="child"></InputGroup>
   </div>
 </template>
 
@@ -10,13 +10,13 @@ import { db } from '@/db.js'
 import { firebaseApp } from '@/db.js'
 import '@/styles/common.css'
 import * as moment from "moment/moment";
-import Input from '@/components/Input.vue'
+import InputGroup from '@/components/InputGroup.vue'
 
 
 export default {
   name: 'new',
   components: {
-    Input
+    InputGroup
   },
   data() {
     return {
@@ -29,7 +29,7 @@ export default {
         this.$message.error('請選擇客服及出發日期')
         return 0
       }
-      let ref = db.collection(moment(this.$refs.child.ruleForm.depDate).format('YYYY-MM'));
+      let ref = db.collection(moment(this.$refs.child.ruleForm.depDate).format('YYYY-MM')+'G');
       let number = []
       let i = 0
 
@@ -80,7 +80,7 @@ export default {
 
       }
       
-      ref = db.collection(moment(this.$refs.child.ruleForm.depDate).format('YYYY-MM')).doc(this.$refs.child.ruleForm.number);
+      ref = db.collection(moment(this.$refs.child.ruleForm.depDate).format('YYYY-MM')+'G').doc(this.$refs.child.ruleForm.number);
       await ref.get().then(function(doc){ 
         if(typeof(doc.data()) != 'undefined'){
           if (doc.exists) {

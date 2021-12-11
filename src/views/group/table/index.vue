@@ -16,7 +16,7 @@
         <el-table-column prop="people" label="代表人" width='125%' sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
         <el-table-column prop="amount" label="人數" width='75%' sortable :sort-method = "(a,b)=>a.amount.localeCompare(b.amount)"></el-table-column>
         <el-table-column prop="phone" label="聯絡電話" width='125%' sortable :sort-method = "(a,b)=>{return a.phone - b.phone}"></el-table-column>
-        <el-table-column prop="profit" label="利潤" width='100%' :formatter="profit" sortable :sort-method = "(a,b)=>{return a.profit - b.profit}"></el-table-column>
+        <el-table-column prop="priceInsufficient" label="未收尾款" width='100%' :formatter="profit" sortable :sort-method = "(a,b)=>{return a.priceInsufficient - b.priceInsufficient}"></el-table-column>
         <el-table-column prop="other" label="備註" width='125%' sortable :sort-method = "(a,b)=>a.other.localeCompare(b.other)"></el-table-column>
         <el-table-column prop="" label="編輯" width='50%'>
           <template slot-scope="scope">
@@ -120,7 +120,7 @@ export default {
       console.log(row)
 
       let route = this.$router.resolve({
-        path: '/admin/edit/group',
+        path: '/group/edit',
         query: { number:row.number,depDate:this.$refs.child.month }
       })
       window.open(route.href, '_blank');

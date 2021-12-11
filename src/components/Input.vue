@@ -629,7 +629,7 @@
             </el-select>
           </el-form-item>
           <el-button @click="count">試算</el-button>
-          <el-button type="primary" @click="submit('ruleForm')">提交</el-button>
+          <el-button type="primary" v-if="submitShow" @click="submit('ruleForm')">提交</el-button>
         </el-form-item>
       </el-form>
 
@@ -960,7 +960,8 @@ export default {
       readNumber:false,
       opShow:true,
       adminShow:true,
-      createDate:false
+      createDate:false,
+      submitShow:false,
     }
   },
   created() {
@@ -1190,13 +1191,15 @@ export default {
     submit(validRuleForm){
       this.ruleForm.record.push(this.email + ' '+moment().format('YYYY-MM-DD HH:mm'))
 
-      let ref = db.collection((this.ruleForm.depDate).substring(0,7).toString()).doc(this.ruleForm.number);
+      let ref = db.collection(moment(this.ruleForm.depDate).format('YYYY-MM')).doc(this.ruleForm.number);
+      
       console.log(ref)
       this.$refs[validRuleForm].validate((valid) => {
         if (valid) {
           ref.set(this.ruleForm).then(() => {
           console.log('set data successful');
           this.$message.success('新增成功');
+          this.$router.push({ path: '/profile' })
         });
         } else {
           console.log('error submit!!');
@@ -1208,12 +1211,12 @@ export default {
   },
   mounted(){
     firebaseApp.auth().onAuthStateChanged(user=>{
-        if (user) {
-          this.email = user.email
-        }else{
-          
-        }
-      });
+      if (user) {
+        this.email = user.email
+      }else{
+        
+      }
+    });
   }
 }
 </script>
