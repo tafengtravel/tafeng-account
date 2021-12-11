@@ -1051,9 +1051,42 @@ export default {
         type: 'success',
       });
     },
-    handleRemove(file, fileList) {
-      //尚未刪除
-      console.log(file);
+    async handleRemove(file, fileList) {
+      if(file.status == 'success'){
+        try { // statements to try
+          let storageRef = firebaseApp.storage().ref('test/'+file.name); //尚未修改路徑
+          await storageRef.delete().then(doc =>{
+            if(this.ruleForm.priceUrl.some(arr=> arr.name === file.name)){
+              this.ruleForm.priceUrl.length = 0
+              this.ruleForm.priceUrl = fileList
+            }else if(this.ruleForm.netUrl.some(arr=> arr.name === file.name)){
+              this.ruleForm.netUrl.length = 0
+              this.ruleForm.netUrl = fileList
+            }else if(this.ruleForm.itineraryUrl.some(arr=> arr.name === file.name)){
+              this.ruleForm.itineraryUrl.length = 0
+              this.ruleForm.itineraryUrl = fileList
+            }else if(this.ruleForm.downPayUrl.some(arr=> arr.name === file.name)){
+              this.ruleForm.downPayUrl.length = 0
+              this.ruleForm.downPayUrl = fileList
+            }else if(this.ruleForm.priceOutUrl.some(arr=> arr.name === file.name)){
+              this.ruleForm.priceOutUrl.length = 0
+              this.ruleForm.priceOutUrl = fileList
+            }
+            this.$notify({
+              title: '刪除成功',
+              type: 'success',
+              message: '挖呼！刪除成功！',
+            });
+          })
+        } 
+        catch (e) {
+          this.$notify.error({
+            title: '刪除失敗',
+            message: '不要動！請通知Leo來！',
+          });
+          console.log(e)
+        }
+      }
       console.log(fileList);
     },
     imagePreview(file) {
