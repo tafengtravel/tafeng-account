@@ -537,7 +537,7 @@ export const adminRoutes = [
 let createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: csRoutes
+  routes: adminRoutes
 })
 
 let router = createRouter()
