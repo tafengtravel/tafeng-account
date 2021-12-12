@@ -105,6 +105,141 @@ export const csRoutes = [
 ]
 
 
+export const opRoutes = [
+  {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true,
+  },
+
+  {
+    path: '/404',
+    component: () => import('@/views/404'),
+    hidden: true,
+    beforeEnter: checkAuth,
+    
+  },
+
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/profile',
+    beforeEnter: checkAuth,
+    children: [{
+      path: 'profile',
+      name: 'Profile',
+      component: () => import('@/views/profile/index'),
+      meta: { title: '首頁', icon: 'home' }
+    }]
+  },
+
+  {
+    path: '/op',
+    component: Layout,
+    redirect: '/op/edit',
+    name: 'OP',
+    meta: { title: 'OP', icon: 'op' },
+    beforeEnter: (to, from, next) => {
+      firebaseApp.auth().onAuthStateChanged(user=>{
+        if (user) {
+          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2') {
+            next();
+          }else{
+            next('/404')
+          }
+        }else{
+          next('/login')
+        }
+      });
+    },
+    children: [
+      {
+        path: 'edit',
+        name: '修改報帳',
+        component: () => import('@/views/op/edit/index'),
+        meta: { title: '修改報帳', icon: '' }
+      },
+      {
+        path: 'table',
+        name: '表單全覽',
+        component: () => import('@/views/op/table/index'),
+        meta: { title: '表單全覽', icon: '' }
+      },
+      {
+        path: 'company-search',
+        name: '廠商搜尋',
+        component: () => import('@/views/op/company-search/index'),
+        meta: { title: '廠商搜尋', icon: '' }
+      },
+      {
+        path: 'name-search',
+        name: '團名搜尋',
+        component: () => import('@/views/op/name-search/index'),
+        meta: { title: '團名搜尋', icon: '' }
+      },
+      {
+        path: 'income',
+        name: '當日收入',
+        component: () => import('@/views/op/income/index'),
+        meta: { title: '當日收入', icon: '' }
+      },
+      {
+        path: 'today',
+        name: '當日業績',
+        component: () => import('@/views/op/today/index'),
+        meta: { title: '當日業績', icon: '' }
+      },
+      {
+        path: 'deadline',
+        name: '當日DL',
+        component: () => import('@/views/op/deadline/index'),
+        meta: { title: '當日DL', icon: '' }
+      }
+    ]
+  },
+  {
+    path: '/group',
+    component: Layout,
+    redirect: '/group/new',
+    beforeEnter: (to, from, next) => {
+      firebaseApp.auth().onAuthStateChanged(user=>{
+        if (user) {
+          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2') {
+            next();
+          }else{
+            next('/404')
+          }
+        }else{
+          next('/login')
+        }
+      });
+    },
+    meta: { title: '團體', icon: 'group' },
+    children: [
+      {
+        path: 'new',
+        name: '新增報帳',
+        component: () => import('@/views/group/new/index'),
+        meta: { title: '新增報帳', icon: '' }
+      },
+      {
+        path: 'edit',
+        name: '修改報帳',
+        component: () => import('@/views/group/edit/index'),
+        meta: { title: '修改報帳', icon: '' }
+      },
+      {
+        path: 'table',
+        name: '表單全覽',
+        component: () => import('@/views/group/table/index'),
+        meta: { title: '表單全覽', icon: '' }
+      },
+    ]
+  },
+  
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
+]
 /**
  * constantRoutes
  * a base page that does not have permission requirements
@@ -402,7 +537,7 @@ export const adminRoutes = [
 let createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: adminRoutes
+  routes: csRoutes
 })
 
 let router = createRouter()
