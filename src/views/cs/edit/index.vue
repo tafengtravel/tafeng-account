@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    客服 edit
     <Input @readChildEvent="readParentEvent" ref="child"></Input>
   </div>
 </template>

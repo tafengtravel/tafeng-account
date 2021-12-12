@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    管理員 edit group
     <InputGroup @readChildEvent="readParentEvent" ref="child"></InputGroup>
   </div>
 </template>

@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    OP edit
     <Input @readChildEvent="readParentEvent" ref="child"></Input>
   </div>
 </template>

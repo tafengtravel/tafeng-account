@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    new group
     <InputGroup @readChildEvent="readParentEvent" ref="child"></InputGroup>
   </div>
 </template>
