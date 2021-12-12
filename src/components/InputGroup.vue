@@ -960,7 +960,8 @@ export default {
         profit:0,
         income:0,  
         net:0,
-        record:[],
+        recordAccount:[],
+        recordTime:[],
       },
       rules: {
           number: [
@@ -1311,7 +1312,8 @@ export default {
       //利潤>9999 5%稅金
     },
     submit(validRuleForm){
-      this.ruleForm.record.push(this.email + ' '+moment().format('YYYY-MM-DD HH:mm'))
+      this.ruleForm.recordAccount.push(this.email)
+      this.ruleForm.recordTime.push(moment().format('YYYY-MM-DD HH:mm'))
 
       let ref = db.collection(moment(this.ruleForm.depDate).format('YYYY-MM')+'G').doc(this.ruleForm.number);
       console.log(ref)
