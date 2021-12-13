@@ -83,3 +83,6 @@
 .el-table {
     color: black;
 }
+.el-table thead {
+    color: black;
+}
