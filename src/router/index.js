@@ -142,7 +142,7 @@ export const opRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2') {
+          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2' || user.uid =='bDbwj0BKjnY0hg5q5orSvnE1Gfi1') {
             next();
           }else{
             next('/404')
@@ -204,7 +204,7 @@ export const opRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2') {
+          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2' || user.uid =='bDbwj0BKjnY0hg5q5orSvnE1Gfi1') {
             next();
           }else{
             next('/404')
@@ -329,7 +329,7 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2') {
+          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2' || user.uid =='bDbwj0BKjnY0hg5q5orSvnE1Gfi1') {
             next();
           }else{
             next('/404')
@@ -391,7 +391,7 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2') {
+          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2' || user.uid =='bDbwj0BKjnY0hg5q5orSvnE1Gfi1') {
             next();
           }else{
             next('/404')
@@ -562,7 +562,11 @@ router.beforeResolve((to, from, next) => {
         console.log('admin')
         router.options.routes = adminRoutes
         next()
-      }else{
+      }else if(user.uid =='bDbwj0BKjnY0hg5q5orSvnE1Gfi1'){
+        router.options.routes = opRoutes
+        next()
+      }
+      else{
         router.options.routes = csRoutes
         next()
       }
