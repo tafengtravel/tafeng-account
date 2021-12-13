@@ -86,6 +86,12 @@ export const csRoutes = [
         meta: { title: '廠商搜尋', icon: '' }
       },
       {
+        path: 'people-search',
+        name: '代表人搜尋',
+        component: () => import('@/views/cs/people-search/index'),
+        meta: { title: '代表人搜尋', icon: '' }
+      },
+      {
         path: 'today',
         name: '當日業績',
         component: () => import('@/views/cs/today/index'),
@@ -304,6 +310,12 @@ export const adminRoutes = [
         name: '廠商搜尋',
         component: () => import('@/views/cs/company-search/index'),
         meta: { title: '廠商搜尋', icon: '' }
+      },
+      {
+        path: 'people-search',
+        name: '代表人搜尋',
+        component: () => import('@/views/cs/people-search/index'),
+        meta: { title: '代表人搜尋', icon: '' }
       },
       {
         path: 'today',
