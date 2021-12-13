@@ -987,16 +987,9 @@ export default {
         'contractDownPayment':this.ruleForm.contractDownPayment,
         'contractType':this.ruleForm.contractType,
       }
-      this.$refs[validRuleForm].validate((valid) => {
-        if (valid) {
-          ref.set(contract).then(() => {
-            console.log('set data successful');
-            this.$message.success('新增合約成功');
-          });
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
+      ref.set(contract).then(() => {
+        console.log('set data successful');
+        this.$message.success('新增合約成功');
       });
     },
     refundDetailAdd(){
