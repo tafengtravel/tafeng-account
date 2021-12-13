@@ -972,6 +972,7 @@ export default {
     setContract(){
       let ref = db.collection('contract').doc(this.ruleForm.number);
       let contract = {
+        'number':this.ruleForm.number,
         'amount':this.ruleForm.amount,
         'people':this.ruleForm.people,
         'depDate':this.ruleForm.depDate,
