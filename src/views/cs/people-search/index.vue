@@ -99,16 +99,15 @@ export default {
       for(let j=0;j<monthLength;j++){
         console.log(startMonth)
         ref = db.collection(startMonth);
-        ref.where('people','==',this.people).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
+        ref.where('people','==',this.people).get().then(querySnapshot => { //資料編排改變後 客服需改變
 
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData[i] = {...doc.data(),'priceInsufficient':priceInsufficient}
-            i=i+1
+            this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 
-        }));
+        });
         startMonth = moment(startMonth).add(1,'months').format('YYYY-MM')
       }
       this.listLoading = false

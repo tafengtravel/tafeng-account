@@ -24,8 +24,8 @@
         <el-table-column prop="people" label="代表人" width='100%' sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
         <el-table-column prop="amount" label="人數" width='75%' sortable :sort-method = "(a,b)=>a.amount.localeCompare(b.amount)"></el-table-column>
         <el-table-column prop="createDate" label="報帳日期" width='100%'></el-table-column>
+        <el-table-column prop="profit" label="利潤" width='100%'></el-table-column>
         <el-table-column prop="priceDetailAdminCheck" label="主管核實" :formatter="adminCheck" width='80%' ></el-table-column>
-        <el-table-column prop="incomeDetailIncome[0]" label="收入" width='100%'></el-table-column>
         <el-table-column prop="incomeDetailOpCheck[0]" label="OP核實" :formatter="opCheck" width='80%' ></el-table-column>
         <el-table-column prop="" label="編輯" width='50%'>
           <template slot-scope="scope">
@@ -48,8 +48,8 @@
         <el-table-column prop="people" label="代表人" width='150%' sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
         <el-table-column prop="amount" label="人數" width='75%' sortable :sort-method = "(a,b)=>a.amount.localeCompare(b.amount)"></el-table-column>
         <el-table-column prop="createDate" label="報帳日期" width='100%'></el-table-column>
+        <el-table-column prop="profit" label="利潤" width='100%'></el-table-column>
         <el-table-column prop="priceDetailAdminCheck" label="主管核實" :formatter="adminCheck" width='80%' ></el-table-column>
-        <el-table-column prop="incomeDetailIncome[0]" label="收入" width='100%'></el-table-column>
         <el-table-column prop="incomeDetailOpCheck[0]" label="OP核實" :formatter="opCheck" width='80%' ></el-table-column>
         <el-table-column prop="" label="編輯" width='50%'>
           <template slot-scope="scope">
@@ -123,35 +123,31 @@ export default {
       let ref 
       let priceInsufficient = 0
       let month = moment(this.date).subtract(6, 'months').format('YYYY-MM')
-      
-
       this.itemData.length = 0
 
       for(let j=0;j<18;j++){
         ref = db.collection(month);
         console.log(month)
 
-        ref.where('createDate','==',this.date).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
+        ref.where('createDate','==',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
           
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData[i] = {...doc.data(),'priceInsufficient':priceInsufficient}
-            i=i+1
+            this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 
-        }));
+        });
 
-        ref.where('cancelDate','==',this.date).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
+        ref.where('cancelDate','==',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
           
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemDataCancel[i] = {...doc.data(),'priceInsufficient':priceInsufficient}
-            i=i+1
+            this.itemDataCancel.push({...doc.data(),'priceInsufficient':priceInsufficient})
           }); 
           this.itemDataCancel.reverse()
           this.itemDataCancel.reverse() 
-        }));
+        });
         month = moment(month).add(1,'months').format('YYYY-MM')
       }
 

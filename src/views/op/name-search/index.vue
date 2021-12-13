@@ -84,7 +84,7 @@ export default {
       this.incomeTotal = 0
       this.amountTotal = 0
 
-      ref.where('depDate','==',this.date).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
+      ref.where('depDate','==',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
         this.itemData.length = 0
         querySnapshot.forEach(doc => {  
           console.log(doc.data())
@@ -93,13 +93,12 @@ export default {
             this.incomeTotal = this.incomeTotal + parseInt(doc.data().income)
             this.amountTotal = this.amountTotal + parseInt(doc.data().amount)
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData[i] = {...doc.data(),'priceInsufficient':priceInsufficient}
-            i=i+1
+            this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
           }
         }); 
         this.itemData.reverse()
         this.itemData.reverse() 
-      }));
+      });
       this.listLoading = false
     },
     edit(row){

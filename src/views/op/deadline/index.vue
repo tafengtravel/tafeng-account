@@ -71,7 +71,7 @@ export default {
       }
       return '';
     },
-    async search() {
+    search() {
       this.listLoading = true
       let i = 0
       let ref 
@@ -83,7 +83,7 @@ export default {
         ref = db.collection(month);
         console.log(month)
 
-        await ref.where('payDetailDl1','array-contains',this.date).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
+        ref.where('payDetailDl1','array-contains',this.date).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
           querySnapshot.forEach(doc => {  
 
             for(let j=0;j<doc.data().payDetailDl1.length;j++){
@@ -108,12 +108,12 @@ export default {
           this.itemData.reverse() 
         }));
 
-        await ref.where('payDetailDl2','array-contains',this.date).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
+        ref.where('payDetailDl2','array-contains',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
           querySnapshot.forEach(doc => {  
 
             for(let j=0;j<doc.data().payDetailDl2.length;j++){
               if(doc.data().payDetailDl2[j] == this.date){
-                this.itemData[i] = {
+                this.itemData.push({
                   ...doc.data(),
                   'company':doc.data().payDetailCompany[j],
                   'item':doc.data().payDetailItem[j],
@@ -122,16 +122,14 @@ export default {
                   'dlpay1':doc.data().payDetailDlPay1[j],
                   'dl2':doc.data().payDetailDl2[j],
                   'dlpay2':doc.data().payDetailDlPay2[j],
-                }
-                console.log(this.itemData[i].number,this.itemData[i].pay)
-                i=i+1
+                })
               }
             }
             // console.log(doc.data().number)
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 
-        }));
+        });
 
         month = moment(month).add(1,'months').format('YYYY-MM')
       }

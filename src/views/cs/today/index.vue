@@ -129,26 +129,23 @@ export default {
         ref = db.collection(month);
         console.log(month)
 
-        ref.where('createDate','==',this.date).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
+        ref.where('createDate','==',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData[i] = {...doc.data(),'priceInsufficient':priceInsufficient}
-            i=i+1
+            this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 
-        }));
+        });
 
-        ref.where('cancelDate','==',this.date).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
-          
+        ref.where('cancelDate','==',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemDataCancel[i] = {...doc.data(),'priceInsufficient':priceInsufficient}
-            i=i+1
+            this.itemDataCancel.push({...doc.data(),'priceInsufficient':priceInsufficient})
           }); 
           this.itemDataCancel.reverse()
           this.itemDataCancel.reverse() 
-        }));
+        });
         month = moment(month).add(1,'months').format('YYYY-MM')
       }
 

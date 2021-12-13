@@ -101,7 +101,7 @@ export default {
       }
       return '';
     },
-    async search() {
+    search() {
       this.listLoading = true
       let i = 0
       let ref 
@@ -113,19 +113,19 @@ export default {
         ref = db.collection(month);
         console.log(month)
 
-        await ref.where('incomeDetailDate','array-contains',this.date).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
+        ref.where('incomeDetailDate','array-contains',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
           querySnapshot.forEach(doc => {  
 
             for(let j=0;j<doc.data().incomeDetailDate.length;j++){
               if(doc.data().incomeDetailDate[j] == this.date){
-                this.itemData[i] = {
+                this.itemData.push({
                   ...doc.data(),
                   'item':doc.data().incomeDetailItem[j],
                   'income':doc.data().incomeDetailIncome[j],
                   'incomeType':doc.data().incomeDetailType[j],
                   'opCheck':doc.data().incomeDetailOpCheck[j],
                   'adminCheck':doc.data().incomeDetailAdminCheck[j],
-                }
+                })
                 if(doc.data().incomeDetailType[j] == '匯款'){
                   this.transfer = this.transfer + parseInt(doc.data().incomeDetailIncome[j])
                 }else if(doc.data().incomeDetailType[j] == '刷卡'){
@@ -149,7 +149,7 @@ export default {
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 
-        }));
+        });
         month = moment(month).add(1,'months').format('YYYY-MM')
       }
       this.listLoading = false

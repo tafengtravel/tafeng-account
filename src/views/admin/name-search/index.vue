@@ -93,7 +93,7 @@ export default {
             this.incomeTotal = this.incomeTotal + parseInt(doc.data().income)
             this.amountTotal = this.amountTotal + parseInt(doc.data().amount)
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData[i] = {...doc.data(),'priceInsufficient':priceInsufficient}
+            this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
             i=i+1
           }
         }); 

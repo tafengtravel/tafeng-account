@@ -85,7 +85,7 @@ export default {
 
           for(let j=0;j<doc.data().payDetailCompany.length;j++){
             if(doc.data().payDetailCompany[j] == this.company){
-              this.itemData[i] = {
+              this.itemData.push({
                 ...doc.data(),
                 'count':i+1,
                 'payDetailCompany':doc.data().payDetailCompany[j],
@@ -95,7 +95,7 @@ export default {
                 'dlpay1':doc.data().payDetailDlPay1[j],
                 'dl2':doc.data().payDetailDl2[j],
                 'dlpay2':doc.data().payDetailDlPay2[j],
-              }
+              })
               console.log(this.itemData[i].number,this.itemData[i].pay)
               i=i+1
             }
