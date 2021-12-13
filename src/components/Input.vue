@@ -674,6 +674,9 @@ export default {
           }, {
             value: '馬祖',
             label: '馬祖'
+          }, {
+            value: '小琉球',
+            label: '小琉球'
           }]
         }, {
           label: '國旅',
