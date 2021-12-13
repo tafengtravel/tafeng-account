@@ -970,7 +970,34 @@ export default {
   },
   methods: {
     setContract(){
+      let ref = db.collection('contract').doc(this.ruleForm.number);
+      let contract = {
+        'amount':this.ruleForm.amount,
+        'people':this.ruleForm.people,
+        'depDate':this.ruleForm.depDate,
+        'endDate':this.ruleForm.endDate,
+        'contractOther':this.ruleForm.contractOther,
+        'year':moment().format('YYYY'),
+        'month':moment().format('MM'),
+        'day':moment().format('DD'),
+        'name':this.ruleForm.name,
+        'price':this.ruleForm.price,
+        'location':this.ruleForm.location,
+        'contractDownPayment':this.ruleForm.contractDownPayment,
+        'contractType':this.ruleForm.contractType,
+        }
 
+      this.$refs[validRuleForm].validate((valid) => {
+        if (valid) {
+          ref.set(contract).then(() => {
+            console.log('set data successful');
+            this.$message.success('新增合約成功');
+          });
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
     },
     refundDetailAdd(){
       this.ruleForm.refundDetailDate.push('');
