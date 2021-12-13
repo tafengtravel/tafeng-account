@@ -985,8 +985,7 @@ export default {
         'location':this.ruleForm.location,
         'contractDownPayment':this.ruleForm.contractDownPayment,
         'contractType':this.ruleForm.contractType,
-        }
-
+      }
       this.$refs[validRuleForm].validate((valid) => {
         if (valid) {
           ref.set(contract).then(() => {
@@ -1220,8 +1219,8 @@ export default {
       //利潤>9999 5%稅金
     },
     submit(validRuleForm){
-      this.ruleForm.recordAccount.push(this.email)
-      this.ruleForm.recordTime.push(moment().format('YYYY-MM-DD HH:mm'))
+      // this.ruleForm.recordAccount.push(this.email)
+      // this.ruleForm.recordTime.push(moment().format('YYYY-MM-DD HH:mm'))
 
       let ref = db.collection(moment(this.ruleForm.depDate).format('YYYY-MM')).doc(this.ruleForm.number);
       
