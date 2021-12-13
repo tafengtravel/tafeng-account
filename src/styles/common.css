@@ -80,4 +80,6 @@
 .el-row {
     margin-bottom: 10px;
 }
-
+.el-table {
+    color: black;
+}
