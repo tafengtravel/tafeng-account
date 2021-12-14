@@ -15,8 +15,9 @@
       <div class="sub_title"><font color="black">當日業績</font></div>
       <el-row></el-row>
       <el-row>
-        <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">人數：{{amountTotal}}</font></span>
-        <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">利潤：{{profitTotal}}</font></span>
+      <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">人數：{{amountTotal}}</font></span>
+      <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">營業額：{{priceTotal}}</font></span>
+      <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">利潤：{{profitTotal}}</font></span>
       </el-row>
       <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
         <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
@@ -91,6 +92,7 @@ export default {
       date:'',
       amountTotal:'',
       profitTotal:'',
+      priceTotal:''
     }
   },
   created() {
@@ -140,6 +142,7 @@ export default {
       this.itemData.length = 0
       this.amountTotal = 0
       this.profitTotal = 0
+      this.priceTotal = 0
 
       for(let j=0;j<18;j++){
         ref = db.collection(month);
@@ -150,11 +153,20 @@ export default {
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
             this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
-            this.amountTotal = parseInt(this.amountTotal) + parseInt(doc.data().amount)
-            if(doc.data().location != '跨年'&&doc.data().location != '團體報帳'&&doc.data().location != 'JOIN報帳'){
-              this.profitTotal = parseInt(this.profitTotal) + parseInt(doc.data().profit)
+            if(isNaN(parseFloat(doc.data().amount))){
+            }else{
+              this.amountTotal = parseFloat(this.amountTotal) + parseFloat(doc.data().amount)
             }
-
+            if(isNaN(parseFloat(doc.data().price))){
+            }else{
+              this.priceTotal = parseFloat(this.priceTotal) + parseFloat(doc.data().price)
+            }
+            if(doc.data().location != '跨年'&&doc.data().location != '團體報帳'&&doc.data().location != 'JOIN報帳'){
+              if(isNaN(parseFloat(doc.data().profit))){
+              }else{
+                this.profitTotal = parseFloat(this.profitTotal) + parseFloat(doc.data().profit)
+              }
+            }
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 

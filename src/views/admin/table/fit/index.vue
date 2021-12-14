@@ -2,6 +2,12 @@
   <div class="app-container">
     
     <TableOption @searchChildEvent="search" ref="child"></TableOption>
+    <el-row></el-row>
+    <el-row>
+      <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">人數：{{amountTotal}}</font></span>
+      <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">營業額：{{priceTotal}}</font></span>
+      <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">利潤：{{profitTotal}}</font></span>
+    </el-row>
     <div class ="el-col-24">
       <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
 
@@ -12,13 +18,14 @@
         <el-table-column prop="depDate" label="出發日期" width='120%' sortable :sort-method = "(a,b) =>a.depDate.localeCompare(b.depDate)"></el-table-column>
         <el-table-column prop="endDate" label="結束日期" width='120%' sortable :sort-method = "(a,b) =>a.endDate.localeCompare(b.endDate)"></el-table-column>
         <el-table-column prop="name" label="團名"  sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
-        <el-table-column prop="people" label="代表人" width='175%' sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
+        <el-table-column prop="people" label="代表人" sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
         <el-table-column prop="amount" label="人數" width='90%' sortable :sort-method = "(a,b)=>a.amount.localeCompare(b.amount)"></el-table-column>
         <el-table-column prop="phone" label="聯絡電話" width='125%' sortable :sort-method = "(a,b)=>{return a.phone - b.phone}"></el-table-column>
         <el-table-column prop="priceInsufficient" label="未收尾款" width='125%' sortable  :sort-method = "(a,b)=>{return a.priceInsufficient - b.priceInsufficient}"></el-table-column>
         <el-table-column prop="profit" label="利潤" width='100%' :formatter="profit" sortable :sort-method = "(a,b)=>{return a.profit - b.profit}"></el-table-column>
         <el-table-column prop="insurance1" label="旅責險" width='100%' :formatter="insurance" sortable :sort-method = "(a,b)=>{return a.insurance1 - b.insurance1}"></el-table-column>
         <el-table-column prop="other" label="備註" sortable :sort-method = "(a,b)=>a.other.localeCompare(b.other)"></el-table-column>
+        <el-table-column prop="location" label="地點" width='100%' sortable :sort-method = "(a,b)=>a.location.localeCompare(b.location)"></el-table-column>
         <el-table-column prop="" label="編輯" width='60%'>
           <template slot-scope="scope">
             <el-button @click="edit(scope.row)" type="text" >編輯</el-button>
@@ -51,7 +58,9 @@ export default {
       listLoading: false,
       itemData:[],
       month:'',
-      
+      amountTotal:'',
+      profitTotal:'',
+      priceTotal:'',
     }
   },
   created() {
@@ -90,14 +99,30 @@ export default {
       let i = 0
       let ref = db.collection(e.month.toString());
       let priceInsufficient = 0
+      this.amountTotal = 0
+      this.profitTotal = 0
+      this.priceTotal = 0
 
       if (e.cs == 'all'){
         ref.onSnapshot((querySnapshot => {
           this.itemData.length = 0
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData[i] = {...doc.data(),'priceInsufficient':priceInsufficient}
-            i=i+1
+            this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
+            if(isNaN(parseFloat(doc.data().amount))){
+            }else{
+              this.amountTotal = parseFloat(this.amountTotal) + parseFloat(doc.data().amount)
+            }
+            if(isNaN(parseFloat(doc.data().price))){
+            }else{
+              this.priceTotal = parseFloat(this.priceTotal) + parseFloat(doc.data().price)
+            }
+            if(doc.data().location != '跨年'&&doc.data().location != '團體報帳'&&doc.data().location != 'JOIN報帳'){
+              if(isNaN(parseFloat(doc.data().profit))){
+              }else{
+                this.profitTotal = parseFloat(this.profitTotal) + parseFloat(doc.data().profit)
+              }
+            }
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 
@@ -107,8 +132,21 @@ export default {
           this.itemData.length = 0
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData[i] = {...doc.data(),'priceInsufficient':priceInsufficient}
-            i=i+1
+            this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
+            if(isNaN(parseFloat(doc.data().amount))){
+            }else{
+              this.amountTotal = parseFloat(this.amountTotal) + parseFloat(doc.data().amount)
+            }
+            if(isNaN(parseFloat(doc.data().price))){
+            }else{
+              this.priceTotal = parseFloat(this.priceTotal) + parseFloat(doc.data().price)
+            }
+            if(doc.data().location != '跨年'&&doc.data().location != '團體報帳'&&doc.data().location != 'JOIN報帳'){
+              if(isNaN(parseFloat(doc.data().profit))){
+              }else{
+                this.profitTotal = parseFloat(this.profitTotal) + parseFloat(doc.data().profit)
+              }
+            }
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 
