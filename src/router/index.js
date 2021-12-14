@@ -539,6 +539,13 @@ export const adminRoutes = [
         component: () => import('@/views/admin/deadline/index'),
         meta: { title: '當日DL', icon: '' }
       }
+      ,
+      {
+        path: 'type-search',
+        name: '類型搜索',
+        component: () => import('@/views/admin/type-search/index'),
+        meta: { title: '類型搜索', icon: '' }
+      }
     ]
   },
   

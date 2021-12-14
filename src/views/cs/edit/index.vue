@@ -1,6 +1,6 @@
 <template>
-  <div class="app-container">
-    <Input @readChildEvent="readParentEvent" ref="child"></Input>
+  <div class="app-container" style="background-color:#fbf2e6">
+    <Input @readChildEvent="readParentEvent" ref="child" ></Input>
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="app-container" style="background-color:#fbf2e6">
     <InputGroup @readChildEvent="readParentEvent" ref="child"></InputGroup>
   </div>
 </template>
