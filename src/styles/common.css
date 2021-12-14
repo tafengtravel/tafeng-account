@@ -89,3 +89,14 @@
 .el-table thead {
     color: black;
 }
+.el-table {
+    font-size: 16px;
+}
+.el-input__inner {
+    color: black;
+    font-size: 18px;
+}
+.el-textarea__inner {
+    color: black;
+    font-size: 18px;
+}
