@@ -12,7 +12,12 @@
     <el-button type="primary" @click="search">搜尋</el-button>
     <el-row></el-row>
     <div class ="el-col-24">
-      <div style="font-size: 20px;color:black;">當日業績</div>
+      <div class="sub_title"><font color="black">當日業績</font></div>
+      <el-row></el-row>
+      <el-row>
+        <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">人數：{{amountTotal}}</font></span>
+        <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">利潤：{{profitTotal}}</font></span>
+      </el-row>
       <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
         <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
         <el-table-column prop="number" label="團號" width='140%' sortable :sort-method = "(a,b)=>a.number.localeCompare(b.number)"></el-table-column>
@@ -24,8 +29,8 @@
         <el-table-column prop="people" label="代表人" width='175%' sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
         <el-table-column prop="amount" label="人數" width='90%' sortable :sort-method = "(a,b)=>a.amount.localeCompare(b.amount)"></el-table-column>
         <el-table-column prop="createDate" label="報帳日期" width='120%'></el-table-column>
+        <el-table-column prop="profit" label="利潤" width='100%' :formatter="profitCheck"></el-table-column>
         <el-table-column prop="priceDetailAdminCheck" label="主管核實" width='100%' :formatter="adminCheck"></el-table-column>
-        <el-table-column prop="incomeDetailIncome[0]" label="收入" width='100%'></el-table-column>
         <el-table-column prop="incomeDetailOpCheck[0]" label="OP核實" width='100%' :formatter="opCheck"></el-table-column>
         <el-table-column prop="" label="編輯" width='60%'>
           <template slot-scope="scope">
@@ -36,7 +41,7 @@
 
       <el-row></el-row>
 
-      <div style="font-size: 20px;color:black;">退業績</div>
+      <div class="sub_title">退業績</div>
       <el-table v-loading="listLoading" :data="itemDataCancel" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
         <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
         <el-table-column prop="number" label="團號" width='140%' sortable :sort-method = "(a,b)=>a.number.localeCompare(b.number)"></el-table-column>
@@ -84,12 +89,21 @@ export default {
       itemData:[],
       itemDataCancel:[],
       date:'',
+      amountTotal:'',
+      profitTotal:'',
     }
   },
   created() {
     
   },
   methods: {
+    profitCheck(row){
+      if(row.location != '跨年'&&row.location != '團體報帳'&&row.location != 'JOIN報帳'){
+        return row.profit
+      }else{
+        return '0'
+      }
+    },
     adminCheck(row, column){
       if(row.priceDetailAdminCheck){
         return '✔️'
@@ -124,6 +138,8 @@ export default {
       let priceInsufficient = 0
       let month = moment(this.date).subtract(6, 'months').format('YYYY-MM')
       this.itemData.length = 0
+      this.amountTotal = 0
+      this.profitTotal = 0
 
       for(let j=0;j<18;j++){
         ref = db.collection(month);
@@ -134,6 +150,11 @@ export default {
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
             this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
+            this.amountTotal = parseInt(this.amountTotal) + parseInt(doc.data().amount)
+            if(doc.data().location != '跨年'&&doc.data().location != '團體報帳'&&doc.data().location != 'JOIN報帳'){
+              this.profitTotal = parseInt(this.profitTotal) + parseInt(doc.data().profit)
+            }
+
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 
