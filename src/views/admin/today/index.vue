@@ -41,7 +41,7 @@
 
       <el-row></el-row>
 
-      <div class="sub_title">退業績</div>
+      <div class="sub_title"><font color="black">退業績</font></div>
       <el-table v-loading="listLoading" :data="itemDataCancel" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
         <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
         <el-table-column prop="number" label="團號" width='140%' sortable :sort-method = "(a,b)=>a.number.localeCompare(b.number)"></el-table-column>
