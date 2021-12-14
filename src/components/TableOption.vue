@@ -1,11 +1,11 @@
 <template>
-  <div class="app-container">
+  <div>
       
       <el-date-picker
         v-model="month"
         type="month"
         placeholder="選擇月份"
-        style="width:120px"
+        style="width:150px"
         value-format="yyyy-MM">
       </el-date-picker>
       <el-select v-model="cs" placeholder="請選擇客服" style="width:100px">

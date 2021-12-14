@@ -7,7 +7,7 @@
         </el-row>
         <el-card class="box-card">
           <el-form-item label="團號" prop="number" label-width="85px">
-            <span class="form-font-xl" v-if="(ruleForm.lock||readNumber)&&!adminShow">{{ruleForm.number}}</span>
+            <span class="form-font-xl" v-if="(ruleForm.lock||readNumber)&&!adminShow" style="width:255px">{{ruleForm.number}}</span>
             <el-input v-model="ruleForm.number" v-else :disabled="readNumber"></el-input>
           </el-form-item>            
           <el-form-item label="團名" prop="name">
