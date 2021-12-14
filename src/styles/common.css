@@ -86,3 +86,6 @@
 .el-form-item__label {
     font-size: 18px;
 }
+.el-table thead {
+    color: black;
+}
