@@ -11,7 +11,7 @@
     }
     .font{
         font-family: Microsoft JhengHei;
-        color:#666;
+        color:#404040;
         font-size: 20px;
         font-weight:bold;
     }
@@ -51,7 +51,7 @@
     }
     .font{
         font-family: Microsoft JhengHei;
-        color:#666;
+        color:#404040;
         font-size: 16px;
         font-weight:bold;
     }
@@ -81,25 +81,46 @@
     margin-bottom: 10px;
 }
 .el-table {
-    color: black;
+    color: #404040;
 }
 .el-form-item__label {
     font-size: 18px;
 }
 .el-table thead {
-    color: black;
+    color: #404040;
 }
 .el-table {
     font-size: 18px;
 }
 .el-input__inner {
-    color: black;
+    color: #404040;
     font-size: 18px;
 }
 .el-textarea__inner {
-    color: black;
+    color: #404040;
     font-size: 18px;
 }
 .el-date-editor .el-range-input, .el-date-editor .el-range-separator {
     font-size: 18px;
+}
+.el-form-item__label {
+    color: #404040;
+}
+.form-font-xl{
+    width: 205px; 
+    display: inline-block;
+    font-size: 20px;
+    color:#404040;
+}
+.form-font-md{
+    width: 170px; 
+    display: inline-block;
+    font-size: 20px;
+    color:#404040;
+}
+.form-font-sm{
+    width: 110px; 
+    display: inline-block;
+    font-size: 20px;
+    color:#404040;
 }

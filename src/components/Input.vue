@@ -1262,24 +1262,6 @@ export default {
 .app-container {
   padding: 7px;
 }
-.form-font-xl{
-  width: 205px; 
-  display: inline-block;
-  font-size: 20px;
-  color:#606266;
-}
-.form-font-md{
-  width: 170px; 
-  display: inline-block;
-  font-size: 20px;
-  color:#606266;
-}
-.form-font-sm{
-  width: 110px; 
-  display: inline-block;
-  font-size: 20px;
-  color:#606266;
-}
 </style>
 
 
