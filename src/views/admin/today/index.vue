@@ -12,7 +12,7 @@
     <el-button type="primary" @click="search">搜尋</el-button>
     <el-row></el-row>
     <div class ="el-col-24">
-      <div class="sub_title"><font color="black">當日業績</font></div>
+      <div class="sub_title">當日業績</div>
       <el-row></el-row>
       <el-row>
       <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">人數：{{amountTotal}}</font></span>
@@ -42,7 +42,7 @@
 
       <el-row></el-row>
 
-      <div class="sub_title"><font color="black">退業績</font></div>
+      <div class="sub_title">退業績</div>
       <el-table v-loading="listLoading" :data="itemDataCancel" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
         <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
         <el-table-column prop="number" label="團號" width='140%' sortable :sort-method = "(a,b)=>a.number.localeCompare(b.number)"></el-table-column>
