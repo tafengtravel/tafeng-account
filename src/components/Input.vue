@@ -949,9 +949,6 @@ export default {
           amount:[
               { required: true, message: '必填', trigger: 'blur'},
           ],
-          phone:[
-              { required: true, message: '必填', trigger: 'blur'},
-          ],
           depDate:[
               { required: true, message: '必填', trigger: 'blur'},
           ],
