@@ -32,7 +32,7 @@
           <template slot-scope="scope">
             <el-button @click="edit(scope.row)" type="text" >編輯</el-button>
           </template>
-        </el-table-column>
+        </el-table-column> 
         
       </el-table>
       <el-row>
