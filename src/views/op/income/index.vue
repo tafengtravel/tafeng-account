@@ -103,7 +103,6 @@ export default {
     },
     search() {
       this.listLoading = true
-      let i = 0
       let ref 
       let priceInsufficient = 0
       let month = moment(this.date).subtract(12, 'months').format('YYYY-MM')
@@ -141,8 +140,6 @@ export default {
                 }else if(doc.data().incomeDetailType[j] == 'LINEPAY'){
                   this.linepay = this.transfer + parseInt(doc.data().linepay[j])
                 }
-                
-                i=i+1
               }
             }
             // console.log(doc.data().number)

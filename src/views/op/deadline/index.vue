@@ -88,7 +88,7 @@ export default {
 
             for(let j=0;j<doc.data().payDetailDl1.length;j++){
               if(doc.data().payDetailDl1[j] == this.date){
-                this.itemData[i] = {
+                this.itemData.push({
                   ...doc.data(),
                   'company':doc.data().payDetailCompany[j],
                   'item':doc.data().payDetailItem[j],
@@ -97,9 +97,7 @@ export default {
                   'dlpay1':doc.data().payDetailDlPay1[j],
                   'dl2':doc.data().payDetailDl2[j],
                   'dlpay2':doc.data().payDetailDlPay2[j],
-                }
-                console.log(this.itemData[i].number,this.itemData[i].pay)
-                i=i+1
+                })
               }
             }
             // console.log(doc.data().number)
