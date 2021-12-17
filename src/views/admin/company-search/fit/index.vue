@@ -35,6 +35,9 @@
         </el-table-column>
         
       </el-table>
+      <el-row>
+        <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">總支出：{{payTotal}}</font></span>
+      </el-row>
     </div>
   </div>
 </template>
@@ -58,7 +61,7 @@ export default {
       itemData:[],
       month:'',
       company:'',
-      
+      payTotal:0,
     }
   },
   created() {
@@ -80,6 +83,7 @@ export default {
 
       ref.where('payDetailCompany','array-contains',this.company).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
         this.itemData.length = 0
+        this.payTotal = 0
         querySnapshot.forEach(doc => {  
 
           for(let j=0;j<doc.data().payDetailCompany.length;j++){
@@ -94,9 +98,9 @@ export default {
                 'dl2':doc.data().payDetailDl2[j],
                 'dlpay2':doc.data().payDetailDlPay2[j],
               })
+              this.payTotal = parseInt(doc.data().payDetailPay[j]) + this.payTotal
             }
           }
-          // console.log(doc.data().number)
         }); 
         this.itemData.reverse()
         this.itemData.reverse() 
