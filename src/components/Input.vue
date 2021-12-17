@@ -1167,23 +1167,36 @@ export default {
       let refundTotal = 0
       for(let i=0;i<this.ruleForm.priceDetailTotalPrice.length;i++){
         this.ruleForm.priceDetailTotalPrice[i] = parseFloat(this.ruleForm.priceDetailPrice[i]) * parseFloat(this.ruleForm.priceDetailAmount[i])
+        if(isNaN(this.ruleForm.priceDetailTotalPrice[i])){
+          this.ruleForm.priceDetailTotalPrice[i] = 0
+        }
         this.ruleForm.price = parseFloat(this.ruleForm.price) + parseFloat(this.ruleForm.priceDetailTotalPrice[i])
       }
-      for(let i=0;i<this.ruleForm.extraDetailItem.length;i++){
+      for(let i=0;i<this.ruleForm.extraDetailTotalPrice.length;i++){
         this.ruleForm.extraDetailTotalPrice[i] = parseFloat(this.ruleForm.extraDetailAmount[i]) * parseFloat(this.ruleForm.extraDetailPrice[i]) * parseFloat(this.ruleForm.extraDetailDays[i])
+        if(isNaN(this.ruleForm.extraDetailTotalPrice[i])){
+          this.ruleForm.extraDetailTotalPrice[i] = 0
+        }
         this.ruleForm.price = parseFloat(this.ruleForm.price) + parseFloat(this.ruleForm.extraDetailTotalPrice[i])
       }
+      //總退款
       for(let i=0;i<this.ruleForm.refundDetailRefund.length;i++){
-        refundTotal = parseFloat(this.ruleForm.refundDetailRefund[i]) + parseFloat(refundTotal)
+        if(!(isNaN(this.ruleForm.refundDetailRefund[i])||this.ruleForm.refundDetailRefund[i] == '')){
+          refundTotal = parseFloat(this.ruleForm.refundDetailRefund[i]) + parseFloat(refundTotal)
+        }
       }
+      //總收入
       for(let i=0;i<this.ruleForm.incomeDetailIncome.length;i++){
         if(this.ruleForm.incomeDetailType[i] == '刷卡'){
           cardTotal = cardTotal + parseFloat(this.ruleForm.incomeDetailIncome[i])*0.02
         }else if(this.ruleForm.incomeDetailType[i] == 'LINEPAY'){
           linepayTotal = linepayTotal + parseFloat(this.ruleForm.incomeDetailIncome[i])*0.0231
         }
-        this.ruleForm.income = parseFloat(this.ruleForm.incomeDetailIncome[i]) + parseFloat(this.ruleForm.income)
+        if(!(isNaN(this.ruleForm.incomeDetailIncome[i])||this.ruleForm.incomeDetailIncome[i] == '')){
+          this.ruleForm.income = parseFloat(this.ruleForm.incomeDetailIncome[i]) + parseFloat(this.ruleForm.income)
+        }
       }
+      //總支出
       for(let i=0;i<this.ruleForm.payDetailPay.length;i++){
         if(this.ruleForm.payDetailFee1[i]){
           this.ruleForm.net = parseFloat(this.ruleForm.net) + 15
@@ -1191,15 +1204,23 @@ export default {
         if(this.ruleForm.payDetailFee2[i]){
           this.ruleForm.net = parseFloat(this.ruleForm.net) + 15
         }
-        this.ruleForm.net = parseFloat(this.ruleForm.payDetailPay[i]) + parseFloat(this.ruleForm.net)
+        if(!(isNaN(this.ruleForm.payDetailPay[i])||this.ruleForm.payDetailPay[i] == '')){
+          this.ruleForm.net = parseFloat(this.ruleForm.payDetailPay[i]) + parseFloat(this.ruleForm.net)
+        }
       }
       //保險計算
       if(this.ruleForm.insurance1){
         this.ruleForm.insuranceTotalPrice1 = parseFloat(this.ruleForm.insurancePrice1)*parseFloat(this.ruleForm.insuranceDays1)*parseFloat(this.ruleForm.insuranceAmount1)
+        if(isNaN(this.ruleForm.insuranceTotalPrice1)){
+          this.ruleForm.insuranceTotalPrice1 = 0
+        }
         this.ruleForm.insuranceTotalPrice1 = parseFloat((this.ruleForm.insuranceTotalPrice1).toFixed(1))
       }
       if(this.ruleForm.insurance2){
         this.ruleForm.insuranceTotalPrice2 = parseFloat(this.ruleForm.insurancePrice2)*parseFloat(this.ruleForm.insuranceDays2)*parseFloat(this.ruleForm.insuranceAmount2)
+        if(isNaN(this.ruleForm.insuranceTotalPrice2)){
+          this.ruleForm.insuranceTotalPrice2 = 0
+        }
         this.ruleForm.insuranceTotalPrice2 = parseFloat((this.ruleForm.insuranceTotalPrice2).toFixed(1))
       }
       this.ruleForm.income = this.ruleForm.income - refundTotal 
