@@ -138,14 +138,14 @@ export default {
       let i = 0
       let ref 
       let priceInsufficient = 0
-      let month = moment(this.date).subtract(6, 'months').format('YYYY-MM')
+      let month = moment(this.date).subtract(12, 'months').format('YYYY-MM')
       this.itemData.length = 0
       this.itemDataCancel.length = 0
       this.amountTotal = 0
       this.profitTotal = 0
       this.priceTotal = 0
 
-      for(let j=0;j<18;j++){
+      for(let j=0;j<24;j++){
         ref = db.collection(month);
         console.log(month)
 

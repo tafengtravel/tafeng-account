@@ -108,6 +108,14 @@ export default {
       let month = moment(this.date).subtract(12, 'months').format('YYYY-MM')
       this.itemData.length = 0
 
+      this.transfer = 0
+      this.card = 0
+      this.cash = 0
+      this.check = 0
+      this.other = 0
+      this.coupon = 0
+      this.linepay = 0
+
       for(let k=0;k<24;k++){
         ref = db.collection(month);
         console.log(month)
@@ -138,7 +146,7 @@ export default {
                 }else if(doc.data().incomeDetailType[j] == '三倍券'){
                   this.coupon = this.coupon + parseInt(doc.data().incomeDetailIncome[j])
                 }else if(doc.data().incomeDetailType[j] == 'LINEPAY'){
-                  this.linepay = this.transfer + parseInt(doc.data().linepay[j])
+                  this.linepay = this.transfer + parseInt(doc.data().incomeDetailIncome[j])
                 }
                 
               }
