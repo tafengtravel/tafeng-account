@@ -107,7 +107,7 @@ export default {
 
       let route = this.$router.resolve({
         path: '/admin/edit/fit',
-        query: { number:row.number,depDate:this.month }
+        query: { number:row.number,depDate:moment(this.date).format('YYYY-MM') }
       })
       window.open(route.href, '_blank');
     }
