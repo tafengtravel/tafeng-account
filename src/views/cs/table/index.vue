@@ -78,7 +78,6 @@ export default {
     },
     search(e) {
       this.listLoading = true
-      let i = 0
       let ref = db.collection(e.month.toString());
       let priceInsufficient = 0
 
@@ -87,26 +86,25 @@ export default {
           this.itemData.length = 0
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData[i] = {...doc.data(),'count':i+1,'priceInsufficient':priceInsufficient}
-            i=i+1
+            this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 
+          this.listLoading = false
         }));
       }else{
         ref.where('cs','==',e.cs).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
           this.itemData.length = 0
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData[i] = {...doc.data(),'count':i+1,'priceInsufficient':priceInsufficient}
-            i=i+1
+            this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 
+          this.listLoading = false
         }));
       }
-      
-      this.listLoading = false
+
     },
     edit(row){
       console.log(row)

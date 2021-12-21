@@ -126,6 +126,7 @@ export default {
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 
+          this.listLoading = false
         }));
       }else{
         ref.where('cs','==',e.cs).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
@@ -150,10 +151,9 @@ export default {
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 
+          this.listLoading = false
         }));
       }
-      
-      this.listLoading = false
     },
     edit(row){
       console.log(row)
