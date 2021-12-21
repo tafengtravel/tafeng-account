@@ -1138,6 +1138,7 @@ export default {
       this.ruleForm.payDetailDlProve1.push('');
       this.ruleForm.payDetailDlOpCheck1.push(false);
       this.ruleForm.payDetailDlAdminCheck1.push(false);
+      this.ruleForm.payDetailFee1.push(false);
 
       this.ruleForm.payDetailDl2.push('');
       this.ruleForm.payDetailDlPayDate2.push('');
@@ -1146,6 +1147,7 @@ export default {
       this.ruleForm.payDetailDlProve2.push('');
       this.ruleForm.payDetailDlOpCheck2.push(false);
       this.ruleForm.payDetailDlAdminCheck2.push(false);
+      this.ruleForm.payDetailFee2.push(false);
     },
     payDetailRemove(){
       if(this.ruleForm.payDetailOpCheck[this.ruleForm.payDetailOpCheck.length-1]
