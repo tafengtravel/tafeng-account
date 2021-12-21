@@ -548,6 +548,40 @@ export const adminRoutes = [
       }
     ]
   },
+  {
+    path: '/backup',
+    component: Layout,
+    redirect: '/backup/index',
+    name: '備份與還原',
+    beforeEnter: (to, from, next) => {
+      firebaseApp.auth().onAuthStateChanged(user=>{
+        if (user) {
+          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2') {
+            next();
+          }else{
+            next('/404')
+          }
+        }else{
+          next('/login')
+        }
+      });
+    },
+    meta: {title: '備份與還原', icon: 'backup'},
+    children: [
+      {
+        path: 'backup',
+        name: '備份',
+        component: () => import('@/views/backup/backup/index'),
+        meta: { title: '備份', icon: '' }
+      },
+      {
+        path: 'recover',
+        name: '還原',
+        component: () => import('@/views/backup/recover/index'),
+        meta: { title: '還原', icon: '' }
+      },
+    ]
+  },
   
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

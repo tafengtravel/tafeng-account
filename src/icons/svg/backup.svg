@@ -1,0 +1,11 @@
+<svg width="128" height="128" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>background</title>
+  <rect x="-1" y="-1" width="130" height="130" id="canvas_background" fill="none"/>
+ </g>
+
+ <g>
+  <title>Layer 1</title>
+  <text style="cursor: move;" fill="#ffffff" stroke="#ffffff" stroke-width="0" stroke-opacity="0" x="3.743599" y="106.120848" id="svg_3" font-size="120" font-family="Helvetica, Arial, sans-serif" text-anchor="start" xml:space="preserve" font-weight="bold">備</text>
+ </g>
+</svg>
