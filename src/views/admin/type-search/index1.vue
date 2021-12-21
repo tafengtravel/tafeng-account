@@ -66,44 +66,40 @@ export default {
       }
       return '';
     },
-    async search() {
+    search() {
       this.listLoading = true
       let i = 0
       let ref = db.collection(this.month);
       let priceInsufficient = 0
-      let itemData = []
-      let length = 0
-      let fee1Length = 0
-      let fee2Length = 0
+      let total = 0
+      let thirdTotal = 0
+      let forthTotal = 0
+      // payDetailCompany
 
-      await ref.get().then((querySnapshot => { //資料編排改變後 客服需改變
+      ref.where('location','==','跨年').onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
         this.itemData.length = 0
         querySnapshot.forEach(doc => {  
+          if(doc.data().createDate > '2020-12-14'){
+            if(doc.data().name.substring(0,7) == '跨年阿里山台北'){
+              total = total + parseInt(doc.data().amount)
+              this.itemData.push(doc.data())
+            }
+            if(doc.data().name.substring(0,9) == '跨年阿里山台北三排'){
+              thirdTotal = thirdTotal + parseInt(doc.data().amount)
+            }
+            if(doc.data().name.substring(0,9) == '跨年阿里山台北四排'){
+              forthTotal = forthTotal + parseInt(doc.data().amount)
+            }
 
-          itemData.push({...doc.data()})
-
-          length = doc.data().payDetailCompany.length
-          fee1Length = doc.data().payDetailFee1.length
-          fee2Length = doc.data().payDetailFee2.length
-
-          for(let j=0;j<length-fee1Length;j++){
-            itemData[i].payDetailFee1.push(false)
           }
-          for(let j=0;j<length-fee2Length;j++){
-            itemData[i].payDetailFee2.push(false)
-          }
-          console.log(itemData[i])
-          i=i+1
+          // console.log(doc.data().number)
         }); 
-  
+        this.itemData.reverse()
+        this.itemData.reverse() 
+        console.log(total,thirdTotal,forthTotal)
       }));
 
-      for(let j=0;j<itemData.length;j++){
-        ref = db.collection(this.month).doc(itemData[j].number);
-        ref.update(itemData[j]).then(() => {
-          console.log('set data successful');
-        });
-      }
+      
       this.listLoading = false
     },
     edit(row){
