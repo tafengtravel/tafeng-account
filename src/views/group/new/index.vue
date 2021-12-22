@@ -11,7 +11,6 @@ import '@/styles/common.css'
 import * as moment from "moment/moment";
 import InputGroup from '@/components/InputGroup.vue'
 
-
 export default {
   name: 'new',
   components: {
@@ -100,8 +99,6 @@ export default {
     this.$refs.child.opShow = false
     this.$refs.child.readNumber = true
     this.$refs.child.createDateDisable = 0 //報帳日期不上鎖
-    
-    // this.email = firebaseApp.auth().currentUser.email
   }
   
 }

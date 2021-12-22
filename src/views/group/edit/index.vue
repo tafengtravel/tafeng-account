@@ -11,7 +11,6 @@ import '@/styles/common.css'
 import * as moment from "moment/moment";
 import InputGroup from '@/components/InputGroup.vue'
 
-
 export default {
   name: 'new',
   components: {
@@ -55,9 +54,8 @@ export default {
       this.$refs.child.ruleForm.number = this.$route.query.number
       this.readParentEvent()
     }
-    
   }
-  
+
 }
 </script>
 
