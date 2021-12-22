@@ -541,10 +541,23 @@ export const adminRoutes = [
       }
       ,
       {
-        path: 'type-search',
-        name: '類型搜索',
-        component: () => import('@/views/admin/type-search/index'),
-        meta: { title: '類型搜索', icon: '' }
+        beforeEnter: (to, from, next) => {
+          firebaseApp.auth().onAuthStateChanged(user=>{
+            if (user) {
+              if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83') {
+                next();
+              }else{
+                next('/404')
+              }
+            }else{
+              next('/login')
+            }
+          });
+        },
+        path: 'other',
+        name: '雜項',
+        component: () => import('@/views/admin/other/index'),
+        meta: { title: '雜項', icon: '' }
       }
     ]
   },
@@ -556,7 +569,7 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2') {
+          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83') {
             next();
           }else{
             next('/404')
