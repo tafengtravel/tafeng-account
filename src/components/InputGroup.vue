@@ -669,7 +669,6 @@
               <el-option label="是" :value= true ></el-option>
             </el-select>
           </el-form-item>
-          <el-button @click="count">試算</el-button>
           <el-button type="primary" v-if="submitShow" @click="submit('ruleForm')">提交</el-button>
         </el-form-item>
       </el-form>
