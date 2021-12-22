@@ -278,7 +278,7 @@
               <el-input v-model="ruleForm.incomeDetailOther[index]" v-else></el-input>
             </el-form-item> 
             <el-form-item label="OP核實" class="op">
-              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.incomeDetailOpCheck[index]||ruleForm.incomeDetailAdminCheck[index]||!opShow)&&!adminShow">{{ruleForm.incomeDetailOpCheck[index]}}</span>
+              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.incomeDetailOpCheck[index]||ruleForm.incomeDetailAdminCheck[index])&&!opShow&&!adminShow">{{ruleForm.incomeDetailOpCheck[index]}}</span>
               <el-select v-model="ruleForm.incomeDetailOpCheck[index]" v-else placeholder="OP核實" style="width: 110px;">
                 <el-option label="否" :value= false></el-option>
                 <el-option label="是" :value= true></el-option>
@@ -352,7 +352,7 @@
               <el-input v-model="ruleForm.payDetailProve[index]" v-else></el-input>
             </el-form-item>
             <el-form-item label="OP核實" class="op">
-              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index]||!opShow)&&!adminShow">{{ruleForm.payDetailOpCheck[index]}}</span>
+              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!opShow&&!adminShow">{{ruleForm.payDetailOpCheck[index]}}</span>
               <el-select v-model="ruleForm.payDetailOpCheck[index]" v-else placeholder="OP核實" style="width: 110px;">
                 <el-option label="否" :value= false></el-option>
                 <el-option label="是" :value= true></el-option>
@@ -408,7 +408,7 @@
               <el-input v-model="ruleForm.payDetailDlProve1[index]" @input="count" v-else style="width: 110px;"></el-input>
             </el-form-item>
             <el-form-item label="OP核實" class="op">
-              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck1[index]||ruleForm.payDetailDlAdminCheck1[index]||!opShow)&&!adminShow">{{ruleForm.payDetailDlOpCheck1[index]}}</span>
+              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck1[index]||ruleForm.payDetailDlAdminCheck1[index])&&!opShow&&!adminShow">{{ruleForm.payDetailDlOpCheck1[index]}}</span>
               <el-select v-model="ruleForm.payDetailDlOpCheck1[index]" placeholder="OP核實" v-else style="width: 110px;">
                 <el-option label="否" :value= false></el-option>
                 <el-option label="是" :value= true></el-option>
@@ -457,7 +457,7 @@
               <el-input v-model="ruleForm.payDetailDlProve2[index]" v-else style="width: 110px;"></el-input>
             </el-form-item>
             <el-form-item label="OP核實" class="op">
-              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck2[index]||ruleForm.payDetailDlAdminCheck2[index]||!opShow)&&!adminShow">{{ruleForm.payDetailDlOpCheck2[index]}}</span>
+              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck2[index]||ruleForm.payDetailDlAdminCheck2[index])&&!opShow&&!adminShow">{{ruleForm.payDetailDlOpCheck2[index]}}</span>
               <el-select v-model="ruleForm.payDetailDlOpCheck2[index]" placeholder="OP核實" v-else style="width: 110px;">
                 <el-option label="否" :value= false></el-option>
                 <el-option label="是" :value= true></el-option>
@@ -504,7 +504,7 @@
             <span class="form-font-sm">{{ruleForm.insuranceTotalPrice1}}</span>
           </el-form-item> 
           <el-form-item label="OP核實" class="op">
-            <span class="form-font-sm" v-if="(ruleForm.insuranceOpCheck1||ruleForm.insuranceAdminCheck1||ruleForm.lock||!opShow)&&!adminShow">{{ruleForm.insuranceOpCheck1}}</span>
+            <span class="form-font-sm" v-if="(ruleForm.insuranceOpCheck1||ruleForm.insuranceAdminCheck1||ruleForm.lock)&&!opShow&&!adminShow">{{ruleForm.insuranceOpCheck1}}</span>
             <el-select v-model="ruleForm.insuranceOpCheck1" placeholder="OP核實" v-else style="width: 110px;">
               <el-option label="否" :value= false></el-option>
               <el-option label="是" :value= true></el-option>
@@ -542,7 +542,7 @@
             <span class="form-font-sm">{{ruleForm.insuranceTotalPrice2}}</span>
           </el-form-item> 
           <el-form-item label="OP核實" class="op">
-            <span class="form-font-sm" v-if="(ruleForm.insuranceOpCheck2||ruleForm.insuranceAdminCheck2||ruleForm.lock||!opShow)&&!adminShow">{{ruleForm.insuranceOpCheck2}}</span>
+            <span class="form-font-sm" v-if="(ruleForm.insuranceOpCheck2||ruleForm.insuranceAdminCheck2||ruleForm.lock)&&!opShow&&!adminShow">{{ruleForm.insuranceOpCheck2}}</span>
             <el-select v-model="ruleForm.insuranceOpCheck2" placeholder="OP核實" style="width: 110px;" v-else>
               <el-option label="否" :value= false></el-option>
               <el-option label="是" :value= true></el-option>
@@ -605,7 +605,7 @@
               <el-input v-model="ruleForm.refundDetailOther[index]" v-else></el-input>
             </el-form-item> 
             <el-form-item label="OP核實" class="op">
-              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.refundDetailOpCheck[index]||ruleForm.refundDetailAdminCheck[index]||!opShow)&&!adminShow">{{ruleForm.refundDetailOpCheck[index]}}</span>
+              <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.refundDetailOpCheck[index]||ruleForm.refundDetailAdminCheck[index])&&!opShow&&!adminShow">{{ruleForm.refundDetailOpCheck[index]}}</span>
               <el-select v-model="ruleForm.refundDetailOpCheck[index]" v-else placeholder="OP核實" style="width: 110px;">
                 <el-option label="否" :value= false></el-option>
                 <el-option label="是" :value= true></el-option>
