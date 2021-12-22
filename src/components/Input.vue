@@ -8,11 +8,11 @@
         <el-card class="box-card">
           <el-form-item label="團號" prop="number" label-width="85px">
             <span class="form-font-xl" v-if="(ruleForm.lock||readNumber)&&!adminShow" style="width:255px">{{ruleForm.number}}</span>
-            <el-input v-model="ruleForm.number" v-else :disabled="readNumber"></el-input>
+            <el-input v-model.trim="ruleForm.number" v-else :disabled="readNumber"></el-input>
           </el-form-item>            
           <el-form-item label="團名" prop="name">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.name}}</span>
-            <el-input v-model="ruleForm.name" v-else></el-input>
+            <el-input v-model.trim="ruleForm.name" v-else></el-input>
           </el-form-item>
           <el-form-item label="客服" prop="cs" >
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.cs}}</span>
@@ -49,15 +49,15 @@
 
           <el-form-item label="代表人" prop="people" label-width="90px">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.people}}</span>
-            <el-input v-model="ruleForm.people" v-else></el-input>
+            <el-input v-model.trim="ruleForm.people" v-else></el-input>
           </el-form-item>            
           <el-form-item label="人數" prop="amount">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.amount}}</span>
-            <el-input v-model="ruleForm.amount" v-else></el-input>
+            <el-input v-model.trim="ruleForm.amount" v-else></el-input>
           </el-form-item>
           <el-form-item label="電話" prop="phone">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.phone}}</span>
-            <el-input v-model="ruleForm.phone" v-else></el-input>
+            <el-input v-model.trim="ruleForm.phone" v-else></el-input>
           </el-form-item>
 
           <el-row></el-row>
@@ -278,7 +278,7 @@
             </el-form-item>
             <el-form-item label="廠商">
               <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailCompany[index]}}</span>
-              <el-input v-model="ruleForm.payDetailCompany[index]" v-else style="width: 160px;"></el-input>
+              <el-input v-model.trim="ruleForm.payDetailCompany[index]" v-else style="width: 160px;"></el-input>
             </el-form-item> 
             <el-form-item label="品項">
               <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailItem[index]}}</span>
