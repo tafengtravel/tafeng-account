@@ -41,6 +41,10 @@
         left: 0;
         right: 0;
     }
+    .el-table {
+        color: #404040;
+        font-size: 18px;
+    }
 }
 @media (max-width: 768px) {
     .title{
@@ -76,21 +80,18 @@
         font-size: 28px;
         font-weight:bold;
     }
+    .el-table {
+        font-size: 14px;
+    }
 }
 .el-row {
     margin-bottom: 10px;
-}
-.el-table {
-    color: #404040;
 }
 .el-form-item__label {
     font-size: 18px;
 }
 .el-table thead {
     color: #404040;
-}
-.el-table {
-    font-size: 18px;
 }
 .el-input__inner {
     color: #404040;

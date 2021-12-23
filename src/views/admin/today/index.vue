@@ -218,5 +218,17 @@ export default {
 }
 </script>
 
+<style >
+
+@media (max-width: 768px) {
+  .el-date-range-picker {
+    width: 258px;
+  }
+  .el-date-range-picker__content {
+    float: none;
+  }
+}
+</style>
+
 
 
