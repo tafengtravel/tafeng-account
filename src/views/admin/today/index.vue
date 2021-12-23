@@ -180,8 +180,6 @@ export default {
                 }
               }
             }); 
-            this.itemData.reverse()
-            this.itemData.reverse() 
             this.listLoading = false
           });
           
@@ -191,8 +189,6 @@ export default {
               priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
               this.itemDataCancel.push({...doc.data(),'priceInsufficient':priceInsufficient})
             }); 
-            this.itemDataCancel.reverse()
-            this.itemDataCancel.reverse() 
             startDateCancel = moment(startDateCancel).add(1,'days').format('YYYY-MM-DD')
             this.listLoading = false
           });
