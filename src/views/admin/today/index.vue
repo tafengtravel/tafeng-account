@@ -140,6 +140,7 @@ export default {
       let ref 
       let priceInsufficient = 0
       let month = moment(this.date[0]).subtract(12, 'months').format('YYYY-MM')
+
       this.itemData.length = 0
       this.itemDataCancel.length = 0
       this.amountTotal = 0
@@ -149,9 +150,10 @@ export default {
       let startDate = moment(this.date[0]);
       let endDate = moment(this.date[1]);
       let dateLength = endDate.diff(startDate, 'days')+1;  
-
-      
       let startDateCancel = this.date[0]
+
+      this.itemData.reverse()
+      this.itemDataCancel.reverse()
 
       for(let j=0;j<24;j++){
         ref = db.collection(month);
