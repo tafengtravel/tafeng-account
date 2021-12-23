@@ -3,12 +3,13 @@
     
     <el-date-picker
       v-model="date"
-      type="date"
-      placeholder="選擇報帳日期"
-      style="width:160px"
-      value-format="yyyy-MM-dd"
-      >
+      type="daterange"
+      range-separator="至"
+      start-placeholder="開始月份"
+      end-placeholder="結束月份"
+      value-format="yyyy-MM-dd">
     </el-date-picker>
+
     <el-button type="primary" @click="search">搜尋</el-button>
     <el-row></el-row>
     <div class ="el-col-24">
@@ -29,7 +30,7 @@
         <el-table-column prop="name" label="團名"  sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
         <el-table-column prop="people" label="代表人" width='175%' sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
         <el-table-column prop="amount" label="人數" width='90%' sortable :sort-method = "(a,b)=>a.amount.localeCompare(b.amount)"></el-table-column>
-        <el-table-column prop="createDate" label="報帳日期" width='120%'></el-table-column>
+        <el-table-column prop="createDate" label="報帳日期" sortable :sort-method = "(a,b) =>a.createDate.localeCompare(b.createDate)" width='120%'></el-table-column>
         <el-table-column prop="profit" label="利潤" width='100%' :formatter="profitCheck"></el-table-column>
         <el-table-column prop="priceDetailAdminCheck" label="主管核實" width='100%' :formatter="adminCheck"></el-table-column>
         <el-table-column prop="incomeDetailOpCheck[0]" label="OP核實" width='100%' :formatter="opCheck"></el-table-column>
@@ -138,54 +139,72 @@ export default {
       let i = 0
       let ref 
       let priceInsufficient = 0
-      let month = moment(this.date).subtract(12, 'months').format('YYYY-MM')
+      let month = moment(this.date[0]).subtract(12, 'months').format('YYYY-MM')
       this.itemData.length = 0
       this.itemDataCancel.length = 0
       this.amountTotal = 0
       this.profitTotal = 0
       this.priceTotal = 0
 
+      let startDate = moment(this.date[0]);
+      let endDate = moment(this.date[1]);
+      let dateLength = endDate.diff(startDate, 'days')+1;  
+
+      
+      let startDateCancel = this.date[0]
+
       for(let j=0;j<24;j++){
         ref = db.collection(month);
         console.log(month)
+        startDate = this.date[0]
 
-        ref.where('createDate','==',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
+        for(let i=0;i<dateLength;i++){
+         
+          ref.where('createDate','==',startDate).get().then(querySnapshot => { //資料編排改變後 客服需改變
           
-          querySnapshot.forEach(doc => {  
-            priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
-            if(isNaN(parseFloat(doc.data().amount))){
-            }else{
-              this.amountTotal = parseFloat(this.amountTotal) + parseFloat(doc.data().amount)
-            }
-            if(isNaN(parseFloat(doc.data().price))){
-            }else{
-              this.priceTotal = parseFloat(this.priceTotal) + parseFloat(doc.data().price)
-            }
-            if(doc.data().location != '跨年'&&doc.data().location != '團體報帳'&&doc.data().location != 'JOIN報帳'){
-              if(isNaN(parseFloat(doc.data().profit))){
+            querySnapshot.forEach(doc => {  
+              priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
+              this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
+              if(isNaN(parseFloat(doc.data().amount))){
               }else{
-                this.profitTotal = parseFloat(this.profitTotal) + parseFloat(doc.data().profit)
+                this.amountTotal = parseFloat(this.amountTotal) + parseFloat(doc.data().amount)
               }
-            }
-          }); 
-          this.itemData.reverse()
-          this.itemData.reverse() 
-        });
-
-        ref.where('cancelDate','==',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
+              if(isNaN(parseFloat(doc.data().price))){
+              }else{
+                this.priceTotal = parseFloat(this.priceTotal) + parseFloat(doc.data().price)
+              }
+              if(doc.data().location != '跨年'&&doc.data().location != '團體報帳'&&doc.data().location != 'JOIN報帳'){
+                if(isNaN(parseFloat(doc.data().profit))){
+                }else{
+                  this.profitTotal = parseFloat(this.profitTotal) + parseFloat(doc.data().profit)
+                }
+              }
+            }); 
+            this.itemData.reverse()
+            this.itemData.reverse() 
+            this.listLoading = false
+          });
           
-          querySnapshot.forEach(doc => {  
-            priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemDataCancel.push({...doc.data(),'priceInsufficient':priceInsufficient})
-          }); 
-          this.itemDataCancel.reverse()
-          this.itemDataCancel.reverse() 
-        });
+          ref.where('cancelDate','==',startDate).get().then(querySnapshot => { //資料編排改變後 客服需改變
+            
+            querySnapshot.forEach(doc => {  
+              priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
+              this.itemDataCancel.push({...doc.data(),'priceInsufficient':priceInsufficient})
+            }); 
+            this.itemDataCancel.reverse()
+            this.itemDataCancel.reverse() 
+            startDateCancel = moment(startDateCancel).add(1,'days').format('YYYY-MM-DD')
+            this.listLoading = false
+          });
+
+          startDate = moment(startDate).add(1,'days').format('YYYY-MM-DD')
+          console.log(startDate)
+        }
         month = moment(month).add(1,'months').format('YYYY-MM')
+        
       }
 
-      this.listLoading = false
+      
     },
     edit(row){
       console.log(row)
