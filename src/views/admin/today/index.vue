@@ -9,7 +9,7 @@
       end-placeholder="結束月份"
       value-format="yyyy-MM-dd">
     </el-date-picker>
-
+    <el-input v-model="name" style="width:250px" placeholder="請輸入團名"></el-input>
     <el-button type="primary" @click="search">搜尋</el-button>
     <el-row></el-row>
     <div class ="el-col-24">
@@ -20,7 +20,7 @@
       <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">營業額：{{priceTotal}}</font></span>
       <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">利潤：{{profitTotal}}</font></span>
       </el-row>
-      <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
+      <el-table v-loading="listLoading" show-summary :summary-method="getSummaries" :data="itemData.filter(data => !name || data.name.toLowerCase().includes(name.toLowerCase()))" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
         <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
         <el-table-column prop="number" label="團號" width='140%' sortable :sort-method = "(a,b)=>a.number.localeCompare(b.number)"></el-table-column>
         <el-table-column prop="group" label="團體" width='90%' :formatter="group" sortable :sort-method = "(a,b)=>{return a.group - b.group}"></el-table-column>
@@ -93,18 +93,48 @@ export default {
       date:'',
       amountTotal:'',
       profitTotal:'',
-      priceTotal:''
+      priceTotal:'',
+      name:'',
     }
   },
   created() {
     
   },
   methods: {
+    getSummaries(param) {
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '總共';
+          return;
+        }
+        if(column.label == '人數'||column.label == '利潤'){
+          const values = data.map(item => parseInt(item[column.property]));
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = parseInt(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            
+          }
+        }else{
+          sums[index] = '';
+        }
+        
+      });
+
+      return sums;
+    },
     profitCheck(row){
       if(row.location != '跨年'&&row.location != '團體報帳'&&row.location != 'JOIN報帳'){
         return row.profit
       }else{
-        return '0'
+        return row.profit = 0
       }
     },
     adminCheck(row, column){
