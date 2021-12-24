@@ -17,6 +17,7 @@
           >
         </el-option>
       </el-select>
+      <el-input v-model="name" style="width:250px" placeholder="請輸入團名"></el-input>
       <el-button type="primary" @click="search">搜尋</el-button>
 
   </div>
@@ -80,7 +81,8 @@ export default {
         value: 'B12',
         label: 'B12'
       }],
-      cs: 'all'
+      cs: 'all',
+      name:''
     }
   },
   created() {
