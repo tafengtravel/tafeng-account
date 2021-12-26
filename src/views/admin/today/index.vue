@@ -152,7 +152,7 @@ export default {
       }
     },
     group(row, column){
-      if(row.tax > 0 && (row.location != '跨年'&&row.location != '團體報帳'&&row.location != 'JOIN報帳')){
+      if(row.tax > 0 && row.location != '跨年' && row.location != '團體報帳' && row.location != 'JOIN報帳'){
         return '✔️'
       }else{
         return ''

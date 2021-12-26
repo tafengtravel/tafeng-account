@@ -7,6 +7,7 @@
       <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">人數：{{amountTotal}}</font></span>
       <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">營業額：{{priceTotal}}</font></span>
       <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">利潤：{{profitTotal}}</font></span>
+      <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">稅金：{{taxTotal}}</font></span>
     </el-row>
     <div class ="el-col-24">
       <el-table v-loading="listLoading" show-summary :summary-method="getSummaries" :data="itemData.filter(data => !$refs.child.name || data.name.toLowerCase().includes($refs.child.name.toLowerCase()))" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
@@ -61,6 +62,7 @@ export default {
       amountTotal:'',
       profitTotal:'',
       priceTotal:'',
+      taxTotal:'',
     }
   },
   created() {
@@ -111,7 +113,7 @@ export default {
       }
     },
     group(row, column){
-      if(row.tax > 0){
+      if(row.tax > 0&& row.location != '團體報帳' && row.location != 'JOIN報帳' && row.location != '跨年'){
         return '✔️'
       }else{
         return ''
@@ -135,6 +137,7 @@ export default {
           this.amountTotal = 0
           this.profitTotal = 0
           this.priceTotal = 0
+          this.taxTotal = 0
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
             this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
@@ -145,6 +148,10 @@ export default {
             if(isNaN(parseFloat(doc.data().price))){
             }else{
               this.priceTotal = parseFloat(this.priceTotal) + parseFloat(doc.data().price)
+            }
+            if(isNaN(parseFloat(doc.data().tax))){
+            }else{
+              this.taxTotal = parseFloat(this.taxTotal) + parseFloat(doc.data().tax)
             }
             if(doc.data().location != '跨年'&&doc.data().location != '團體報帳'&&doc.data().location != 'JOIN報帳'){
               if(isNaN(parseFloat(doc.data().profit))){
@@ -163,6 +170,7 @@ export default {
           this.amountTotal = 0
           this.profitTotal = 0
           this.priceTotal = 0
+          this.taxTotal = 0
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
             this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
@@ -173,6 +181,10 @@ export default {
             if(isNaN(parseFloat(doc.data().price))){
             }else{
               this.priceTotal = parseFloat(this.priceTotal) + parseFloat(doc.data().price)
+            }
+            if(isNaN(parseFloat(doc.data().tax))){
+            }else{
+              this.taxTotal = parseFloat(this.taxTotal) + parseFloat(doc.data().tax)
             }
             if(doc.data().location != '跨年'&&doc.data().location != '團體報帳'&&doc.data().location != 'JOIN報帳'){
               if(isNaN(parseFloat(doc.data().profit))){
