@@ -586,6 +586,7 @@
                 <el-option label="刷卡" value="刷卡"></el-option>
                 <el-option label="現金" value="現金"></el-option>
                 <el-option label="支票" value="支票"></el-option>
+                <el-option label="LINEPAY" value="LINEPAY"></el-option>
                 <el-option label="其他" value="其他"></el-option>
               </el-select>
             </el-form-item>
@@ -1268,8 +1269,15 @@ export default {
       let cardTotal = 0
       let linepayTotal = 0
       let refundTotal = 0
+      let refundCardTotal = 0
+      let refundLinepayTotal = 0
       //總退款
       for(let i=0;i<this.ruleForm.refundDetailRefund.length;i++){
+        if(this.ruleForm.refundDetailType[i] == '刷卡'){
+          refundCardTotal = refundCardTotal + parseFloat(this.ruleForm.refundDetailRefund[i])*0.02
+        }else if(this.ruleForm.refundDetailType[i] == 'LINEPAY'){
+          refundLinepayTotal = refundLinepayTotal + parseFloat(this.ruleForm.refundDetailRefund[i])*0.0231
+        }
         if(!(isNaN(this.ruleForm.refundDetailRefund[i])||this.ruleForm.refundDetailRefund[i] == '')){
           refundTotal = parseFloat(this.ruleForm.refundDetailRefund[i]) + parseFloat(refundTotal)
         }
@@ -1314,7 +1322,7 @@ export default {
       }
       this.ruleForm.income = this.ruleForm.income - refundTotal 
       //總收扣除退款
-      this.ruleForm.net = Math.ceil(this.ruleForm.net + cardTotal + linepayTotal + this.ruleForm.insuranceTotalPrice1 + this.ruleForm.insuranceTotalPrice2)
+      this.ruleForm.net = Math.ceil(this.ruleForm.net + cardTotal + linepayTotal + this.ruleForm.insuranceTotalPrice1 + this.ruleForm.insuranceTotalPrice2 - refundCardTotal - refundLinepayTotal)
       //NET = NET + 卡手續費 + 保險
       this.ruleForm.profit = parseFloat(this.ruleForm.price) - parseFloat(this.ruleForm.net)
       if(this.ruleForm.profit > 9999){

@@ -1237,17 +1237,16 @@ export default {
       }
       //總退款
       for(let i=0;i<this.ruleForm.refundDetailRefund.length;i++){
-        if(!(isNaN(this.ruleForm.refundDetailRefund[i])||this.ruleForm.refundDetailRefund[i] == '')){
-          refundTotal = parseFloat(this.ruleForm.refundDetailRefund[i]) + parseFloat(refundTotal)
-        }
-
         if(this.ruleForm.refundDetailType[i] == '刷卡'){
           refundCardTotal = refundCardTotal + parseFloat(this.ruleForm.refundDetailRefund[i])*0.02
         }else if(this.ruleForm.refundDetailType[i] == 'LINEPAY'){
           refundLinepayTotal = refundLinepayTotal + parseFloat(this.ruleForm.refundDetailRefund[i])*0.0231
         }
+        if(!(isNaN(this.ruleForm.refundDetailRefund[i])||this.ruleForm.refundDetailRefund[i] == '')){
+          refundTotal = parseFloat(this.ruleForm.refundDetailRefund[i]) + parseFloat(refundTotal)
+        }
       }
-      //總收入 refundCardTotal
+      //總收入 
       for(let i=0;i<this.ruleForm.incomeDetailIncome.length;i++){
         if(this.ruleForm.incomeDetailType[i] == '刷卡'){
           cardTotal = cardTotal + parseFloat(this.ruleForm.incomeDetailIncome[i])*0.02
