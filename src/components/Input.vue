@@ -74,7 +74,6 @@
             <span class="form-font-xl" v-if="(ruleForm.lock||createDate)&&!adminShow">{{ruleForm.createDate}}</span>
             <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.createDate" v-else style="width: 190px;" :picker-options="createDateDisable"></el-date-picker>
           </el-form-item>
-
           <el-row></el-row>
 
           <el-form-item label="總團費">
@@ -91,6 +90,35 @@
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.cancelDate}}</span>
             <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.cancelDate" v-else style="width: 180px;"></el-date-picker>
           </el-form-item>
+          <!-- 刪除 -->
+          <el-form-item>
+            <el-button type="danger" @click="dialogDelete = true" style="width:100px" v-if="adminShow && submitShow">刪除</el-button>
+          </el-form-item>
+          <el-dialog
+            title="確定是否進行刪除？"
+            :visible.sync="dialogDelete"
+            width="80%"
+            class = "sub_title">
+            <el-row>
+              <div class = "font">團號：{{ruleForm.number}}</div>
+            </el-row>
+            <el-row>
+              <div class = "font">團號：{{ruleForm.name}}</div>
+            </el-row>
+            <el-row>
+              <div class = "font">代表人：{{ruleForm.people}}</div>
+            </el-row>
+            <el-row>
+              <div class = "font">出發日期：{{ruleForm.depDate}}</div>
+            </el-row>
+            <el-row>
+              <div class = "font">結束日期：{{ruleForm.endDate}}</div>
+            </el-row>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogDelete = false">取 消</el-button>
+              <el-button type="danger" @click="deleted">確 定</el-button>
+            </span>
+          </el-dialog>
         </el-card>
         <el-card class="box-card">
           <el-row :gutter="20">
@@ -966,12 +994,25 @@ export default {
       adminShow:true,
       createDate:false,
       submitShow:false,
+      dialogDelete:false,
     }
   },
   created() {
      
   },
   methods: {
+    async deleted(){
+      let ref = db.collection(moment(this.ruleForm.depDate).format('YYYY-MM')).doc(this.ruleForm.number);
+
+      await ref.delete().then(()=>{
+        console.log("Document successfully deleted!");
+        this.$message.success('刪除成功');
+        this.$router.push({ path: '/profile' })
+      }).catch(function(error) {
+        console.error("Error removing document: ", error);
+      });
+      
+    },
     setContract(){
       let ref = db.collection('contract').doc(this.ruleForm.number);
       let contract = {
