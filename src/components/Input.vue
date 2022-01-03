@@ -92,13 +92,9 @@
           </el-form-item>
           <!-- 刪除 -->
           <el-form-item>
-            <el-button type="danger" @click="dialogDelete = true" style="width:100px" v-if="adminShow && submitShow">刪除</el-button>
+            <el-button type="danger" @click="dialogDeleteCheck = true" style="width:100px" v-if="adminShow && submitShow">刪除</el-button>
           </el-form-item>
-          <el-dialog
-            title="確定是否進行刪除？"
-            :visible.sync="dialogDelete"
-            width="80%"
-            class = "sub_title">
+          <el-dialog title="確定是否進行刪除？" class = "sub_title" :visible.sync="dialogDeleteCheck">
             <el-row>
               <div class = "font">團號：{{ruleForm.number}}</div>
             </el-row>
@@ -115,9 +111,19 @@
               <div class = "font">結束日期：{{ruleForm.endDate}}</div>
             </el-row>
             <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogDelete = false">取 消</el-button>
-              <el-button type="danger" @click="deleted">確 定</el-button>
+              <el-button @click="dialogDeleteCheck = false">取 消</el-button>
+              <el-button type="danger" @click="dialogDelete = true">確 定</el-button>
             </span>
+            <el-dialog
+              title="一經刪除無法復原？"
+              :visible.sync="dialogDelete"
+              append-to-body
+              class = "sub_title">
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogDelete = false">取 消</el-button>
+                <el-button type="danger" @click="deleted">確 定</el-button>
+              </span>
+            </el-dialog>
           </el-dialog>
         </el-card>
         <el-card class="box-card">
@@ -995,6 +1001,7 @@ export default {
       createDate:false,
       submitShow:false,
       dialogDelete:false,
+      dialogDeleteCheck:false,
     }
   },
   created() {
@@ -1325,6 +1332,18 @@ export default {
 .app-container {
   padding: 7px;
 }
+
+@media (min-width: 768px){
+  .el-dialog {
+    width: 40%;
+  }
+}
+@media (max-width: 768px) {
+  .el-dialog {
+    width: 90%;
+  }
+}
+
 </style>
 
 
