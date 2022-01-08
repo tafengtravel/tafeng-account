@@ -7,6 +7,7 @@
       <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">人數：{{amountTotal}}</font></span>
       <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">營業額：{{priceTotal}}</font></span>
       <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">利潤：{{profitTotal}}</font></span>
+      <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">稅金：{{taxTotal}}</font></span>
     </el-row>
     <div class ="el-col-24">
       <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
@@ -59,6 +60,7 @@ export default {
       amountTotal:'',
       profitTotal:'',
       priceTotal:'',
+      taxTotal:'',
     }
   },
   created() {
@@ -90,13 +92,15 @@ export default {
       let i = 0
       let ref = db.collection(e.month.toString()+'G');
       let priceInsufficient = 0
-      this.amountTotal = 0
-      this.profitTotal = 0
-      this.priceTotal = 0
+
 
       if (e.cs == 'all'){
         ref.onSnapshot((querySnapshot => {
           this.itemData.length = 0
+          this.amountTotal = 0
+          this.profitTotal = 0
+          this.priceTotal = 0
+          this.taxTotal = 0
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseFloat(doc.data().price) - parseFloat(doc.data().income)
             this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
@@ -113,6 +117,10 @@ export default {
             }else{
               this.profitTotal = parseFloat(this.profitTotal) + parseFloat(doc.data().profit)
             }
+            if(isNaN(parseFloat(doc.data().tax))){
+            }else{
+              this.taxTotal = parseFloat(this.taxTotal) + parseFloat(doc.data().tax)
+            }
           }); 
           this.itemData.reverse()
           this.itemData.reverse() 
@@ -121,6 +129,10 @@ export default {
       }else{
         ref.where('cs','==',e.cs).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
           this.itemData.length = 0
+          this.amountTotal = 0
+          this.profitTotal = 0
+          this.priceTotal = 0
+          this.taxTotal = 0
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseFloat(doc.data().price) - parseFloat(doc.data().income)
             this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
@@ -136,6 +148,10 @@ export default {
             if(isNaN(parseFloat(doc.data().profit))){
             }else{
               this.profitTotal = parseFloat(this.profitTotal) + parseFloat(doc.data().profit)
+            }
+            if(isNaN(parseFloat(doc.data().tax))){
+            }else{
+              this.taxTotal = parseFloat(this.taxTotal) + parseFloat(doc.data().tax)
             }
           }); 
           this.itemData.reverse()
