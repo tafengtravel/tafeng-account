@@ -312,7 +312,7 @@
             </el-form-item>
             <el-form-item label="廠商">
               <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailCompany[index]}}</span>
-              <el-input v-model.trim="ruleForm.payDetailCompany[index]" v-else style="width: 160px;"></el-input>
+              <el-input v-model.trim="ruleForm.payDetailCompany[index]" v-else style="width: 160px;" @input="(val) => (ruleForm.payDetailCompany[index] = ruleForm.payDetailCompany[index].toUpperCase())"></el-input>
             </el-form-item> 
             <el-form-item label="品項">
               <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailItem[index]}}</span>
