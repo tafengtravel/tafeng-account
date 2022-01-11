@@ -94,7 +94,6 @@ export default {
       let priceInsufficient = 0
       this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom
 
-
       if (e.cs == 'all'){
         ref.onSnapshot((querySnapshot => {
           this.amountTotal = 0
