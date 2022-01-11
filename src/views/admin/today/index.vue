@@ -171,8 +171,8 @@ export default {
       let priceInsufficient = 0
       let month = moment(this.date[0]).subtract(12, 'months').format('YYYY-MM')
 
-      this.itemData.length = 0
-      this.itemDataCancel.length = 0
+      this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom
+      this.itemDataCancel.splice(0,this.itemDataCancel.length) //用splice清空 就無須reverse刷新dom
       this.amountTotal = 0
       this.profitTotal = 0
       this.priceTotal = 0
@@ -181,9 +181,6 @@ export default {
       let endDate = moment(this.date[1]);
       let dateLength = endDate.diff(startDate, 'days')+1;  
       let startDateCancel = this.date[0]
-
-      this.itemData.reverse()
-      this.itemDataCancel.reverse()
 
       for(let j=0;j<24;j++){
         ref = db.collection(month);

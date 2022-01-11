@@ -123,8 +123,8 @@ export default {
       let ref 
       let priceInsufficient = 0
       let month = moment(this.date).subtract(12, 'months').format('YYYY-MM')
-      this.itemData.length = 0
-      this.itemDataCancel.length = 0
+      this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom
+      this.itemDataCancel.splice(0,this.itemDataCancel.length) //用splice清空 就無須reverse刷新dom
 
       for(let j=0;j<24;j++){
         ref = db.collection(month);
@@ -135,8 +135,6 @@ export default {
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
             this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
           }); 
-          this.itemData.reverse()
-          this.itemData.reverse() 
         });
 
         ref.where('cancelDate','==',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
@@ -144,8 +142,6 @@ export default {
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
             this.itemDataCancel.push({...doc.data(),'priceInsufficient':priceInsufficient})
           }); 
-          this.itemDataCancel.reverse()
-          this.itemDataCancel.reverse() 
         });
         month = moment(month).add(1,'months').format('YYYY-MM')
       }

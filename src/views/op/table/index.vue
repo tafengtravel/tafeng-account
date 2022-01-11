@@ -80,27 +80,22 @@ export default {
       this.listLoading = true
       let ref = db.collection(e.month.toString());
       let priceInsufficient = 0
+      this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom
 
       if (e.cs == 'all'){
         ref.onSnapshot((querySnapshot => {
-          this.itemData.length = 0
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
             this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
           }); 
-          this.itemData.reverse()
-          this.itemData.reverse() 
           this.listLoading = false
         }));
       }else{
         ref.where('cs','==',e.cs).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
-          this.itemData.length = 0
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
             this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
           }); 
-          this.itemData.reverse()
-          this.itemData.reverse() 
           this.listLoading = false
         }));
       }

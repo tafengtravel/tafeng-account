@@ -77,7 +77,7 @@ export default {
       let ref 
       let priceInsufficient = 0
       let month = moment(this.date).subtract(12, 'months').format('YYYY-MM')
-      this.itemData.length = 0
+      this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom
 
       for(let k=0;k<24;k++){
         ref = db.collection(month);
@@ -102,8 +102,6 @@ export default {
             }
             // console.log(doc.data().number)
           }); 
-          this.itemData.reverse()
-          this.itemData.reverse() 
         });
 
         ref.where('payDetailDl2','array-contains',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
@@ -125,8 +123,6 @@ export default {
             }
             // console.log(doc.data().number)
           }); 
-          this.itemData.reverse()
-          this.itemData.reverse() 
         });
 
         month = moment(month).add(1,'months').format('YYYY-MM')

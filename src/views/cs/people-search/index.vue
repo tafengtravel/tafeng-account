@@ -87,7 +87,7 @@ export default {
     search() {
       // this.listLoading = true
       let i = 0
-      this.itemData.length = 0
+      this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom
       
       let startMonth = moment(this.month[0]);
       let endMonth = moment(this.month[1]);
@@ -105,8 +105,6 @@ export default {
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
             this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
           }); 
-          this.itemData.reverse()
-          this.itemData.reverse() 
         });
         startMonth = moment(startMonth).add(1,'months').format('YYYY-MM')
       }
