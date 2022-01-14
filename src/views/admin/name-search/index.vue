@@ -24,6 +24,8 @@
         <el-table-column prop="amount" label="人數" width='90%' sortable :sort-method = "(a,b)=>a.amount.localeCompare(b.amount)"></el-table-column>
         <el-table-column prop="phone" label="聯絡電話" width='125%' sortable :sort-method = "(a,b)=>{return a.phone - b.phone}"></el-table-column>
         <el-table-column prop="income" label="總收入" width='90%'></el-table-column>
+        <el-table-column prop="incomeDetailIncome" label="收入" width='90%'></el-table-column>
+        <el-table-column prop="incomeDetailType" label="收款方式" width='100%'></el-table-column>
         <el-table-column prop="priceInsufficient" label="未收尾款" width='110%' ></el-table-column>
         <el-table-column prop="other" label="備註" ></el-table-column>
         <el-table-column prop="" label="編輯" width='60%'>
@@ -39,6 +41,16 @@
       <span style="font-size: 15px;font-family: Microsoft JhengHei;font-weight: bold;padding-right:30px;">總收入：{{incomeTotal}}</span>
       <span style="font-size: 15px;font-family: Microsoft JhengHei;font-weight: bold;">總人數：{{amountTotal}}</span>
     </div>
+    <div class ="el-col-24">
+      <el-row></el-row>
+      <el-col class="el-col-xl-3 el-col-lg-3 el-col-md-8 el-col-sm-8 el-col-xs-12" style="font-size: 15px;font-family: Microsoft JhengHei;font-weight: bold;padding-right:30px;">匯款：{{transfer}}</el-col>
+      <el-col class="el-col-xl-3 el-col-lg-3 el-col-md-8 el-col-sm-8 el-col-xs-12" style="font-size: 15px;font-family: Microsoft JhengHei;font-weight: bold;padding-right:30px;">現金：{{cash}}</el-col>
+      <el-col class="el-col-xl-3 el-col-lg-3 el-col-md-8 el-col-sm-8 el-col-xs-12" style="font-size: 15px;font-family: Microsoft JhengHei;font-weight: bold;padding-right:30px;">刷卡：{{card}}</el-col>
+      <el-col class="el-col-xl-3 el-col-lg-3 el-col-md-8 el-col-sm-8 el-col-xs-12" style="font-size: 15px;font-family: Microsoft JhengHei;font-weight: bold;padding-right:30px;">支票：{{check}}</el-col>
+      <el-col class="el-col-xl-3 el-col-lg-3 el-col-md-8 el-col-sm-8 el-col-xs-12" style="font-size: 15px;font-family: Microsoft JhengHei;font-weight: bold;padding-right:30px;">其他：{{other}}</el-col>
+      <el-col class="el-col-xl-3 el-col-lg-3 el-col-md-8 el-col-sm-8 el-col-xs-12" style="font-size: 15px;font-family: Microsoft JhengHei;font-weight: bold;padding-right:30px;">三倍券：{{coupon}}</el-col>
+      <el-col class="el-col-xl-3 el-col-lg-3 el-col-md-8 el-col-sm-8 el-col-xs-12" style="font-size: 15px;font-family: Microsoft JhengHei;font-weight: bold;padding-right:30px;">LINEPAY：{{linepay}}</el-col>
+    </div>  
 
   </div>
 </template>
@@ -64,6 +76,13 @@ export default {
       name:'',
       incomeTotal:0,
       amountTotal:0,
+      transfer:0,
+      cash:0,
+      card:0,
+      check:0,
+      other:0,
+      coupon:0,
+      linepay:0,
     }
   },
   created() {
@@ -85,26 +104,54 @@ export default {
       this.amountTotal = 0
       this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom
 
-      ref.where('depDate','==',this.date).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
+      this.transfer = 0
+      this.card = 0
+      this.cash = 0
+      this.check = 0
+      this.other = 0
+      this.coupon = 0
+      this.linepay = 0
+
+      ref.where('depDate','==',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
         querySnapshot.forEach(doc => {  
           console.log(doc.data())
           if(doc.data().name == this.name){
-            console.log('有的'+doc.data())
             this.incomeTotal = this.incomeTotal + parseInt(doc.data().income)
             this.amountTotal = this.amountTotal + parseInt(doc.data().amount)
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
-            i=i+1
+            for(let i=0;i<doc.data().incomeDetailIncome.length;i++){
+              this.itemData.push({
+                ...doc.data(),
+                'priceInsufficient':priceInsufficient,
+                'incomeDetailIncome':doc.data().incomeDetailIncome[i],
+                'incomeDetailType':doc.data().incomeDetailType[i],
+              })
+              if(doc.data().incomeDetailType[i] == '匯款'){
+                this.transfer = this.transfer + parseInt(doc.data().incomeDetailIncome[i])
+              }else if(doc.data().incomeDetailType[i] == '刷卡'){
+                this.card = this.card + parseInt(doc.data().incomeDetailIncome[i])
+              }else if(doc.data().incomeDetailType[i] == '現金'){
+                this.cash = this.cash + parseInt(doc.data().incomeDetailIncome[i])
+              }else if(doc.data().incomeDetailType[i] == '支票'){
+                this.check = this.check + parseInt(doc.data().incomeDetailIncome[i])
+              }else if(doc.data().incomeDetailType[i] == '其他'){
+                this.other = this.other + parseInt(doc.data().incomeDetailIncome[i])
+              }else if(doc.data().incomeDetailType[i] == '三倍券'){
+                this.coupon = this.coupon + parseInt(doc.data().incomeDetailIncome[i])
+              }else if(doc.data().incomeDetailType[i] == 'LINEPAY'){
+                this.linepay = this.transfer + parseInt(doc.data().incomeDetailIncome[i])
+              }
+            }
           }
         }); 
-      }));
+      });
       this.listLoading = false
     },
     edit(row){
       console.log(row)
 
       let route = this.$router.resolve({
-        path: '/admin/edit/fit',
+        path: '/admin/edit',
         query: { number:row.number,depDate:moment(this.date).format('YYYY-MM') }
       })
       window.open(route.href, '_blank');
