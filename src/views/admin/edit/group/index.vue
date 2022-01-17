@@ -38,8 +38,51 @@ export default {
         this.$refs.child.ruleForm = doc.data()
         this.$refs.child.submitShow = true
         this.$message.success('讀取成功');
+
+        // 判斷是否有transfer項目
+        if(this.$route.query.transfer == 'true' && !this.$refs.child.ruleForm.lock){ //必須等於'true' route.query傳送皆為字串
+          let transferIncomeDetailCard
+          if(this.$route.query.transferLength == '1'){
+            if(this.$route.query.transferIncomeDetailCard == 'true'){
+              transferIncomeDetailCard = true
+            }else if(this.$route.query.transferIncomeDetailCard == 'false'){
+              transferIncomeDetailCard = false
+            }
+            this.$refs.child.ruleForm.incomeDetailDate.push(this.$route.query.transferIncomeDetailDate)
+            this.$refs.child.ruleForm.incomeDetailItem.push(this.$route.query.transferIncomeDetailItem)
+            this.$refs.child.ruleForm.incomeDetailIncome.push(this.$route.query.transferIncomeDetailIncome)
+            this.$refs.child.ruleForm.incomeDetailType.push(this.$route.query.transferIncomeDetailType)
+            this.$refs.child.ruleForm.incomeDetailCard.push(transferIncomeDetailCard)
+            this.$refs.child.ruleForm.incomeDetailReceiveDate.push(this.$route.query.transferIncomeDetailReceiveDate)
+            this.$refs.child.ruleForm.incomeDetailProve.push(this.$route.query.transferIncomeDetailProve)
+            this.$refs.child.ruleForm.incomeDetailOther.push(this.$route.query.transferIncomeDetailOther)
+            this.$refs.child.ruleForm.incomeDetailOpCheck.push(false)
+            this.$refs.child.ruleForm.incomeDetailAdminCheck.push(false)
+          }else{
+            transferIncomeDetailCard = this.$route.query.transferIncomeDetailCard.map(function(item, index, array){
+              if(item == 'true'){
+                return true
+              }
+              if(item == 'false'){
+                return false
+              }
+            });
+            for(let i=0;i<parseInt(this.$route.query.transferLength);i++){
+              this.$refs.child.ruleForm.incomeDetailDate.push(this.$route.query.transferIncomeDetailDate[i])
+              this.$refs.child.ruleForm.incomeDetailItem.push(this.$route.query.transferIncomeDetailItem[i])
+              this.$refs.child.ruleForm.incomeDetailIncome.push(this.$route.query.transferIncomeDetailIncome[i])
+              this.$refs.child.ruleForm.incomeDetailType.push(this.$route.query.transferIncomeDetailType[i])
+              this.$refs.child.ruleForm.incomeDetailCard.push(transferIncomeDetailCard[i])
+              this.$refs.child.ruleForm.incomeDetailReceiveDate.push(this.$route.query.transferIncomeDetailReceiveDate[i])
+              this.$refs.child.ruleForm.incomeDetailProve.push(this.$route.query.transferIncomeDetailProve[i])
+              this.$refs.child.ruleForm.incomeDetailOther.push(this.$route.query.transferIncomeDetailOther[i])
+              this.$refs.child.ruleForm.incomeDetailOpCheck.push(false)
+              this.$refs.child.ruleForm.incomeDetailAdminCheck.push(false)
+            }
+          }
+          this.$refs.child.$forceUpdate() // 重新渲染dom
+        }
       })
-      this.$refs.child.$forceUpdate() // 重新渲染dom
     }
   },
   computed: {

@@ -8,7 +8,7 @@
         <el-card class="box-card">
           <el-form-item label="團號" prop="number" label-width="85px">
             <span class="form-font-xl" v-if="(ruleForm.lock||readNumber)&&!adminShow" style="width:255px">{{ruleForm.number}}</span>
-            <el-input v-model.trim="ruleForm.number" v-else :disabled="readNumber"></el-input>
+            <el-input v-model.trim="ruleForm.number" v-else :disabled="readNumber" @input="(val) => (ruleForm.number = ruleForm.number.toUpperCase())"></el-input>
           </el-form-item>            
           <el-form-item label="團名" prop="name">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.name}}</span>
@@ -221,7 +221,46 @@
           <el-row></el-row>
         </el-card>
         <el-row :gutter="20">
-          <div class="sub_title">收入</div>
+          <span class="sub_title">收入</span>&emsp;
+          <el-button type="primary" v-if="adminShow||opShow" @click="transferDialogCheck = true" >轉移</el-button>
+          <!-- 轉移收入dialog -->
+          <el-dialog title="請輸入轉移至團號及項目" class = "sub_title" :visible.sync="transferDialogCheck">
+            <el-row>
+              <div class="font">轉移至團號：</div>
+              <el-input v-model.trim="transferNumber" @input="(val) => (transferNumber = transferNumber.toUpperCase())"></el-input>
+            </el-row>
+            <el-row>
+              <div class="font">收入起始項：</div>
+              <el-input v-model="transferIncomeFrom" type="number"></el-input>
+            </el-row>
+            <el-row>
+              <div class="font">收入結束項</div>
+              <el-input v-model="transferIncomeTo" type="number"></el-input>
+            </el-row>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="transferDialogCheck = false">取 消</el-button>
+              <el-button type="danger" @click="transferDialog = true">確 定</el-button>
+            </span>
+            <el-dialog
+              title="是否確定進行轉移？"
+              :visible.sync="transferDialog"
+              append-to-body
+              class = "sub_title">
+              <el-row>
+                <div class ="font">轉移至團號：{{transferNumber}}</div>
+              </el-row>
+              <el-row>
+                <div class ="font">收入起始項：{{transferIncomeFrom}}</div>
+              </el-row>
+              <el-row>
+                <div class ="font">收入結束項：{{transferIncomeTo}}</div>
+              </el-row>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="transferDialog = false">取 消</el-button>
+                <el-button type="danger" @click="transfer">確 定</el-button>
+              </span>
+            </el-dialog>
+          </el-dialog>
         </el-row>
         <el-card class="box-card">
           <span v-for="(incomeDetailItem,index) in ruleForm.incomeDetailItem.length">
@@ -682,6 +721,11 @@ import * as moment from "moment/moment";
 export default {
   data() {
     return {
+      transferIncomeFrom:1,
+      transferIncomeTo:1,
+      transferDialog:false,
+      transferDialogCheck:false,
+      transferNumber:'',
       createDateDisable:{
         disabledDate(time) {
           if(moment().hours() >= 18 && moment().minutes() > 30){
@@ -1009,6 +1053,9 @@ export default {
      
   },
   methods: {
+    transfer(){
+      this.$emit("transferChildEvent");
+    },
     async deleted(){
       let ref = db.collection(moment(this.ruleForm.depDate).format('YYYY-MM')).doc(this.ruleForm.number);
 

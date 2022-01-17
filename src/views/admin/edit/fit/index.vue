@@ -1,6 +1,6 @@
 <template>
   <div class="app-container" style="background-color:#fbf2e6">
-    <Input @readChildEvent="readParentEvent" ref="child"></Input>
+    <Input @readChildEvent="readParentEvent" @transferChildEvent="transfer" ref="child"></Input>
   </div>
 </template>
 
@@ -40,6 +40,41 @@ export default {
         this.$message.success('讀取成功');
       })
       this.$refs.child.$forceUpdate() // 重新渲染dom
+    },
+    transfer(){
+      console.log(this.$refs.child.transferNumber)
+      let transferLength = parseInt(this.$refs.child.transferIncomeTo)-parseInt(this.$refs.child.transferIncomeFrom)+1
+      let transferQuery = {
+        'number':this.$refs.child.transferNumber,
+        'depDate':this.$refs.child.ruleForm.depDate,
+        'transfer':true,
+        'transferLength':transferLength,
+        'transferIncomeDetailDate':[],
+        'transferIncomeDetailItem':[],
+        'transferIncomeDetailIncome':[],
+        'transferIncomeDetailType':[],
+        'transferIncomeDetailCard':[],
+        'transferIncomeDetailReceiveDate':[],
+        'transferIncomeDetailProve':[],
+        'transferIncomeDetailOther':[],
+      }
+      
+      for(let i=0;i<parseInt(this.$refs.child.transferIncomeTo)-parseInt(this.$refs.child.transferIncomeFrom)+1;i++){
+        transferQuery.transferIncomeDetailDate.push(this.$refs.child.ruleForm.incomeDetailDate[i]) 
+        transferQuery.transferIncomeDetailItem.push(this.$refs.child.ruleForm.incomeDetailItem[i])
+        transferQuery.transferIncomeDetailIncome.push(this.$refs.child.ruleForm.incomeDetailIncome[i])
+        transferQuery.transferIncomeDetailType.push(this.$refs.child.ruleForm.incomeDetailType[i])
+        transferQuery.transferIncomeDetailCard.push(this.$refs.child.ruleForm.incomeDetailCard[i])
+        transferQuery.transferIncomeDetailReceiveDate.push(this.$refs.child.ruleForm.incomeDetailReceiveDate[i])
+        transferQuery.transferIncomeDetailProve.push(this.$refs.child.ruleForm.incomeDetailProve[i])
+        transferQuery.transferIncomeDetailOther.push(this.$refs.child.ruleForm.incomeDetailOther[i])
+      }
+      console.log(transferQuery)
+      let route = this.$router.resolve({
+        path: '/admin/edit/group',
+        query: transferQuery
+      })
+      window.open(route.href, '_blank');
     }
   },
   computed: {
