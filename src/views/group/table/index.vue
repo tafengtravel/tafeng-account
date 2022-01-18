@@ -16,7 +16,7 @@
         <el-table-column prop="people" label="代表人" width='175%' sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
         <el-table-column prop="amount" label="人數" width='90%' sortable :sort-method = "(a,b)=>a.amount.localeCompare(b.amount)"></el-table-column>
         <el-table-column prop="phone" label="聯絡電話" width='125%' sortable :sort-method = "(a,b)=>{return a.phone - b.phone}"></el-table-column>
-        <el-table-column prop="priceInsufficient" label="未收尾款" width='120%' :formatter="profit" sortable :sort-method = "(a,b)=>{return a.priceInsufficient - b.priceInsufficient}"></el-table-column>
+        <el-table-column prop="priceInsufficient" label="未收尾款" width='120%' sortable :sort-method = "(a,b)=>{return a.priceInsufficient - b.priceInsufficient}"></el-table-column>
         <el-table-column prop="other" label="備註" sortable :sort-method = "(a,b)=>a.other.localeCompare(b.other)"></el-table-column>
         <el-table-column prop="" label="編輯" width='60%'>
           <template slot-scope="scope">
@@ -95,7 +95,7 @@ export default {
           this.itemData.length = 0
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData[i] = {...doc.data(),'priceInsufficient':priceInsufficient}
+            this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
             i=i+1
           }); 
           this.itemData.reverse()
@@ -106,7 +106,7 @@ export default {
           this.itemData.length = 0
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
-            this.itemData[i] = {...doc.data(),'priceInsufficient':priceInsufficient}
+            this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
             i=i+1
           }); 
           this.itemData.reverse()
