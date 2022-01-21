@@ -73,7 +73,7 @@ export default {
       }
       console.log(transferQuery)
       let route = this.$router.resolve({
-        path: '/op/edit',
+        path: '/group/edit',
         query: transferQuery
       })
       window.open(route.href, '_blank');
