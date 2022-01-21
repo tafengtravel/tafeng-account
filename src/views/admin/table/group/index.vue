@@ -92,10 +92,10 @@ export default {
       let i = 0
       let ref = db.collection(e.month.toString()+'G');
       let priceInsufficient = 0
-      this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom
 
       if (e.cs == 'all'){
         ref.onSnapshot((querySnapshot => {
+          this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom 由於onSnapshot 須放在裡面清空
           this.amountTotal = 0
           this.profitTotal = 0
           this.priceTotal = 0
@@ -125,6 +125,7 @@ export default {
         }));
       }else{
         ref.where('cs','==',e.cs).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
+          this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom 由於onSnapshot 須放在裡面清空
           this.amountTotal = 0
           this.profitTotal = 0
           this.priceTotal = 0

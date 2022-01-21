@@ -92,7 +92,7 @@ export default {
 
       if (e.cs == 'all'){
         ref.onSnapshot((querySnapshot => {
-          this.itemData.length = 0
+          this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom 由於onSnapshot 須放在裡面清空
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
             this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
@@ -103,7 +103,7 @@ export default {
         }));
       }else{
         ref.where('cs','==',e.cs).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
-          this.itemData.length = 0
+          this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom 由於onSnapshot 須放在裡面清空
           querySnapshot.forEach(doc => {  
             priceInsufficient = parseInt(doc.data().price) - parseInt(doc.data().income)
             this.itemData.push({...doc.data(),'priceInsufficient':priceInsufficient})
