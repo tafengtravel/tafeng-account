@@ -1099,7 +1099,7 @@ export default {
       this.ruleForm.refundDetailDate.push('');
       this.ruleForm.refundDetailItem.push('');
       this.ruleForm.refundDetailRefund.push('');
-      this.ruleForm.refundDetailType.push('匯款');
+      this.ruleForm.refundDetailType.push('轉帳');
       this.ruleForm.refundDetailRefundDate.push('');
       this.ruleForm.refundDetailProve.push('');
       this.ruleForm.refundDetailOther.push('');
