@@ -10,7 +10,7 @@
       <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">稅金：{{taxTotal}}</font></span>
     </el-row>
     <div class ="el-col-24">
-      <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
+      <el-table v-loading="listLoading" show-summary :summary-method="getSummaries" :data="itemData" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
 
         <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
         <el-table-column prop="number" label="團號" width='140%' sortable :sort-method = "(a,b)=>a.number.localeCompare(b.number)"></el-table-column>
@@ -67,6 +67,35 @@ export default {
     
   },
   methods: {
+    getSummaries(param) {
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '總共';
+          return;
+        }
+        if(column.label == '人數'||column.label == '利潤'){
+          const values = data.map(item => parseInt(item[column.property]));
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = parseInt(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            
+          }
+        }else{
+          sums[index] = '';
+        }
+        
+      });
+
+      return sums;
+    },
     insurance(row, column){
       if(row.insurance1){
         return '✔️'
