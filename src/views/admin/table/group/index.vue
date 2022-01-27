@@ -10,7 +10,7 @@
       <span class="font el-col-4 el-col-sm-12 el-col-xs-12 el-col-xl-4 el-col-lg-4"><font color="black">稅金：{{taxTotal}}</font></span>
     </el-row>
     <div class ="el-col-24">
-      <el-table v-loading="listLoading" show-summary :summary-method="getSummaries" :data="itemData" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
+      <el-table v-loading="listLoading" show-summary :summary-method="getSummaries" :data="itemData.filter(data => !$refs.child.name || data.name.toLowerCase().includes($refs.child.name.toLowerCase()))" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
 
         <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
         <el-table-column prop="number" label="團號" width='140%' sortable :sort-method = "(a,b)=>a.number.localeCompare(b.number)"></el-table-column>
