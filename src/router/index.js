@@ -538,8 +538,13 @@ export const adminRoutes = [
         name: '當日DL',
         component: () => import('@/views/admin/deadline/index'),
         meta: { title: '當日DL', icon: '' }
-      }
-      ,
+      },
+      {
+        path: 'lock',
+        name: '鎖定',
+        component: () => import('@/views/admin/lock/index'),
+        meta: { title: '鎖定', icon: '' }
+      },
       {
         beforeEnter: (to, from, next) => {
           firebaseApp.auth().onAuthStateChanged(user=>{
