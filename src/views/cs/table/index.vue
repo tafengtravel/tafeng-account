@@ -17,7 +17,7 @@
         <el-table-column prop="phone" label="聯絡電話" width='125%' sortable :sort-method = "(a,b)=>{return a.phone - b.phone}"></el-table-column>
         <el-table-column prop="priceInsufficient" label="未收尾款" width='125%' sortable  :sort-method = "(a,b)=>{return a.priceInsufficient - b.priceInsufficient}"></el-table-column>
         <el-table-column prop="insurance1" label="旅責險" width='100%' :formatter="insurance" sortable :sort-method = "(a,b)=>{return a.insurance1 - b.insurance1}"></el-table-column>
-        <el-table-column prop="other" label="備註" sortable :sort-method = "(a,b)=>a.other.localeCompare(b.other)"></el-table-column>
+        <el-table-column prop="other" label="備註" width='150%' sortable :sort-method = "(a,b)=>a.other.localeCompare(b.other)"></el-table-column>
         <el-table-column prop="" label="編輯" width='60%'>
           <template slot-scope="scope">
             <el-button @click="edit(scope.row)" type="text" >編輯</el-button>

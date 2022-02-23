@@ -79,6 +79,42 @@
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.cancelDate}}</span>
             <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.cancelDate" v-else style="width: 205px;"></el-date-picker>
           </el-form-item>
+          <!-- 刪除 -->
+          <el-form-item>
+            <el-button type="danger" @click="dialogDeleteCheck = true" style="width:100px" v-if="adminShow && submitShow">刪除</el-button>
+          </el-form-item>
+          <el-dialog title="確定是否進行刪除？" class = "sub_title" :visible.sync="dialogDeleteCheck">
+            <el-row>
+              <div class = "font">團號：{{ruleForm.number}}</div>
+            </el-row>
+            <el-row>
+              <div class = "font">團號：{{ruleForm.name}}</div>
+            </el-row>
+            <el-row>
+              <div class = "font">代表人：{{ruleForm.people}}</div>
+            </el-row>
+            <el-row>
+              <div class = "font">出發日期：{{ruleForm.depDate}}</div>
+            </el-row>
+            <el-row>
+              <div class = "font">結束日期：{{ruleForm.endDate}}</div>
+            </el-row>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogDeleteCheck = false">取 消</el-button>
+              <el-button type="danger" @click="dialogDelete = true">確 定</el-button>
+            </span>
+            <el-dialog
+              title="一經刪除無法復原？"
+              :visible.sync="dialogDelete"
+              append-to-body
+              class = "sub_title">
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogDelete = false">取 消</el-button>
+                <el-button type="danger" @click="deleted">確 定</el-button>
+              </span>
+            </el-dialog>
+          </el-dialog>
+          <!-- 刪除 -->
         </el-card>
         <el-card class="box-card">
           <el-row :gutter="20">
@@ -999,13 +1035,24 @@ export default {
       createDate:false,
       dialogImageUrl: '',
       dialogVisible: false,
-      
+      dialogDelete:false,
+      dialogDeleteCheck:false,
     }
   },
   created() {
      
   },
   methods: {
+    async deleted(){
+      let ref = db.collection(moment(this.ruleForm.depDate).format('YYYY-MM')+'G').doc(this.ruleForm.number);
+      await ref.delete().then(()=>{
+        console.log("Document successfully deleted!");
+        this.$message.success('刪除成功');
+        this.$router.push({ path: '/profile' })
+      }).catch(function(error) {
+        console.error("Error removing document: ", error);
+      });
+    },
     async imgUploadAll(){
       await this.$notify({
         title: '上傳中，請稍後',
