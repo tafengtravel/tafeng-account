@@ -150,14 +150,14 @@ export default {
             }else{
               this.priceTotal = parseFloat(this.priceTotal) + parseFloat(doc.data().price)
             }
-            if(isNaN(parseFloat(doc.data().tax))){
-            }else{
-              this.taxTotal = parseFloat(this.taxTotal) + parseFloat(doc.data().tax)
-            }
             if(doc.data().location != '跨年'&&doc.data().location != '團體報帳'&&doc.data().location != 'JOIN報帳'){
               if(isNaN(parseFloat(doc.data().profit))){
               }else{
                 this.profitTotal = parseFloat(this.profitTotal) + parseFloat(doc.data().profit)
+              }
+              if(isNaN(parseFloat(doc.data().tax))){
+              }else{
+                this.taxTotal = parseFloat(this.taxTotal) + parseFloat(doc.data().tax)
               }
             }
           }); 
@@ -182,7 +182,7 @@ export default {
               this.priceTotal = parseFloat(this.priceTotal) + parseFloat(doc.data().price)
             }
             if(doc.data().location != '跨年'&&doc.data().location != '團體報帳'&&doc.data().location != 'JOIN報帳'){
-              if(isNaN(parseFloat(doc.data().procfit))){
+              if(isNaN(parseFloat(doc.data().profit))){
               }else{
                 this.profitTotal = parseFloat(this.profitTotal) + parseFloat(doc.data().profit)
               }
@@ -192,8 +192,6 @@ export default {
               }
             }
           }); 
-          this.itemData.reverse()
-          this.itemData.reverse() 
           this.listLoading = false
         }));
       }
