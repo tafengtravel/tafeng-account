@@ -1335,10 +1335,13 @@ export default {
       //總收扣除退款
       this.ruleForm.net = Math.ceil(this.ruleForm.net + cardTotal + linepayTotal + this.ruleForm.insuranceTotalPrice1 + this.ruleForm.insuranceTotalPrice2 - refundCardTotal - refundLinepayTotal)
       //NET = NET + 卡手續費 + 保險
-      this.ruleForm.profit = parseFloat(this.ruleForm.price) - parseFloat(this.ruleForm.net)
-      if(this.ruleForm.profit > 9999){
-        this.ruleForm.tax = (this.ruleForm.profit*0.05).toFixed(0);
-        this.ruleForm.profit = (this.ruleForm.profit*0.95).toFixed(0);
+      //排除跨年 團體 join 利潤
+      if(this.ruleForm.location != '跨年'&&this.ruleForm.location != '團體報帳'&&this.ruleForm.location != 'JOIN報帳'){
+        this.ruleForm.profit = parseFloat(this.ruleForm.price) - parseFloat(this.ruleForm.net)
+        if(this.ruleForm.profit > 9999){
+          this.ruleForm.tax = (this.ruleForm.profit*0.05).toFixed(0);
+          this.ruleForm.profit = (this.ruleForm.profit*0.95).toFixed(0);
+        }
       }
       //利潤>9999 5%稅金
     },
