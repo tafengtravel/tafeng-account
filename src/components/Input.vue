@@ -30,7 +30,7 @@
           </el-form-item>
           <el-form-item label="地點" prop="location" >
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.location}}</span>
-            <el-select v-model="ruleForm.location" style="width: 200px;" v-else placeholder="地點">
+            <el-select v-model="ruleForm.location" style="width: 200px;" v-else placeholder="地點" @change="count">
               <el-option-group
                 v-for="group in locationOptions"
                 :key="group.label"
