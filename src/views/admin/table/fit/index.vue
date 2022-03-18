@@ -24,7 +24,8 @@
         <el-table-column prop="phone" label="聯絡電話" width='125%' sortable :sort-method = "(a,b)=>{return a.phone - b.phone}"></el-table-column>
         <el-table-column prop="priceInsufficient" label="未收尾款" width='125%' sortable  :sort-method = "(a,b)=>{return a.priceInsufficient - b.priceInsufficient}"></el-table-column>
         <el-table-column prop="profit" label="利潤" width='100%' :formatter="profit" sortable :sort-method = "(a,b)=>{return a.profit - b.profit}"></el-table-column>
-        <el-table-column prop="insurance1" label="旅責險" width='100%' :formatter="insurance" sortable :sort-method = "(a,b)=>{return a.insurance1 - b.insurance1}"></el-table-column>
+        <el-table-column prop="insurance1" label="旅責" width='80%' :formatter="insurance1" sortable :sort-method = "(a,b)=>{return a.insurance1 - b.insurance1}"></el-table-column>
+        <el-table-column prop="insurance2" label="旅平" width='80%' :formatter="insurance2" sortable :sort-method = "(a,b)=>{return a.insurance2 - b.insurance2}"></el-table-column>
         <el-table-column prop="other" label="備註"  width='120%' sortable :sort-method = "(a,b)=>a.other.localeCompare(b.other)"></el-table-column>
         <el-table-column prop="location" label="地點" width='100%' sortable :sort-method = "(a,b)=>a.location.localeCompare(b.location)"></el-table-column>
         <el-table-column prop="" label="編輯" width='60%'>
@@ -98,8 +99,15 @@ export default {
 
       return sums;
     },
-    insurance(row, column){
+    insurance1(row, column){
       if(row.insurance1){
+        return '✔️'
+      }else{
+        return '❌'
+      }
+    },
+    insurance2(row, column){
+      if(row.insurance2){
         return '✔️'
       }else{
         return '❌'
