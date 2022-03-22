@@ -52,11 +52,11 @@
 
           <el-form-item label="出發日期" prop="depDate" label-width="110px">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.depDate}}</span>
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.depDate" v-else style="width: 190px;"></el-date-picker>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.depDate" v-else style="width: 190px;" @change="endDateCheck"></el-date-picker>
           </el-form-item>
           <el-form-item label="結束日期" prop="endDate" label-width="110px">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.endDate}}</span>
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.endDate" v-else style="width: 190px;"></el-date-picker>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.endDate" v-else style="width: 190px;" :picker-options="endDateDisable" :disabled="ruleForm.depDate == null"></el-date-picker>
           </el-form-item>
           <el-form-item label="報帳日期" prop="createDate" label-width="110px">
             <span class="form-font-xl" v-if="(ruleForm.lock||createDate)&&!adminShow">{{ruleForm.createDate}}</span>
@@ -725,6 +725,11 @@ import * as moment from "moment/moment";
 export default {
   data() {
     return {
+      endDateDisable:{
+        disabledDate:(time=>{
+          return time.getTime() <= new Date(this.ruleForm.depDate).getTime()-24*60*60*1000;
+        })
+      },
       createDateDisable:{
         disabledDate(time) {
           if(moment().format('HH') >= moment('18').format('HH')){
@@ -1044,6 +1049,11 @@ export default {
      
   },
   methods: {
+    endDateCheck(){
+      if(this.ruleForm.endDate < this.ruleForm.depDate){
+        this.ruleForm.endDate = this.ruleForm.depDate
+      }
+    },
     async deleted(){
       let ref = db.collection(moment(this.ruleForm.depDate).format('YYYY-MM')+'G').doc(this.ruleForm.number);
       await ref.delete().then(()=>{

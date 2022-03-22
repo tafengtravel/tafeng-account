@@ -64,11 +64,11 @@
 
           <el-form-item label="出發日期" prop="depDate" label-width="110px">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.depDate}}</span>
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.depDate" v-else style="width: 190px;"></el-date-picker>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.depDate" v-else style="width: 190px;" @change="endDateCheck"></el-date-picker>
           </el-form-item>
           <el-form-item label="結束日期" prop="endDate" label-width="110px">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.endDate}}</span>
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.endDate" v-else style="width: 190px;"></el-date-picker>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.endDate" v-else style="width: 190px;" :picker-options="endDateDisable" :disabled="ruleForm.depDate == null"></el-date-picker>
           </el-form-item>
           <el-form-item label="報帳日期" prop="createDate" label-width="110px">
             <span class="form-font-xl" v-if="(ruleForm.lock||createDate)&&!adminShow">{{ruleForm.createDate}}</span>
@@ -726,6 +726,11 @@ export default {
       transferDialog:false,
       transferDialogCheck:false,
       transferNumber:'',
+      endDateDisable:{
+        disabledDate:(time=>{
+          return time.getTime() <= new Date(this.ruleForm.depDate).getTime()-24*60*60*1000;
+        })
+      }, 
       createDateDisable:{
         disabledDate(time) {
           if(moment().hours() >= 18 && moment().minutes() > 30){
@@ -1053,6 +1058,11 @@ export default {
      
   },
   methods: {
+    endDateCheck(){
+      if(this.ruleForm.endDate < this.ruleForm.depDate){
+        this.ruleForm.endDate = this.ruleForm.depDate
+      }
+    },
     transfer(){
       this.$emit("transferChildEvent");
     },
