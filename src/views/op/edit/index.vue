@@ -61,15 +61,15 @@ export default {
         'transferIncomeDetailOther':[],
       }
       
-      for(let i=0;i<parseInt(this.$refs.child.transferIncomeTo)-parseInt(this.$refs.child.transferIncomeFrom)+1;i++){
-        transferQuery.transferIncomeDetailDate.push(this.$refs.child.ruleForm.incomeDetailDate[i]) 
-        transferQuery.transferIncomeDetailItem.push(this.$refs.child.ruleForm.incomeDetailItem[i])
-        transferQuery.transferIncomeDetailIncome.push(this.$refs.child.ruleForm.incomeDetailIncome[i])
-        transferQuery.transferIncomeDetailType.push(this.$refs.child.ruleForm.incomeDetailType[i])
-        transferQuery.transferIncomeDetailCard.push(this.$refs.child.ruleForm.incomeDetailCard[i])
-        transferQuery.transferIncomeDetailReceiveDate.push(this.$refs.child.ruleForm.incomeDetailReceiveDate[i])
-        transferQuery.transferIncomeDetailProve.push(this.$refs.child.ruleForm.incomeDetailProve[i])
-        transferQuery.transferIncomeDetailOther.push(this.$refs.child.ruleForm.incomeDetailOther[i])
+      for(let i=0;i<transferLength;i++){
+        transferQuery.transferIncomeDetailDate.push(this.$refs.child.ruleForm.incomeDetailDate[i+parseInt(this.$refs.child.transferIncomeFrom)-1]) 
+        transferQuery.transferIncomeDetailItem.push(this.$refs.child.ruleForm.incomeDetailItem[i+parseInt(this.$refs.child.transferIncomeFrom)-1])
+        transferQuery.transferIncomeDetailIncome.push(this.$refs.child.ruleForm.incomeDetailIncome[i+parseInt(this.$refs.child.transferIncomeFrom)-1])
+        transferQuery.transferIncomeDetailType.push(this.$refs.child.ruleForm.incomeDetailType[i+parseInt(this.$refs.child.transferIncomeFrom)-1])
+        transferQuery.transferIncomeDetailCard.push(this.$refs.child.ruleForm.incomeDetailCard[i+parseInt(this.$refs.child.transferIncomeFrom)-1])
+        transferQuery.transferIncomeDetailReceiveDate.push(this.$refs.child.ruleForm.incomeDetailReceiveDate[i+parseInt(this.$refs.child.transferIncomeFrom)-1])
+        transferQuery.transferIncomeDetailProve.push(this.$refs.child.ruleForm.incomeDetailProve[i+parseInt(this.$refs.child.transferIncomeFrom)-1])
+        transferQuery.transferIncomeDetailOther.push(this.$refs.child.ruleForm.incomeDetailOther[i+parseInt(this.$refs.child.transferIncomeFrom)-1])
       }
       console.log(transferQuery)
       let route = this.$router.resolve({

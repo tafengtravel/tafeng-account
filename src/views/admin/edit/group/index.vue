@@ -80,6 +80,7 @@ export default {
               this.$refs.child.ruleForm.incomeDetailAdminCheck.push(false)
             }
           }
+          this.$refs.child.count()
           this.$refs.child.$forceUpdate() // 重新渲染dom
         }
       })

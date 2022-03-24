@@ -188,6 +188,14 @@ export default {
       this.coupon = 0
       this.linepay = 0
 
+      this.refundTransfer = 0
+      this.refundPost = 0
+      this.refundCard = 0
+      this.refundCash = 0
+      this.refundCheck = 0
+      this.refundOther = 0
+      this.refundLinepay = 0
+
       ref.where('depDate','==',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
         querySnapshot.forEach(doc => {  
           console.log(doc.data())
