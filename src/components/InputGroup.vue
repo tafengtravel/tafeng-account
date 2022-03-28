@@ -725,6 +725,7 @@ import * as moment from "moment/moment";
 export default {
   data() {
     return {
+      submitNew:false,
       endDateDisable:{
         disabledDate:(time=>{
           return time.getTime() <= new Date(this.ruleForm.depDate).getTime()-24*60*60*1000;
@@ -1389,25 +1390,34 @@ export default {
       }
       //利潤>9999 5%稅金
     },
-    submit(validRuleForm){
+    async submit(validRuleForm){
       // this.ruleForm.recordAccount.push(this.email)
       // this.ruleForm.recordTime.push(moment().format('YYYY-MM-DD HH:mm'))
 
       let ref = db.collection(moment(this.ruleForm.depDate).format('YYYY-MM')+'G').doc(this.ruleForm.number);
       console.log(ref)
-      this.$refs[validRuleForm].validate((valid) => {
-        if (valid) {
-          ref.set(this.ruleForm).then(() => {
-            console.log('set data successful');
-            this.$message.success('新增成功');
-            this.$router.push({ path: '/profile' })
+
+      await ref.get().then(doc => { 
+        if(typeof(doc.data()) != 'undefined' && this.submitNew == true){
+          if (doc.exists && this.submitNew == true) {
+            this.$message.error('此團號已存在！請重新讀取一次團號！')
+            return 0;
+          }   
+        }else{
+          this.$refs[validRuleForm].validate((valid) => {
+            if (valid) {
+              ref.set(this.ruleForm).then(() => {
+                console.log('set data successful');
+                this.$message.success('新增成功');
+                this.$router.push({ path: '/profile' })
+              });
+            } else {
+              console.log('error submit!!');
+              return false;
+            }
           });
-        } else {
-          console.log('error submit!!');
-          return false;
         }
-      });
-      
+      })
     }
   },
   mounted(){

@@ -99,8 +99,7 @@ export default {
     this.$refs.child.adminShow = false
     this.$refs.child.opShow = false
     this.$refs.child.readNumber = true
-    
-    // this.email = firebaseApp.auth().currentUser.email
+    this.$refs.child.submitNew = true
   }
   
 }
