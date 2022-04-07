@@ -98,13 +98,7 @@ export default {
         )
         
       }); 
-
-
-
-      doc.save("two-by-four.pdf");
-
-      // let searchChildEvent = {'cs':this.cs,'month':this.month}
-      // this.$emit("searchChildEvent", searchChildEvent);
+      doc.save("FolderCover.pdf");
     },
     newLine(oldLine){
       let newLine = oldLine.split(/\n/)
