@@ -43,6 +43,12 @@
 
       <el-row></el-row>
 
+      <div style="text-align: right">
+        <FolderCover :fotherItemData = 'itemData'></FolderCover>
+      </div>
+
+      <el-row></el-row>
+
       <div class="sub_title">退業績</div>
       <el-table v-loading="listLoading" :data="itemDataCancel" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
         <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
@@ -77,11 +83,13 @@ import { firebaseApp } from '@/db.js'
 import '@/styles/common.css'
 import * as moment from "moment/moment";
 import { formatTime } from '@/utils';
+import FolderCover from '@/components/FolderCover.vue';
 
 
 
 export default {
   components: {
+    FolderCover
 
   },
   
