@@ -90,7 +90,6 @@ import FolderCover from '@/components/FolderCover.vue';
 export default {
   components: {
     FolderCover
-
   },
   
   data() {
