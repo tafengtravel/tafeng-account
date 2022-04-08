@@ -5,7 +5,7 @@
       v-model="date"
       type="date"
       placeholder="選擇DL日期"
-      style="width:150px"
+      style="width:170px"
       value-format="yyyy-MM-dd"
       >
     </el-date-picker>
