@@ -34,7 +34,7 @@ export default {
       this.fotherItemData.forEach((itemData,index) => {
 
         let csName = ''
-        switch(this.fotherItemData[index].cs){
+        switch(itemData.cs){
           case 'B1':csName = 'Rene'    ;break
           case 'B2':csName = 'Joy'     ;break
           case 'B4':csName = 'Carine'  ;break
@@ -45,14 +45,14 @@ export default {
         }
 
         //----------自動排版----------
-        let newLineName = this.newLine(this.fotherItemData[index].name)
-        this.fotherItemData[index].people = this.newLine(this.fotherItemData[index].people)
+        let newLineName = this.newLine(itemData.name)
+        let newLinePeople = this.newLine(itemData.people)
         let amount
 
-        if(this.fotherItemData[index].location != '代訂車'){
-          amount = this.fotherItemData[index].amount + 'P'
+        if(itemData.location != '代訂車'){
+          amount = itemData.amount + 'P'
         }else{
-          amount = this.fotherItemData[index].amount
+          amount = itemData.amount
         }
 
         if(index%3 == 0 && index != 0){
@@ -61,18 +61,18 @@ export default {
         //左側出發日期+團名
         doc.addImage(img, "JPEG", 3, 2.5+index%3*offsetY, 186, offsetY)  
         doc.setFontSize(8)
-        doc.text((parseInt(moment(this.fotherItemData[index].depDate).format('YYYY'))-1911).toString() 
-        +'/'+moment(this.fotherItemData[index].depDate).format('MM/DD')+' ~ '
-        + (parseInt(moment(this.fotherItemData[index].endDate).format('YYYY'))-1911).toString()
-        +'/'+moment(this.fotherItemData[index].endDate).format('MM/DD')
+        doc.text((parseInt(moment(itemData.depDate).format('YYYY'))-1911).toString() 
+        +'/'+moment(itemData.depDate).format('MM/DD')+' ~ '
+        + (parseInt(moment(itemData.endDate).format('YYYY'))-1911).toString()
+        +'/'+moment(itemData.endDate).format('MM/DD')
         , 21, 9+index%3*offsetY)
 
         //左側代表人+團號+業務
         doc.setFontSize(11)
-        doc.text(this.fotherItemData[index].people, 61, 10+index%3*offsetY)
+        doc.text(itemData.people, 61, 10+index%3*offsetY)
         doc.text(amount, 87, 16+index%3*offsetY)
-        doc.text(this.fotherItemData[index].name, 21, 15+index%3*offsetY); 
-        doc.text(this.fotherItemData[index].number, 21, 22+index%3*offsetY); 
+        doc.text(itemData.name, 21, 15+index%3*offsetY); 
+        doc.text(itemData.number, 21, 22+index%3*offsetY); 
         doc.text(csName, 82, 22+index%3*offsetY); 
 
         // 側邊直貼邊框 x1 y1 x2 y2 
@@ -88,36 +88,42 @@ export default {
 
         // 側邊直貼日期 
         doc.setFontSize(12.5)
-        doc.text(moment(this.fotherItemData[index].depDate).format('MM/DD'),191.75, 15+index%3*offsetY)
-        doc.text(moment(this.fotherItemData[index].depDate).format('MM/DD'),191.75, 15+index%3*offsetY+42)
+        doc.text(moment(itemData.depDate).format('MM/DD'),191.75, 15+index%3*offsetY)
+        doc.text(moment(itemData.depDate).format('MM/DD'),191.75, 15+index%3*offsetY+42)
         doc.setFontSize(14)
         doc.text('~',199.25, 19.25+index%3*offsetY,null,90)
         doc.text('~',199.25, 19.25+index%3*offsetY+42,null,90)
         doc.setFontSize(12.5)
-        doc.text(moment(this.fotherItemData[index].endDate).format('MM/DD'),191.75, 23+index%3*offsetY)
-        doc.text(moment(this.fotherItemData[index].endDate).format('MM/DD'),191.75, 23+index%3*offsetY+42)
+        doc.text(moment(itemData.endDate).format('MM/DD'),191.75, 23+index%3*offsetY)
+        doc.text(moment(itemData.endDate).format('MM/DD'),191.75, 23+index%3*offsetY+42)
 
         // 側邊直貼文字 
-        doc.setFontSize(11)
+        let regExp = /[a-z]/i;
+        if(regExp.test(newLinePeople)){
+          doc.setFontSize(9)
+          console.log('eng')
+        }else{
+          doc.setFontSize(11)
+        }
         doc.text(newLineName
-          +'\n'+'\n'+this.fotherItemData[index].people
+          +'\n'+'\n'+newLinePeople
           +'\n'+amount
           ,190.25, 30+index%3*offsetY
         )
         doc.text(newLineName
-          +'\n'+'\n'+this.fotherItemData[index].people
+          +'\n'+'\n'+newLinePeople
           +'\n'+amount
           ,190.25, 30+index%3*offsetY+42
         )
 
         //左側收入
-        if(this.fotherItemData[index].incomeDetailIncome != undefined){
+        if(itemData.incomeDetailIncome != undefined){
           let incomeTypeX1 
           doc.setFontSize(10)
-          doc.text(this.fotherItemData[index].incomeDetailIncome[0],22, 29.5+index%3*offsetY)
+          doc.text(itemData.incomeDetailIncome[0],22, 29.5+index%3*offsetY)
           doc.setFontSize(9)
-          doc.text(moment(this.fotherItemData[index].incomeDetailDate[0]).format('MM/DD'),49, 29.5+index%3*offsetY)
-          switch(this.fotherItemData[index].incomeDetailType[0]){
+          doc.text(moment(itemData.incomeDetailDate[0]).format('MM/DD'),49, 29.5+index%3*offsetY)
+          switch(itemData.incomeDetailType[0]){
             case '匯款':incomeTypeX1 = 58.25 ;break
             case '刷卡':incomeTypeX1 = 63    ;break
             case '現金':incomeTypeX1 = 67.75 ;break
@@ -130,7 +136,7 @@ export default {
 
         //右側廠商支出
         doc.setFontSize(10)
-        this.fotherItemData[index].payDetailCompany.forEach((itemDataCompany,companyIndex) => {
+        itemData.payDetailCompany.forEach((itemDataCompany,companyIndex) => {
           doc.text(itemDataCompany,105, 15+companyIndex*7.25+index%3*offsetY)
         })
 
@@ -139,11 +145,17 @@ export default {
       doc.save("FolderCover.pdf");
     },
     newLine(oldLine){
-      //分割排版 >4換行
-      let textNumber = 4
-      let newLine = oldLine.split(/\n/)
+      let regExp = /[a-z]/i;
+      let newLine
+      if(regExp.test(oldLine)){
+        newLine = oldLine
+        oldLine = newLine.replaceAll(' ','\n')
+      }else{
+        //分割排版 中文>4換行
+        let textNumber = 4
         let stringLength
         let str = ''
+        newLine = oldLine.split(/\n/)
         for(let i=0;i<newLine.length;i++){
           stringLength = newLine[i].length
           if(stringLength > textNumber){
@@ -158,7 +170,8 @@ export default {
             str = ''
           }
         }
-      oldLine = newLine.join('\n')
+        oldLine = newLine.join('\n')
+      }
       return oldLine
     }
   },
