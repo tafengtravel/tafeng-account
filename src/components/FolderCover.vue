@@ -37,7 +37,7 @@ export default {
         switch(this.fotherItemData[index].cs){
           case 'B1':csName = 'Rene'    ;break
           case 'B2':csName = 'Joy'     ;break
-          case 'B4':csName = 'Carin'   ;break
+          case 'B4':csName = 'Carine'  ;break
           case 'B6':csName = 'Alin'    ;break
           case 'B8':csName = 'Jenny'   ;break
           case 'B10':csName = 'Eating' ;break
