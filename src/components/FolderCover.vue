@@ -140,17 +140,18 @@ export default {
     },
     newLine(oldLine){
       //分割排版 >4換行
+      let textNumber = 4
       let newLine = oldLine.split(/\n/)
         let stringLength
         let str = ''
         for(let i=0;i<newLine.length;i++){
           stringLength = newLine[i].length
-          if(stringLength > 4){
-            for(let j=0;j<parseInt(stringLength/4)+1;j++){
-              if(j == parseInt(stringLength/4)){
-                str = str + newLine[i].substring(j*4,j*4+4)
+          if(stringLength > textNumber){
+            for(let j=0;j<parseInt(stringLength/textNumber)+1;j++){
+              if(j == parseInt(stringLength/textNumber)){
+                str = str + newLine[i].substring(j*textNumber,j*textNumber+textNumber)
               }else{
-                str = str + newLine[i].substring(j*4,j*4+4) + '\n'
+                str = str + newLine[i].substring(j*textNumber,j*textNumber+textNumber) + '\n'
               }
             }
             newLine[i] = str
