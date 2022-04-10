@@ -87,21 +87,15 @@ export default {
         doc.line(190, 51+42+index%3*offsetY, 206, 51+42+index%3*offsetY)
 
         // 側邊直貼日期 
-        doc.setFontSize(9)
-        doc.text((parseInt(moment(this.fotherItemData[index].depDate).format('YYYY'))-1911).toString() 
-          +'/'+moment(this.fotherItemData[index].depDate).format('MM/DD')+'\n'
-          +'        ｜'+'\n'
-          +(parseInt(moment(this.fotherItemData[index].endDate).format('YYYY'))-1911).toString()
-          +'/'+moment(this.fotherItemData[index].endDate).format('MM/DD')
-          ,190.25, 16+index%3*offsetY
-        )
-        doc.text((parseInt(moment(this.fotherItemData[index].depDate).format('YYYY'))-1911).toString() 
-          +'/'+moment(this.fotherItemData[index].depDate).format('MM/DD')+'\n'
-          +'        ｜'+'\n'
-          +(parseInt(moment(this.fotherItemData[index].endDate).format('YYYY'))-1911).toString()
-          +'/'+moment(this.fotherItemData[index].endDate).format('MM/DD')
-          ,190.25, 16+index%3*offsetY+42
-        )
+        doc.setFontSize(12.5)
+        doc.text(moment(this.fotherItemData[index].depDate).format('MM/DD'),191.75, 15+index%3*offsetY)
+        doc.text(moment(this.fotherItemData[index].depDate).format('MM/DD'),191.75, 15+index%3*offsetY+42)
+        doc.setFontSize(14)
+        doc.text('~',199.25, 19.25+index%3*offsetY,null,90)
+        doc.text('~',199.25, 19.25+index%3*offsetY+42,null,90)
+        doc.setFontSize(12.5)
+        doc.text(moment(this.fotherItemData[index].endDate).format('MM/DD'),191.75, 23+index%3*offsetY)
+        doc.text(moment(this.fotherItemData[index].endDate).format('MM/DD'),191.75, 23+index%3*offsetY+42)
 
         // 側邊直貼文字 
         doc.setFontSize(11)
