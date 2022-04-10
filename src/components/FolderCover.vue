@@ -118,11 +118,11 @@ export default {
           doc.setFontSize(9)
           doc.text(moment(this.fotherItemData[index].incomeDetailDate[0]).format('MM/DD'),49, 29.5+index%3*offsetY)
           switch(this.fotherItemData[index].incomeDetailType[0]){
-            case '匯款':incomeTypeX1 = 58.25    ;break
-            case '刷卡':incomeTypeX1 = 63     ;break
-            case '現金':incomeTypeX1 = 67.75   ;break
-            case '支票':incomeTypeX1 = 72.5    ;break
-            case '其他':incomeTypeX1 = 77.25   ;break
+            case '匯款':incomeTypeX1 = 58.25 ;break
+            case '刷卡':incomeTypeX1 = 63    ;break
+            case '現金':incomeTypeX1 = 67.75 ;break
+            case '支票':incomeTypeX1 = 72.5  ;break
+            case '其他':incomeTypeX1 = 77.25 ;break
           }
           doc.setFontSize(6)
           doc.text('●',incomeTypeX1, 29+index%3*offsetY)
