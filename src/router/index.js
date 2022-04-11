@@ -26,6 +26,11 @@ import { firebaseApp } from '@/db.js'
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
  */
+const leoUID = 'bnICmkLxO0OTHTbOopiNtWwTKY83'
+const martinaUID = 'mPaUjWY6SjfX52nEXjGKQy1XXav2'
+const amyUID = '9my42qdbUFUYqQO4WNykOTgzekY2'
+const opUID = 'XyQb85iWzIRYS7JtrJU0B6FVGCG3'
+
 export const csRoutes = [
   {
     path: '/login',
@@ -148,7 +153,7 @@ export const opRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2' || user.uid =='bDbwj0BKjnY0hg5q5orSvnE1Gfi1') {
+          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID) {
             next();
           }else{
             next('/404')
@@ -210,7 +215,7 @@ export const opRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2' || user.uid =='bDbwj0BKjnY0hg5q5orSvnE1Gfi1') {
+          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID) {
             next();
           }else{
             next('/404')
@@ -341,7 +346,7 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2' || user.uid =='bDbwj0BKjnY0hg5q5orSvnE1Gfi1') {
+          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID) {
             next();
           }else{
             next('/404')
@@ -403,7 +408,7 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2' || user.uid =='bDbwj0BKjnY0hg5q5orSvnE1Gfi1') {
+          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID) {
             next();
           }else{
             next('/404')
@@ -443,7 +448,7 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2') {
+          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID) {
             next();
           }else{
             next('/404')
@@ -549,7 +554,7 @@ export const adminRoutes = [
         beforeEnter: (to, from, next) => {
           firebaseApp.auth().onAuthStateChanged(user=>{
             if (user) {
-              if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83') {
+              if (user.uid == leoUID) {
                 next();
               }else{
                 next('/404')
@@ -574,7 +579,7 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83') {
+          if (user.uid == leoUID) {
             next();
           }else{
             next('/404')
@@ -629,11 +634,11 @@ router.beforeResolve((to, from, next) => {
   firebaseApp.auth().onAuthStateChanged(user=>{
     if (user) {
       console.log('user')
-      if(user.uid == 'bnICmkLxO0OTHTbOopiNtWwTKY83' || user.uid =='mPaUjWY6SjfX52nEXjGKQy1XXav2' || user.uid =='9my42qdbUFUYqQO4WNykOTgzekY2'){
+      if(user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID){
         console.log('admin')
         router.options.routes = adminRoutes
         next()
-      }else if(user.uid =='bDbwj0BKjnY0hg5q5orSvnE1Gfi1'){
+      }else if(user.uid ==opUID){
         router.options.routes = opRoutes
         next()
       }

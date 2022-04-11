@@ -514,7 +514,7 @@
         </el-row>
         <el-card class="box-card">
           <!-- 旅責險 -->
-          <el-form-item label="是否保旅責險" label-width="120px">
+          <el-form-item label="是否保旅責險" label-width="140px">
             <span class="form-font-sm" v-if="(ruleForm.insuranceOpCheck1||ruleForm.insuranceAdminCheck1||ruleForm.lock)&&!adminShow">{{ruleForm.insurance1}}</span>
             <el-select v-model="ruleForm.insurance1" @input="count" placeholder="請選擇" style="width: 110px;" v-else>
               <el-option label="否" :value= false></el-option>
@@ -536,14 +536,27 @@
           <el-form-item label="= 費用">
             <span class="form-font-sm">{{ruleForm.insuranceTotalPrice1}}</span>
           </el-form-item> 
-          <el-form-item label="OP核實" label-width="110px" class="op">
+          <el-row></el-row>
+          <el-form-item label="是否已保旅責險" label-width="140px">
+            <span class="form-font-sm" v-if="(!opShow||ruleForm.insuranceOpCheck1||ruleForm.insuranceAdminCheck1||ruleForm.lock)&&!adminShow">{{ruleForm.insuranceComplete1}}</span>
+            <el-select v-model="ruleForm.insuranceComplete1" @input="count" placeholder="請選擇" style="width: 110px;" v-else>
+              <el-option label="否" :value= false></el-option>
+              <el-option label="是" :value= true></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="已保旅責險日期" label-width="140px">
+            <span class="form-font-md" v-if="(!opShow||ruleForm.insuranceOpCheck1||ruleForm.insuranceAdminCheck1||ruleForm.lock)&&!adminShow">{{ruleForm.insuranceCompleteDate1}}</span>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.insuranceCompleteDate1" v-else style="width: 160px;"></el-date-picker>
+          </el-form-item>
+
+          <el-form-item label="OP核實" label-width="100px" class="op">
             <span class="form-font-sm" v-if="((!opShow||ruleForm.lock||ruleForm.insuranceAdminCheck1)&&!adminShow)">{{ruleForm.insuranceOpCheck1}}</span>
             <el-select v-model="ruleForm.insuranceOpCheck1" placeholder="OP核實" v-else style="width: 110px;">
               <el-option label="否" :value= false></el-option>
               <el-option label="是" :value= true></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="財務核實" label-width="110px" class="admin">
+          <el-form-item label="財務核實" label-width="100px" class="admin">
             <span class="form-font-sm" v-if="!adminShow">{{ruleForm.insuranceAdminCheck1}}</span>
             <el-select v-model="ruleForm.insuranceAdminCheck1" placeholder="財務核實" v-else style="width: 110px;">
               <el-option label="否" :value= false></el-option>
@@ -552,7 +565,7 @@
           </el-form-item>
           <el-row></el-row>
           <!-- 旅平險 -->
-          <el-form-item label="是否保旅平險" label-width="120px">
+          <el-form-item label="是否保旅平險" label-width="140px">
             <span class="form-font-sm" v-if="(ruleForm.insuranceOpCheck2||ruleForm.insuranceAdminCheck2||ruleForm.lock)&&!adminShow">{{ruleForm.insurance2}}</span>
             <el-select v-model="ruleForm.insurance2" @input="count" placeholder="請選擇" style="width: 110px;" v-else>
               <el-option label="否" :value= false></el-option>
@@ -574,14 +587,26 @@
           <el-form-item label="= 費用">
             <span class="form-font-sm">{{ruleForm.insuranceTotalPrice2}}</span>
           </el-form-item> 
-          <el-form-item label="OP核實" label-width="110px" class="op">
+          <el-row></el-row>
+          <el-form-item label="是否已保旅平險" label-width="140px">
+            <span class="form-font-sm" v-if="(!opShow||ruleForm.insuranceOpCheck2||ruleForm.insuranceAdminCheck2||ruleForm.lock)&&!adminShow">{{ruleForm.insuranceComplete2}}</span>
+            <el-select v-model="ruleForm.insuranceComplete2" @input="count" placeholder="請選擇" style="width: 110px;" v-else>
+              <el-option label="否" :value= false></el-option>
+              <el-option label="是" :value= true></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="已保旅平險日期" label-width="140px">
+            <span class="form-font-md" v-if="(!opShow||ruleForm.insuranceOpCheck2||ruleForm.insuranceAdminCheck2||ruleForm.lock)&&!adminShow">{{ruleForm.insuranceCompleteDate2}}</span>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.insuranceCompleteDate2" v-else style="width: 160px;"></el-date-picker>
+          </el-form-item>
+          <el-form-item label="OP核實" label-width="100px" class="op">
             <span class="form-font-sm" v-if="(!opShow||ruleForm.lock||ruleForm.insuranceAdminCheck2)&&!adminShow">{{ruleForm.insuranceOpCheck2}}</span>
             <el-select v-model="ruleForm.insuranceOpCheck2" placeholder="OP核實" style="width: 110px;" v-else>
               <el-option label="否" :value= false></el-option>
               <el-option label="是" :value= true></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="財務核實" label-width="110px" class="admin">
+          <el-form-item label="財務核實" label-width="100px" class="admin">
             <span class="form-font-sm" v-if="!adminShow">{{ruleForm.insuranceAdminCheck2}}</span>
             <el-select v-model="ruleForm.insuranceAdminCheck2" placeholder="財務核實" v-else style="width: 110px;">
               <el-option label="否" :value= false></el-option>
@@ -995,6 +1020,10 @@ export default {
         insuranceAdminCheck1:false,
         insuranceOpCheck2:false,
         insuranceAdminCheck2:false,
+        insuranceComplete1:false,
+        insuranceComplete2:false,
+        insuranceCompleteDate1:'',
+        insuranceCompleteDate2:'',
 
         refundDetailDate:[],
         refundDetailItem:[],

@@ -16,8 +16,10 @@
         <el-table-column prop="amount" label="人數" width='90%' sortable :sort-method = "(a,b)=>a.amount.localeCompare(b.amount)"></el-table-column>
         <el-table-column prop="phone" label="聯絡電話" width='125%' sortable :sort-method = "(a,b)=>{return a.phone - b.phone}"></el-table-column>
         <el-table-column prop="priceInsufficient" label="未收尾款" width='125%' sortable  :sort-method = "(a,b)=>{return a.priceInsufficient - b.priceInsufficient}"></el-table-column>
-        <el-table-column prop="insurance1" label="旅責" width='80%' :formatter="insurance1" sortable :sort-method = "(a,b)=>{return a.insurance1 - b.insurance1}"></el-table-column>
-        <el-table-column prop="insurance2" label="旅平" width='80%' :formatter="insurance2" sortable :sort-method = "(a,b)=>{return a.insurance2 - b.insurance2}"></el-table-column>
+        <el-table-column prop="insurance1" label="旅責" width='80%' :formatter="insuranceCheck" sortable :sort-method = "(a,b)=>{return a.insurance1 - b.insurance1}"></el-table-column>
+        <el-table-column prop="insuranceComplete1" label="已保" width='80%' :formatter="insuranceCheck" sortable :sort-method = "(a,b)=>{return a.insuranceComplete1 - b.insuranceComplete1}"></el-table-column>
+        <el-table-column prop="insurance2" label="旅平" width='80%' :formatter="insuranceCheck" sortable :sort-method = "(a,b)=>{return a.insurance2 - b.insurance2}"></el-table-column>
+        <el-table-column prop="insuranceComplete2" label="已保" width='80%' :formatter="insuranceCheck" sortable :sort-method = "(a,b)=>{return a.insuranceComplete2 - b.insuranceComplete2}"></el-table-column>
         <el-table-column prop="other" label="備註" sortable :sort-method = "(a,b)=>a.other.localeCompare(b.other)"></el-table-column>
         <el-table-column prop="" label="編輯" width='60%'>
           <template slot-scope="scope">
@@ -57,19 +59,37 @@ export default {
     
   },
   methods: {
-    insurance1(row, column){
-      if(row.insurance1){
-        return '✔️'
-      }else{
-        return '❌'
-      }
-    },
-    insurance2(row, column){
-      if(row.insurance2){
-        return '✔️'
-      }else{
-        return '❌'
-      }
+    insuranceCheck(row, column, cellValue, index){
+      switch(column.property){
+        case 'insurance1': 
+          if(row.insurance1){
+            return '✔️'
+          }else{
+            return '❌'
+          }
+        ;break
+        case 'insurance2': 
+          if(row.insurance2){
+            return '✔️'
+          }else{
+            return '❌'
+          }
+        ;break
+        case 'insuranceComplete1': 
+          if(row.insuranceComplete1){
+            return '✔️'
+          }else{
+            return '❌'
+          }
+        ;break
+        case 'insuranceComplete2': 
+          if(row.insuranceComplete2){
+            return '✔️'
+          }else{
+            return '❌'
+          }
+        ;break
+      }//可以精簡 之後再修改
     },
     group(row, column){
       if(row.tax > 0 && row.location != '團體報帳' && row.location != 'JOIN報帳' && row.location != '跨年'){
