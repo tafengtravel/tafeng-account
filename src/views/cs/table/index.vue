@@ -60,36 +60,11 @@ export default {
   },
   methods: {
     insuranceCheck(row, column, cellValue, index){
-      switch(column.property){
-        case 'insurance1': 
-          if(row.insurance1){
-            return '✔️'
-          }else{
-            return '❌'
-          }
-        ;break
-        case 'insurance2': 
-          if(row.insurance2){
-            return '✔️'
-          }else{
-            return '❌'
-          }
-        ;break
-        case 'insuranceComplete1': 
-          if(row.insuranceComplete1){
-            return '✔️'
-          }else{
-            return '❌'
-          }
-        ;break
-        case 'insuranceComplete2': 
-          if(row.insuranceComplete2){
-            return '✔️'
-          }else{
-            return '❌'
-          }
-        ;break
-      }//可以精簡 之後再修改
+      if(row[column.property]){
+        return '✔️'
+      }else{
+        return '❌'
+      }
     },
     group(row, column){
       if(row.tax > 0 && row.location != '團體報帳' && row.location != 'JOIN報帳' && row.location != '跨年'){
