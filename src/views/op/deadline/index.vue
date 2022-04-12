@@ -25,8 +25,10 @@
         <el-table-column prop="pay" label="支出" width='80%'></el-table-column>
         <el-table-column prop="dl1" label="第一筆DL" width='120%' ></el-table-column>
         <el-table-column prop="dlpay1" label="第一筆金額" width='120%' ></el-table-column>
+        <el-table-column prop="dlpaydate1" label="付款日期" width='120%' ></el-table-column>
         <el-table-column prop="dl2" label="第二筆DL" width='120%' ></el-table-column>
         <el-table-column prop="dlpay2" label="第二筆金額" width='120%' ></el-table-column>
+        <el-table-column prop="dlpaydate2" label="付款日期" width='120%' ></el-table-column>
         <el-table-column prop="" label="編輯" width='60%'>
           <template slot-scope="scope">
             <el-button @click="edit(scope.row)" type="text" >編輯</el-button>
@@ -95,8 +97,10 @@ export default {
                   'pay':doc.data().payDetailPay[j],
                   'dl1':doc.data().payDetailDl1[j],
                   'dlpay1':doc.data().payDetailDlPay1[j],
+                  'dlpaydate1':doc.data().payDetailDlPayDate1[j],
                   'dl2':doc.data().payDetailDl2[j],
                   'dlpay2':doc.data().payDetailDlPay2[j],
+                  'dlpaydate2':doc.data().payDetailDlPayDate2[j],
                 })
               }
             }
@@ -116,8 +120,10 @@ export default {
                   'pay':doc.data().payDetailPay[j],
                   'dl1':doc.data().payDetailDl1[j],
                   'dlpay1':doc.data().payDetailDlPay1[j],
+                  'dlpaydate1':doc.data().payDetailDlPayDate1[j],
                   'dl2':doc.data().payDetailDl2[j],
                   'dlpay2':doc.data().payDetailDlPay2[j],
+                  'dlpaydate2':doc.data().payDetailDlPayDate2[j],
                 })
               }
             }
