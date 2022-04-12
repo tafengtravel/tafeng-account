@@ -47,6 +47,7 @@
         <el-table-column prop="name" label="團名"  sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
         <el-table-column prop="people" label="代表人" width='175%' sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
         <el-table-column prop="amount" label="人數" width='90%' sortable :sort-method = "(a,b)=>a.amount.localeCompare(b.amount)"></el-table-column>
+        <el-table-column prop="other" label="備註" width='200%'></el-table-column>
         <el-table-column prop="createDate" label="報帳日期" width='120%'></el-table-column>
         <el-table-column prop="priceDetailAdminCheck" label="主管核實" width='100%' :formatter="adminCheck"></el-table-column>
         <el-table-column prop="incomeDetailIncome[0]" label="收入" width='100%'></el-table-column>
