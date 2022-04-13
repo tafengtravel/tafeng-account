@@ -1,6 +1,14 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">帳號: {{ email }}</div>
+    <div class="dashboard-text"></div>
+    <el-form :model="form" :inline="true" label-position="left" label-width="70px" class="demo-ruleForm">
+      <el-row :gutter="20">
+        <div class="sub_title">帳號: {{email}}</div>
+      </el-row>
+      <el-row :gutter="20">
+        <div class="sub_title">簽到</div>
+      </el-row>
+    </el-form>
   </div>
 </template>
 
@@ -9,19 +17,22 @@ import { email } from '@/db.js'
 import { mapGetters } from 'vuex'
 import '@/db.js'
 import { firebaseApp } from '@/db.js'
+import axios from 'axios'
+import '@/styles/common.css'
 
 export default {
   name: 'Dashboard',
   data() {
     return {
-      email:' ',
+      email:'',
+      form:{},
     }
   },
   computed: {
     ...mapGetters([
       'name'
     ])
-  },mounted(){
+  },async mounted(){
     firebaseApp.auth().onAuthStateChanged(user=>{
       if (user) {
         this.email = user.email
@@ -29,8 +40,18 @@ export default {
         
       }
     });
-    this.email = email
-    // this.email = firebaseApp.auth().currentUser.email
+
+    const userIP = await axios.request('https://api.ipify.org?format=json').then(response => {
+      return response.data.ip
+    }).catch(function (error) {
+      console.error(error);
+    });
+
+    console.log(userIP)
+
+
+    
+
   }
   
 }
@@ -45,5 +66,11 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+}
+.sub_title{
+  color: black;
+}
+.app-container {
+  padding: 7px;
 }
 </style>
