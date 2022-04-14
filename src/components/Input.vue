@@ -909,7 +909,7 @@ export default {
             label: '其他'
           }]
         }],
-        csOptions: [{
+      csOptions: [{
         value: 'A1',
         label: 'A1'
       },{
