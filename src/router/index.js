@@ -605,6 +605,40 @@ export const adminRoutes = [
       },
     ]
   },
+  {
+    path: '/human',
+    component: Layout,
+    redirect: '/human/edit',
+    name: '人資管理',
+    beforeEnter: (to, from, next) => {
+      firebaseApp.auth().onAuthStateChanged(user=>{
+        if (user) {
+          if (leoUID || user.uid == martinaUID || user.uid == amyUID) {
+            next();
+          }else{
+            next('/404')
+          }
+        }else{
+          next('/login')
+        }
+      });
+    },
+    meta: {title: '人資管理', icon: 'backup'},
+    children: [
+      {
+        path: 'edit',
+        name: '編輯',
+        component: () => import('@/views/human/edit/index'),
+        meta: { title: '編輯', icon: '' }
+      },
+      {
+        path: 'record',
+        name: '出缺勤紀錄',
+        component: () => import('@/views/human/record/index'),
+        meta: { title: '出缺勤紀錄', icon: '' }
+      },
+    ]
+  },
   
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
