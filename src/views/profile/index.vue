@@ -7,29 +7,87 @@
       </el-row>
       <el-row :gutter="16">
         <el-form-item label="姓名">
-          <span class="form-font-md font">{{form.name}}</span>
+          <el-skeleton style="width: 240px" :loading="listLoading" animated>
+            <template slot="template">
+              <el-skeleton-item variant="text" style="width: 40%;"/>
+            </template>
+            <template>
+              <span class="form-font-md font">{{form.name}}</span>
+            </template>
+          </el-skeleton>
         </el-form-item>
         <el-form-item label="代號">
-          <span class="form-font-md font">{{form.cs}}</span>
+          <el-skeleton style="width: 240px" :loading="listLoading" animated>
+            <template slot="template">
+              <el-skeleton-item variant="text" style="width: 60%;"/>
+            </template>
+            <template>
+              <span class="form-font-md font">{{form.cs}}</span>
+            </template>
+          </el-skeleton>
         </el-form-item>
         <el-form-item label="信箱">
-          <span class="form-font-md font">{{form.mail}}</span>
+          <el-skeleton style="width: 240px" :loading="listLoading" animated>
+            <template slot="template">
+              <el-skeleton-item variant="text" style="width: 80%;"/>
+            </template>
+            <template>
+              <span class="form-font-md font">{{form.mail}}</span>
+            </template>
+          </el-skeleton>
+        </el-form-item>
+      </el-row>
+      <el-row :gutter="16">
+        <el-form-item label="日期">
+          <el-skeleton style="width: 240px" :loading="listLoading" animated>
+            <template slot="template">
+              <el-skeleton-item variant="text" style="width: 80%;"/>
+            </template>
+            <template>
+              <span class="form-font-md font">{{date}}</span>
+            </template>
+          </el-skeleton>
+        </el-form-item>
+        <el-form-item label="上班簽到" label-width="110px">
+          <el-skeleton style="width: 200px" :loading="listLoading" animated>
+            <template slot="template">
+              <el-skeleton-item variant="text" style="width: 80%;"/>
+            </template>
+            <template>
+              <span class="form-font-md font" v-if="formRecord.entryTimeDisable || listLoading">{{formRecord.entryTime}}</span>
+              <el-button v-else @click="submit('entry')" type="primary">簽到</el-button>
+            </template>
+          </el-skeleton>
+        </el-form-item>
+        <el-form-item label="下班簽到" label-width="110px">
+          <el-skeleton style="width: 240px" :loading="listLoading" animated>
+            <template slot="template">
+              <el-skeleton-item variant="text" style="width: 80%;"/>
+            </template>
+            <template>
+              <span class="form-font-md font" v-if="formRecord.quitTimeDisable || listLoading" >{{formRecord.quitTime}}</span>
+              <el-button v-else @click="submit('quit')" type="success">簽到</el-button>
+            </template>
+          </el-skeleton>
         </el-form-item>
       </el-row>
       <el-row :gutter="30">
         <div class="sub_title">出缺勤紀錄</div>
       </el-row>
       <el-row :gutter="16">
-        <el-form-item label="上班簽到" label-width="110px">
-          <span class="form-font-md font" v-if="formRecord.entryTimeDisable || listLoading">已簽到</span>
-          <el-button v-else @click="submit('entry')" type="primary">簽到</el-button>
+        <el-form-item label="月份" label-width="70px">
+          <el-date-picker type="month" value-format="yyyy-MM" placeholder="選擇日期" v-model="dateSearch" style="width: 160px;"></el-date-picker>
         </el-form-item>
-        <el-form-item label="下班簽到" label-width="110px">
-          <span class="form-font-md font" v-if="formRecord.quitTimeDisable || listLoading" >已簽到</span>
-          <el-button v-else @click="submit('quit')" type="success">簽到</el-button>
-        </el-form-item>
+          <el-button @click="searchRecord()" type="primary" :loading="listLoading">搜尋</el-button>
       </el-row>
     </el-form>
+    <el-table v-loading="listLoading" :data="itemData" :default-sort = "{prop: 'date',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
+      <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
+      <el-table-column prop="date" label="日期" width='140%' sortable :sort-method = "(a,b)=>{return a.date - b.date}"></el-table-column>
+      <el-table-column prop="name" label="姓名" sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
+      <el-table-column prop="entryTime" label="上班時間" width='140%' :formatter="group" sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
+      <el-table-column prop="quitTime" label="下班時間" width='140%' :formatter="group" sortable :sort-method = "(a,b)=>{return a.quitTime - b.quitTime}"></el-table-column>
+    </el-table>
   </div>
 </template>
 
@@ -59,6 +117,9 @@ export default {
         quitTimeDisable:'',
       },
       listLoading:true,
+      date:moment(new Date()).format('YYYY-MM-DD'),
+      itemData:[],
+      dateSearch:moment(new Date()).format('YYYY-MM'),
     }
   },
   computed: {
@@ -67,6 +128,23 @@ export default {
     ])
   },
   methods: {
+    searchRecord(){
+      let ref = db.collection('human-resources').doc(this.form.number).collection('record')
+      this.itemData.splice(0,this.itemData.length)
+      ref.where('month','==',this.dateSearch).get().then(querySnapshot => { //資料編排改變後 客服需改變
+        querySnapshot.forEach(doc => {  
+          this.itemData.push(doc.data())
+        }); 
+      });
+    },
+    async readRecord(){
+      let ref = db.collection('human-resources').doc(this.form.number).collection('record').doc(moment(new Date()).format('YYYY-MM-DD'))
+      await ref.get().then(doc => {
+        this.formRecord = {...this.formRecord,...doc.data()}
+      })
+      console.log(this.formRecord)
+      this.listLoading = false
+    },
     async submit(type){
       const userIP = await axios.request('https://api.ipify.org?format=json').then(response => {
         return response.data.ip
@@ -101,7 +179,7 @@ export default {
           });
         })
       }else{
-        this.$message.error('錯誤IP！請使用公司網路或電腦進行打卡！')
+        this.$message.error('IP錯誤！請使用公司WIFI或電腦進行打卡！')
       }
       
     },
@@ -116,31 +194,20 @@ export default {
     await firebaseApp.auth().onAuthStateChanged(user=>{
       if (user) {
         this.email = user.email
-      }else{
-        
       }
     });
 
-
-
     let ref = db.collection('human-resources')
-
     await ref.where('mail','==',this.email).where('active','==',true).get().then(querySnapshot => { //資料編排改變後 客服需改變
       querySnapshot.forEach(doc => {  
         this.form = doc.data()
         console.log(doc.data())
       }); 
-      ref = db.collection('human-resources').doc(this.form.number).collection('record').doc(moment(new Date()).format('YYYY-MM-DD'))
-      ref.get().then(doc => {
-        this.formRecord = doc.data()  
-        this.listLoading = false
-      })
-      
+      this.readRecord()
+      this.searchRecord()
     });
-
-
+    
   }
-  
 }
 </script>
 
