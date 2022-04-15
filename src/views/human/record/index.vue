@@ -2,46 +2,29 @@
   <div class="app-container">
     <el-row>
 
-      <el-dialog title="基本資料" class = "sub_title" :visible.sync="dialogNewHuman">
-        <el-form :model="form" :inline="true" label-position="left" label-width="70px" class="demo-ruleForm">
+      <el-dialog title="編輯" class = "sub_title" :visible.sync="dialogEditRecord">
+        <el-form :model="formRecord" :inline="true" label-position="left" label-width="70px" class="demo-ruleForm">
           <el-row>
-            <el-form-item label="編號" label-width="85px">
-              <el-input v-model.trim="form.number"></el-input>
-            </el-form-item>   
             <el-form-item label="姓名" label-width="85px">
-              <el-input v-model.trim="form.name"></el-input>
+              <el-input v-model.trim="formRecord.name"></el-input>
+            </el-form-item>   
+            <el-form-item label="日期" label-width="85px">
+              <el-input v-model.trim="formRecord.date"></el-input>
             </el-form-item>  
-            <el-form-item label="生日" label-width="85px">
-              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="form.birth" style="width: 250px;"></el-date-picker>
-            </el-form-item> 
           </el-row>
           <el-row>
-            <el-form-item label="身分證" label-width="85px">
-              <el-input v-model.trim="form.id" @input="(val) => (form.number = form.number.toUpperCase())"></el-input>
+            <el-form-item label="上班時間" label-width="85px">
+              <el-input v-model.trim="formRecord.entryTime"></el-input>
             </el-form-item> 
-            <el-form-item label="電話" label-width="85px">
-              <el-input v-model.trim="form.phone"></el-input>
+            <el-form-item label="上班時間" label-width="85px">
+              <el-input v-model.trim="formRecord.quitTime"></el-input>
             </el-form-item> 
-            <el-form-item label="信箱" label-width="85px">
-              <el-input v-model.trim="form.mail"></el-input>
-            </el-form-item> 
-          </el-row>
-          <el-row>
-            <el-form-item label="入職日期" label-width="85px">
-              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="form.entryDate" style="width: 250px;"></el-date-picker>
-            </el-form-item> 
-            <el-form-item label="離職日期" label-width="85px">
-              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="form.quitDate" style="width: 250px;"></el-date-picker>
-            </el-form-item>
-            <el-form-item label="是否在職" label-width="85px">
-              <el-input v-model.trim="form.name"></el-input>
-            </el-form-item>
           </el-row>
         </el-form>
         
         <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogNewHuman = false">取 消</el-button>
-          <el-button type="primary" @click="submitHuman">送 出</el-button>
+          <el-button @click="dialogEditRecord = false">取 消</el-button>
+          <el-button type="primary" @click="submitRecord()">送 出</el-button>
         </span>
       </el-dialog>
 
@@ -66,7 +49,7 @@
           <el-table-column prop="quitTime" label="下班時間" width='140%' sortable :sort-method = "(a,b)=>{return a.quitTime - b.quitTime}"></el-table-column>
           <el-table-column prop="" label="編輯" width='60%'>
             <template slot-scope="scope">
-              <el-button @click="edit(scope.row)" type="text" >編輯</el-button>
+              <el-button @click="editRecord(scope.row)" type="text" >編輯</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -97,45 +80,59 @@ export default {
       month:'',
       people:'',
       collection:'cs',
-      dialogNewHuman:false,
+      dialogEditRecord:false,
       itemData:[],
-      form:[],
+      formBasic:[],
+      formRecord:{},
       nameOptions: [],
       nameSearch:'',
       monthSearch:moment(new Date()).format('YYYY-MM'),
+      number:'',//員工編號
     }
   },
   created() {
     
   },
   methods: {
+    editRecord(row){
+      this.dialogEditRecord = true
+      let ref = db.collection('human-resources').doc(this.number).collection('record').doc(row.date)
+      ref.onSnapshot(doc => { //資料編排改變後 客服需改變
+        this.formRecord = doc.data()
+      });
+    },
+    submitRecord(){
+      let ref = db.collection('human-resources').doc(this.number).collection('record').doc(this.formRecord.date)
+      ref.set(this.formRecord).then(() => {
+        console.log('set data successful');
+        this.$message.success('修改成功');
+        this.$router.push({ path: '/human/record'})
+        this.dialogEditRecord = false
+      });
+    },
     searchRecord(){
       let number
-      this.form.forEach((data, index)=>{
+      this.formBasic.forEach((data, index)=>{
         if(data.name == this.nameSearch){
-          let ref = db.collection('human-resources').doc(data.number).collection('record')
-          ref.where('month','==',this.monthSearch).onSnapshot(querySnapshot => { 
-            this.itemData.splice(0,this.itemData.length)//資料編排改變後 客服需改變
-            querySnapshot.forEach(doc => {  
-              this.itemData.push({...doc.data(),'week':moment(doc.data().date).locale('zh-TW').format('dddd')})
-            }); 
-          });
+          this.number = data.number
         }
       })
-
-      
+      let ref = db.collection('human-resources').doc(this.number).collection('record')
+      ref.where('month','==',this.monthSearch).onSnapshot(querySnapshot => { 
+        this.itemData.splice(0,this.itemData.length)//資料編排改變後 客服需改變
+        querySnapshot.forEach(doc => {  
+          this.itemData.push({...doc.data(),'week':moment(doc.data().date).locale('zh-TW').format('dddd')})
+        }); 
+      });
     },
     readName(){
       let ref = db.collection('human-resources')
       ref.get().then(querySnapshot => { //資料編排改變後 客服需改變
         querySnapshot.forEach(doc => {  
-          this.form.push(doc.data())
+          this.formBasic.push(doc.data())
           this.nameOptions.push({'value':doc.data().name,'label':doc.data().name})
         }); 
       });
-    },
-    submitHuman(){
-      
     },
     tableRowClassName({row, rowIndex}) {
       if (rowIndex%2 === 1) {
