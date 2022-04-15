@@ -55,7 +55,7 @@
             </template>
             <template>
               <span class="form-font-md font" v-if="formRecord.entryTimeDisable || listLoading">{{formRecord.entryTime}}</span>
-              <el-button v-else @click="submitCheck('entry')" type="primary">簽到</el-button>
+              <el-button v-else @click="submitCheck('entry')" type="success">簽到</el-button>
             </template>
           </el-skeleton>
         </el-form-item>
