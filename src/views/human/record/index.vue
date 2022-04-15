@@ -16,8 +16,23 @@
             <el-form-item label="上班時間" label-width="85px">
               <el-input v-model.trim="formRecord.entryTime"></el-input>
             </el-form-item> 
-            <el-form-item label="上班時間" label-width="85px">
+            <el-form-item label="上班鎖定" label-width="85px">
+              <el-select v-model="formRecord.entryTimeDisable">
+                <el-option label="否" :value= false></el-option>
+                <el-option label="是" :value= true></el-option>
+              </el-select>
+            </el-form-item> 
+
+          </el-row>
+          <el-row>
+            <el-form-item label="下班時間" label-width="85px">
               <el-input v-model.trim="formRecord.quitTime"></el-input>
+            </el-form-item> 
+            <el-form-item label="下班鎖定" label-width="85px">
+              <el-select v-model="formRecord.quitTimeDisable">
+                <el-option label="否" :value= false></el-option>
+                <el-option label="是" :value= true></el-option>
+              </el-select>
             </el-form-item> 
           </el-row>
         </el-form>
@@ -158,7 +173,7 @@ export default {
 }
 @media (min-width: 768px){
   .el-dialog {
-    width: 70%;
+    width: 50%;
   }
 }
 @media (max-width: 768px) {
