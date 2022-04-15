@@ -60,7 +60,7 @@
           </el-skeleton>
         </el-form-item>
         <el-form-item label="下班簽到" label-width="110px">
-          <el-skeleton style="width: 240px" :loading="listLoading" animated>
+          <el-skeleton style="width: 200px" :loading="listLoading" animated>
             <template slot="template">
               <el-skeleton-item variant="text" style="width: 80%;"/>
             </template>
@@ -243,5 +243,17 @@ export default {
 }
 .form-font-md{
   font-family: 'Microsoft JhengHei';
+}
+</style>
+<style>
+@media (min-width: 768px){
+  .el-message-box {
+    width: 20%;
+  }
+}
+@media (max-width: 768px) {
+  .el-message-box {
+    width: 90%;
+  }
 }
 </style>
