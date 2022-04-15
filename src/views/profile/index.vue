@@ -84,6 +84,7 @@
     <el-table v-loading="listLoading" :data="itemData" :default-sort = "{prop: 'date',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
       <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
       <el-table-column prop="date" label="日期" width='140%' sortable :sort-method = "(a,b)=>{return a.date - b.date}"></el-table-column>
+      <el-table-column prop="week" label="星期" width='140%' sortable :sort-method = "(a,b)=>{return a.date - b.date}"></el-table-column>
       <el-table-column prop="name" label="姓名" sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
       <el-table-column prop="entryTime" label="上班時間" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
       <el-table-column prop="quitTime" label="下班時間" width='140%' sortable :sort-method = "(a,b)=>{return a.quitTime - b.quitTime}"></el-table-column>
@@ -133,19 +134,19 @@ export default {
       ref.where('month','==',this.dateSearch).onSnapshot(querySnapshot => { 
         this.itemData.splice(0,this.itemData.length)//資料編排改變後 客服需改變
         querySnapshot.forEach(doc => {  
-          this.itemData.push(doc.data())
+          this.itemData.push({...doc.data(),'week':moment(doc.data().date).locale('zh-TW').format('dddd')})
         }); 
       });
     },
     async readRecord(){
       let ref = db.collection('human-resources').doc(this.form.number).collection('record').doc(moment(new Date()).format('YYYY-MM-DD'))
-      await ref.get().then(doc => {
+      await ref.onSnapshot(doc => {
         this.formRecord = {...this.formRecord,...doc.data()}
+        this.listLoading = false
       })
       console.log(this.formRecord)
-      this.listLoading = false
     },
-    async submitCheck(type){
+    submitCheck(type){
       this.$confirm('是否進行打卡簽到', '提示', {
         confirmButtonText: '確定',
         cancelButtonText: '取消',
