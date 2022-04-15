@@ -37,7 +37,7 @@
       <el-row></el-row>
 
       <div style="text-align: right">
-        <FolderCover :fotherItemData = 'itemData'></FolderCover>
+        <GenerateFolderCover :fotherItemData = 'itemData'></GenerateFolderCover>
       </div>
 
       <el-row></el-row>
@@ -77,13 +77,13 @@ import { firebaseApp } from '@/db.js'
 import '@/styles/common.css'
 import * as moment from "moment/moment";
 import { formatTime } from '@/utils';
-import FolderCover from '@/components/FolderCover.vue';
+import GenerateFolderCover from '@/components/GenerateFolderCover.vue';
 
 
 
 export default {
   components: {
-    FolderCover
+    GenerateFolderCover
   },
   
   data() {
