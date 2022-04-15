@@ -55,7 +55,7 @@
             </template>
             <template>
               <span class="form-font-md font" v-if="formRecord.entryTimeDisable || listLoading">{{formRecord.entryTime}}</span>
-              <el-button v-else @click="submit('entry')" type="primary">簽到</el-button>
+              <el-button v-else @click="submitCheck('entry')" type="primary">簽到</el-button>
             </template>
           </el-skeleton>
         </el-form-item>
@@ -66,7 +66,7 @@
             </template>
             <template>
               <span class="form-font-md font" v-if="formRecord.quitTimeDisable || listLoading" >{{formRecord.quitTime}}</span>
-              <el-button v-else @click="submit('quit')" type="success">簽到</el-button>
+              <el-button v-else @click="submitCheck('quit')" type="success">簽到</el-button>
             </template>
           </el-skeleton>
         </el-form-item>
@@ -85,8 +85,8 @@
       <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
       <el-table-column prop="date" label="日期" width='140%' sortable :sort-method = "(a,b)=>{return a.date - b.date}"></el-table-column>
       <el-table-column prop="name" label="姓名" sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
-      <el-table-column prop="entryTime" label="上班時間" width='140%' :formatter="group" sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
-      <el-table-column prop="quitTime" label="下班時間" width='140%' :formatter="group" sortable :sort-method = "(a,b)=>{return a.quitTime - b.quitTime}"></el-table-column>
+      <el-table-column prop="entryTime" label="上班時間" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
+      <el-table-column prop="quitTime" label="下班時間" width='140%' sortable :sort-method = "(a,b)=>{return a.quitTime - b.quitTime}"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -130,8 +130,8 @@ export default {
   methods: {
     searchRecord(){
       let ref = db.collection('human-resources').doc(this.form.number).collection('record')
-      this.itemData.splice(0,this.itemData.length)
-      ref.where('month','==',this.dateSearch).get().then(querySnapshot => { //資料編排改變後 客服需改變
+      ref.where('month','==',this.dateSearch).onSnapshot(querySnapshot => { 
+        this.itemData.splice(0,this.itemData.length)//資料編排改變後 客服需改變
         querySnapshot.forEach(doc => {  
           this.itemData.push(doc.data())
         }); 
@@ -144,6 +144,20 @@ export default {
       })
       console.log(this.formRecord)
       this.listLoading = false
+    },
+    async submitCheck(type){
+      this.$confirm('是否進行打卡簽到', '提示', {
+        confirmButtonText: '確定',
+        cancelButtonText: '取消',
+        type: 'success'
+      }).then(() => {
+        this.submit(type)
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消簽到'
+        });          
+      });
     },
     async submit(type){
       const userIP = await axios.request('https://api.ipify.org?format=json').then(response => {
@@ -171,17 +185,14 @@ export default {
         console.log(this.formRecord)
 
         let ref = db.collection('human-resources').doc(this.form.number).collection('record').doc(moment(new Date()).format('YYYY-MM-DD'))
-        await ref.get().then(doc => { 
-          ref.set(this.formRecord).then(() => {
-            console.log('set data successful');
-            this.$message.success('打卡成功');
-            this.$router.push({ path: '/profile'})
-          });
-        })
+        ref.set(this.formRecord).then(() => {
+          console.log('set data successful');
+          this.$message.success('打卡成功');
+          this.$router.push({ path: '/profile'})
+        });
       }else{
         this.$message.error('IP錯誤！請使用公司WIFI或電腦進行打卡！')
       }
-      
     },
     tableRowClassName({row, rowIndex}) {
       if (rowIndex%2 === 1) {
