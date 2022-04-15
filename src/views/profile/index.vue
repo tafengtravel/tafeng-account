@@ -76,7 +76,7 @@
       </el-row>
       <el-row :gutter="16">
         <el-form-item label="月份" label-width="70px">
-          <el-date-picker type="month" value-format="yyyy-MM" placeholder="選擇日期" v-model="dateSearch" style="width: 160px;"></el-date-picker>
+          <el-date-picker type="month" value-format="yyyy-MM" placeholder="選擇日期" v-model="monthSearch" style="width: 160px;"></el-date-picker>
         </el-form-item>
           <el-button @click="searchRecord()" type="primary" :loading="listLoading">搜尋</el-button>
       </el-row>
@@ -120,7 +120,7 @@ export default {
       listLoading:true,
       date:moment(new Date()).format('YYYY-MM-DD'),
       itemData:[],
-      dateSearch:moment(new Date()).format('YYYY-MM'),
+      monthSearch:moment(new Date()).format('YYYY-MM'),
     }
   },
   computed: {
@@ -131,7 +131,7 @@ export default {
   methods: {
     searchRecord(){
       let ref = db.collection('human-resources').doc(this.form.number).collection('record')
-      ref.where('month','==',this.dateSearch).onSnapshot(querySnapshot => { 
+      ref.where('month','==',this.monthSearch).onSnapshot(querySnapshot => { 
         this.itemData.splice(0,this.itemData.length)//資料編排改變後 客服需改變
         querySnapshot.forEach(doc => {  
           this.itemData.push({...doc.data(),'week':moment(doc.data().date).locale('zh-TW').format('dddd')})

@@ -2,7 +2,6 @@
   <div class="app-container">
     <el-row>
 
-      <el-button type="primary" @click="dialogNewHuman = true">新增</el-button>
       <el-dialog title="基本資料" class = "sub_title" :visible.sync="dialogNewHuman">
         <el-form :model="form" :inline="true" label-position="left" label-width="70px" class="demo-ruleForm">
           <el-row>
@@ -46,18 +45,25 @@
         </span>
       </el-dialog>
 
+      <el-select v-model="nameSearch" placeholder="請選擇" style="width:140px">
+        <el-option
+          v-for="item in nameOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+      <el-date-picker type="month" value-format="yyyy-MM" placeholder="選擇日期" v-model="monthSearch" style="width: 160px;"></el-date-picker>
+      <el-button @click="searchRecord()" type="primary">搜尋</el-button>
+      <el-row></el-row>
       <div class ="el-col-24">
-        <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
+        <el-table v-loading="listLoading" :data="itemData" :default-sort = "{prop: 'date',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
           <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
-          <el-table-column prop="number" label="編號" width='140%' sortable :sort-method = "(a,b)=>a.number.localeCompare(b.number)"></el-table-column>
-          <el-table-column prop="name" label="姓名" width='140%'  sortable :sort-method = "(a,b)=>{return a.name - b.name}"></el-table-column>
-          <el-table-column prop="birth" label="生日" width='140%'  sortable :sort-method = "(a,b)=>a.birth.localeCompare(b.birth)"></el-table-column>
-          <el-table-column prop="id" label="身分證" width='140%'  sortable :sort-method = "(a,b)=>a.id.localeCompare(b.id)"></el-table-column>
-          <el-table-column prop="phone" label="電話" width='140%' sortable :sort-method = "(a,b)=>a.phone.localeCompare(b.phone)"></el-table-column>
-          <el-table-column prop="mail" label="信箱"></el-table-column>
-          <el-table-column prop="entryDate" label="入職日期" width='140%' sortable :sort-method = "(a,b) =>a.entryDate.localeCompare(b.entryDate)"></el-table-column>
-          <el-table-column prop="quitDate" label="離職日期" width='140%' sortable :sort-method = "(a,b) =>a.quitDate.localeCompare(b.quitDate)"></el-table-column>
-          <el-table-column prop="active" label="是否在職" width='120%' sortable :sort-method = "(a,b) =>a.active.localeCompare(b.active)"></el-table-column>
+          <el-table-column prop="date" label="日期" width='140%' sortable :sort-method = "(a,b)=>{return a.date - b.date}"></el-table-column>
+          <el-table-column prop="week" label="星期" width='140%' sortable :sort-method = "(a,b)=>{return a.date - b.date}"></el-table-column>
+          <el-table-column prop="name" label="姓名" sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
+          <el-table-column prop="entryTime" label="上班時間" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
+          <el-table-column prop="quitTime" label="下班時間" width='140%' sortable :sort-method = "(a,b)=>{return a.quitTime - b.quitTime}"></el-table-column>
           <el-table-column prop="" label="編輯" width='60%'>
             <template slot-scope="scope">
               <el-button @click="edit(scope.row)" type="text" >編輯</el-button>
@@ -93,13 +99,41 @@ export default {
       collection:'cs',
       dialogNewHuman:false,
       itemData:[],
-      form:{},
+      form:[],
+      nameOptions: [],
+      nameSearch:'',
+      monthSearch:moment(new Date()).format('YYYY-MM'),
     }
   },
   created() {
     
   },
   methods: {
+    searchRecord(){
+      let number
+      this.form.forEach((data, index)=>{
+        if(data.name == this.nameSearch){
+          let ref = db.collection('human-resources').doc(data.number).collection('record')
+          ref.where('month','==',this.monthSearch).onSnapshot(querySnapshot => { 
+            this.itemData.splice(0,this.itemData.length)//資料編排改變後 客服需改變
+            querySnapshot.forEach(doc => {  
+              this.itemData.push({...doc.data(),'week':moment(doc.data().date).locale('zh-TW').format('dddd')})
+            }); 
+          });
+        }
+      })
+
+      
+    },
+    readName(){
+      let ref = db.collection('human-resources')
+      ref.get().then(querySnapshot => { //資料編排改變後 客服需改變
+        querySnapshot.forEach(doc => {  
+          this.form.push(doc.data())
+          this.nameOptions.push({'value':doc.data().name,'label':doc.data().name})
+        }); 
+      });
+    },
     submitHuman(){
       
     },
@@ -111,7 +145,7 @@ export default {
     },
   },
   mounted(){
-    
+    this.readName()
   }
 }
 </script>

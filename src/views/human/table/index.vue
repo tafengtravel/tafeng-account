@@ -220,7 +220,7 @@ export default {
           ref.set(this.form).then(() => {
             console.log('set data successful');
             this.$message.success('新增成功');
-            this.$router.push({ path: '/human/edit' })
+            this.$router.push({ path: '/human/table' })
           });
         }
       })

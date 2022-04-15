@@ -592,10 +592,10 @@ export const adminRoutes = [
     meta: {title: '人資管理', icon: 'human'},
     children: [
       {
-        path: 'edit',
-        name: '編輯',
-        component: () => import('@/views/human/edit/index'),
-        meta: { title: '編輯', icon: '' }
+        path: 'table',
+        name: '表單全覽',
+        component: () => import('@/views/human/table/index'),
+        meta: { title: '表單全覽', icon: '' }
       },
       {
         path: 'record',
