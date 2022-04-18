@@ -117,80 +117,10 @@ export default {
           body,
           columnStyles
         })
+        doc.addPage()
       }
 
-      // this.fotherItemData.forEach((itemData,index) => {
-        
-      //   if(index == 0){
-      //     body.push([
-            itemData.number,
-            itemData.depDate,
-            itemData.endDate,
-            itemData.name,
-            itemData.people,
-            itemData.company,
-            itemData.item,
-            itemData.pay,
-            itemData.dl1,
-            itemData.dlpay1,
-            itemData.dlpaydate1,
-            itemData.dl2,
-            itemData.dlpay2,
-            itemData.dlpaydate2
-      //     ])
-      //   }else{
-      //     if(itemData.company != this.fotherItemData[index-1].company){
-      //       doc.autoTable({
-      //         theme : 'grid',
-      //         headStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
-      //         bodyStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
-      //         styles: {
-      //           font: 'chinese',
-      //           fontStyle: 'normal',
-      //           fontSize: 8,
-      //         },
-      //         theme : 'grid',
-      //         columns,
-      //         body,
-      //         columnStyles
-      //       })
-      //       body.splice(0,body.length)
-      //     }
-      //     body.push([
-      //       itemData.number,
-      //       itemData.depDate,
-      //       itemData.endDate,
-      //       itemData.name,
-      //       itemData.people,
-      //       itemData.company,
-      //       itemData.item,
-      //       itemData.pay,
-      //       itemData.dl1,
-      //       itemData.dlpay1,
-      //       itemData.dlpaydate1,
-      //       itemData.dl2,
-      //       itemData.dlpay2,
-      //       itemData.dlpaydate2
-      //     ])
-      //     if(index == this.fotherItemData.length-1){
-      //       doc.autoTable({
-      //         theme : 'grid',
-      //         headStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
-      //         bodyStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
-      //         styles: {
-      //           font: 'chinese',
-      //           fontStyle: 'normal',
-      //           fontSize: 8,
-      //         },
-      //         columns,
-      //         body,
-      //         columnStyles
-      //       })
-      //     }
-      //   }
-      // });  
-      
-      doc.save("FolderCover.pdf");
+      doc.save("Bill.pdf");
     },
     newLine(oldLine){
       let regExp = /[a-z]/i;
