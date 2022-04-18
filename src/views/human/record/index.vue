@@ -17,7 +17,7 @@
               <el-input v-model.trim="formRecord.entryTime"></el-input>
             </el-form-item> 
             <el-form-item label="上班鎖定" label-width="85px">
-              <el-select v-model="formRecord.entryTimeDisable">
+              <el-select v-model="formRecord.entryTimeDisable" style="width:250px">
                 <el-option label="否" :value= false></el-option>
                 <el-option label="是" :value= true></el-option>
               </el-select>
@@ -29,7 +29,7 @@
               <el-input v-model.trim="formRecord.quitTime"></el-input>
             </el-form-item> 
             <el-form-item label="下班鎖定" label-width="85px">
-              <el-select v-model="formRecord.quitTimeDisable">
+              <el-select v-model="formRecord.quitTimeDisable" style="width:250px">
                 <el-option label="否" :value= false></el-option>
                 <el-option label="是" :value= true></el-option>
               </el-select>
@@ -61,7 +61,13 @@
           <el-table-column prop="week" label="星期" width='140%' sortable :sort-method = "(a,b)=>{return a.date - b.date}"></el-table-column>
           <el-table-column prop="name" label="姓名" sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
           <el-table-column prop="entryTime" label="上班時間" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
+          <el-table-column prop="entryDevice.type" label="設備" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
+          <el-table-column prop="entryDevice.brand" label="裝置" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
+          <el-table-column prop="entryDevice.model" label="型號" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
           <el-table-column prop="quitTime" label="下班時間" width='140%' sortable :sort-method = "(a,b)=>{return a.quitTime - b.quitTime}"></el-table-column>
+          <el-table-column prop="quitDevice.type" label="設備" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
+          <el-table-column prop="quitDevice.brand" label="裝置" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
+          <el-table-column prop="quitDevice.model" label="型號" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
           <el-table-column prop="" label="編輯" width='60%'>
             <template slot-scope="scope">
               <el-button @click="editRecord(scope.row)" type="text" >編輯</el-button>

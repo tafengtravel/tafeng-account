@@ -87,13 +87,7 @@
       <el-table-column prop="week" label="星期" width='140%' sortable :sort-method = "(a,b)=>{return a.date - b.date}"></el-table-column>
       <el-table-column prop="name" label="姓名" sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
       <el-table-column prop="entryTime" label="上班時間" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
-      <el-table-column prop="entryDevice.device.type" label="設備" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
-      <el-table-column prop="entryDevice.device.barnd" label="裝置" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
-      <el-table-column prop="entryDevice.device.model" label="型號" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
       <el-table-column prop="quitTime" label="下班時間" width='140%' sortable :sort-method = "(a,b)=>{return a.quitTime - b.quitTime}"></el-table-column>
-      <el-table-column prop="quitDevice.device.type" label="設備" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
-      <el-table-column prop="quitDevice.device.barnd" label="裝置" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
-      <el-table-column prop="quitDevice.device.model" label="型號" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -153,7 +147,6 @@ export default {
         this.formRecord = {...this.formRecord,...doc.data()}
         this.listLoading = false
       })
-      console.log(this.formRecord)
     },
     submitCheck(type){
       this.$confirm('是否進行打卡簽到', '提示', {
@@ -180,13 +173,13 @@ export default {
           this.formRecord = {...this.formRecord,
             entryTimeDisable:true,
             entryTime:moment(new Date()).format('HH:mm:ss'),
-            entryDevice:new DeviceDetector().parse(window.navigator.userAgent),
+            entryDevice:new DeviceDetector().parse(window.navigator.userAgent).device,
           }
         }else if(type == 'quit'){
           this.formRecord = {...this.formRecord,
             quitTimeDisable:true,
             quitTime:moment(new Date()).format('HH:mm:ss'),
-            quitDevice:new DeviceDetector().parse(window.navigator.userAgent),
+            quitDevice:new DeviceDetector().parse(window.navigator.userAgent).device,
           }
         }
         this.formRecord = {...this.formRecord,
@@ -194,7 +187,6 @@ export default {
           name:this.form.name,
           month:moment(new Date()).format('YYYY-MM'),
         }
-        console.log(this.formRecord)
 
         let ref = db.collection('human-resources').doc(this.form.number).collection('record').doc(moment(new Date()).format('YYYY-MM-DD'))
         ref.set(this.formRecord).then(() => {
@@ -224,7 +216,6 @@ export default {
     await ref.where('mail','==',this.email).where('active','==',true).get().then(querySnapshot => { //資料編排改變後 客服需改變
       querySnapshot.forEach(doc => {  
         this.form = doc.data()
-        console.log(doc.data())
       }); 
       this.readRecord()
       this.searchRecord()
