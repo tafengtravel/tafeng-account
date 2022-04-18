@@ -8,9 +8,8 @@
 <script>
 import { jsPDF } from "jspdf";
 import * as moment from "moment/moment";
-import { Document, Packer, TextRun, Paragraph, BorderStyle, PageBorderDisplay, VerticalAlign,
-PageBorderOffsetFrom, PageBorderZOrder,AlignmentType,ImageRun,Header,Table,TableRow,TableCell,WidthType   } from "docx";
 import { saveAs } from 'file-saver';
+import autoTable from 'jspdf-autotable';
 
 export default {
   props:{
@@ -27,123 +26,170 @@ export default {
   methods: {
     async generatePdf() {
       console.log(this.fotherItemData)
-      let offsetY = 93
       
-      const doc = new jsPDF();
+      const doc = new jsPDF({orientation: 'landscape'});
       doc.addFont('https://tafengtravel.github.io/tafengtravel/index/font/chinese.ttf', 'chinese', 'normal');
       doc.setFont('chinese')
+      doc.setFontSize(8)
 
-      this.fotherItemData.forEach((itemData,index) => {
-
-        let csName = ''
-        switch(itemData.cs){
-          case 'B1':csName = 'Rene'    ;break
-          case 'B2':csName = 'Joy'     ;break
-          case 'B4':csName = 'Carine'  ;break
-          case 'B6':csName = 'Alin'    ;break
-          case 'B8':csName = 'Jenny'   ;break
-          case 'B10':csName = 'Eating' ;break
-          case 'A4':csName = 'Jude'    ;break
+      let columns = ['團號', '出發日期', '結束日期', '團名', '代表人', '廠商', '品項', '支出', '第一筆DL', '第一筆金額', '付款日期', '第二筆DL', '第二筆金額', '付款日期'];
+      let body = []
+      let columnStyles = {
+        0: {
+            cellWidth: 22
+        },
+        1: {
+            cellWidth: 20
+        },
+        2: {
+            cellWidth: 20
+        },
+        3: {
+            cellWidth: 15
+        },
+        4: {
+            cellWidth: 13
+        },
+        5: {
+            cellWidth: 20
+        },
+        6: {
+            cellWidth: 'auto'
+        },
+        7: {
+            cellWidth: 15
+        },
+        8: {
+            cellWidth: 20
+        },
+        9: {
+            cellWidth: 15
+        },
+        10: {
+            cellWidth: 20
+        },
+        11: {
+            cellWidth: 20
+        },
+        12: {
+            cellWidth: 15
+        },
+        13: {
+            cellWidth: 20
         }
+      }
+      this.fotherItemData.sort((a,b)=>{ return a.company.localeCompare(b.company)})
 
-        //----------自動排版----------
-        let newLineName = this.newLine(itemData.name)
-        let newLinePeople = this.newLine(itemData.people)
-        let amount
+      const companyArr = this.fotherItemData.map(item=>item.company)
+      const allCompany = new Set(companyArr)
+      allCompany.forEach(itemCompany=>{
+        const arr = this.fotherItemData.filter(itemData=>itemData.company===itemCompany).map(itemData=>[
+          itemData.number,
+          itemData.depDate,
+          itemData.endDate,
+          itemData.name,
+          itemData.people,
+          itemData.company,
+          itemData.item,
+          itemData.pay,
+          itemData.dl1,
+          itemData.dlpay1,
+          itemData.dlpaydate1,
+          itemData.dl2,
+          itemData.dlpay2,
+          itemData.dlpaydate2
+        ])
+        addTable(arr)
+      })
 
-        if(itemData.location != '代訂車'){
-          amount = itemData.amount + 'P'
-        }else{
-          amount = itemData.amount
-        }
-
-        if(index%3 == 0 && index != 0){
-          doc.addPage();     
-        }  
-        //左側出發日期+團名
-        doc.addImage(img, "JPEG", 2, 2.5+index%3*offsetY, 186, offsetY)  
-        doc.setFontSize(8)
-        doc.text((parseInt(moment(itemData.depDate).format('YYYY'))-1911).toString() 
-        +'/'+moment(itemData.depDate).format('MM/DD')+' ~ '
-        + (parseInt(moment(itemData.endDate).format('YYYY'))-1911).toString()
-        +'/'+moment(itemData.endDate).format('MM/DD')
-        , 20, 9+index%3*offsetY)
-
-        //左側代表人+團號+業務
-        doc.setFontSize(11)
-        doc.text(itemData.people, 60, 10+index%3*offsetY)
-        doc.text(amount, 86, 16+index%3*offsetY)
-        doc.text(itemData.name, 20, 15+index%3*offsetY); 
-        doc.text(itemData.number, 20, 22+index%3*offsetY); 
-        doc.text(csName, 81, 22+index%3*offsetY); 
-
-        // 側邊直貼邊框 x1 y1 x2 y2 
-        doc.line(191, 11+index%3*offsetY, 207, 11+index%3*offsetY)
-        doc.line(191, 11+index%3*offsetY, 191, 51+index%3*offsetY)
-        doc.line(207, 11+index%3*offsetY, 207, 51+index%3*offsetY)
-        doc.line(191, 51+index%3*offsetY, 207, 51+index%3*offsetY)
-
-        doc.line(191, 11+42+index%3*offsetY, 207, 11+42+index%3*offsetY)
-        doc.line(191, 11+42+index%3*offsetY, 191, 51+42+index%3*offsetY)
-        doc.line(207, 11+42+index%3*offsetY, 207, 51+42+index%3*offsetY)
-        doc.line(191, 51+42+index%3*offsetY, 207, 51+42+index%3*offsetY)
-
-        // 側邊直貼日期 
-        doc.setFontSize(12.5)
-        doc.text(moment(itemData.depDate).format('MM/DD'),192.75, 15+index%3*offsetY)
-        doc.text(moment(itemData.depDate).format('MM/DD'),192.75, 15+index%3*offsetY+42)
-        doc.setFontSize(14)
-        doc.text('~',200.25, 19.25+index%3*offsetY,null,90)
-        doc.text('~',200.25, 19.25+index%3*offsetY+42,null,90)
-        doc.setFontSize(12.5)
-        doc.text(moment(itemData.endDate).format('MM/DD'),192.75, 23+index%3*offsetY)
-        doc.text(moment(itemData.endDate).format('MM/DD'),192.75, 23+index%3*offsetY+42)
-
-        // 側邊直貼文字 
-        let regExp = /[a-z]/i;
-        if(regExp.test(newLinePeople)){
-          doc.setFontSize(9)
-          console.log('eng')
-        }else{
-          doc.setFontSize(11)
-        }
-        doc.text(newLineName
-          +'\n'+'\n'+newLinePeople
-          +'\n'+amount
-          ,191.25, 30+index%3*offsetY
-        )
-        doc.text(newLineName
-          +'\n'+'\n'+newLinePeople
-          +'\n'+amount
-          ,191.25, 30+index%3*offsetY+42
-        )
-
-        //左側收入
-        if(itemData.incomeDetailIncome.length > 0){
-          let incomeTypeX1 
-          doc.setFontSize(10)
-          doc.text(itemData.incomeDetailIncome[0],21, 29.5+index%3*offsetY)
-          doc.setFontSize(9)
-          doc.text(moment(itemData.incomeDetailReceiveDate[0]).format('MM/DD'),48, 29.5+index%3*offsetY)
-          switch(itemData.incomeDetailType[0]){
-            case '匯款':incomeTypeX1 = 57.25 ;break
-            case '刷卡':incomeTypeX1 = 62    ;break
-            case '現金':incomeTypeX1 = 66.75 ;break
-            case '支票':incomeTypeX1 = 71.5  ;break
-            case '其他':incomeTypeX1 = 76.25 ;break
-          }
-          doc.setFontSize(6)
-          doc.text('●',incomeTypeX1, 29+index%3*offsetY)
-        }
-
-        //右側廠商支出
-        doc.setFontSize(10)
-        itemData.payDetailCompany.forEach((itemDataCompany,companyIndex) => {
-          doc.text(itemDataCompany,103, 15+companyIndex*7.4+index%3*offsetY)
+      function addTable(body){
+        doc.autoTable({
+          theme : 'grid',
+          headStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
+          bodyStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
+          styles: {
+            font: 'chinese',
+            fontStyle: 'normal',
+            fontSize: 8,
+          },
+          theme : 'grid',
+          columns,
+          body,
+          columnStyles
         })
+      }
 
+      // this.fotherItemData.forEach((itemData,index) => {
         
-      }); 
+      //   if(index == 0){
+      //     body.push([
+            itemData.number,
+            itemData.depDate,
+            itemData.endDate,
+            itemData.name,
+            itemData.people,
+            itemData.company,
+            itemData.item,
+            itemData.pay,
+            itemData.dl1,
+            itemData.dlpay1,
+            itemData.dlpaydate1,
+            itemData.dl2,
+            itemData.dlpay2,
+            itemData.dlpaydate2
+      //     ])
+      //   }else{
+      //     if(itemData.company != this.fotherItemData[index-1].company){
+      //       doc.autoTable({
+      //         theme : 'grid',
+      //         headStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
+      //         bodyStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
+      //         styles: {
+      //           font: 'chinese',
+      //           fontStyle: 'normal',
+      //           fontSize: 8,
+      //         },
+      //         theme : 'grid',
+      //         columns,
+      //         body,
+      //         columnStyles
+      //       })
+      //       body.splice(0,body.length)
+      //     }
+      //     body.push([
+      //       itemData.number,
+      //       itemData.depDate,
+      //       itemData.endDate,
+      //       itemData.name,
+      //       itemData.people,
+      //       itemData.company,
+      //       itemData.item,
+      //       itemData.pay,
+      //       itemData.dl1,
+      //       itemData.dlpay1,
+      //       itemData.dlpaydate1,
+      //       itemData.dl2,
+      //       itemData.dlpay2,
+      //       itemData.dlpaydate2
+      //     ])
+      //     if(index == this.fotherItemData.length-1){
+      //       doc.autoTable({
+      //         theme : 'grid',
+      //         headStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
+      //         bodyStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
+      //         styles: {
+      //           font: 'chinese',
+      //           fontStyle: 'normal',
+      //           fontSize: 8,
+      //         },
+      //         columns,
+      //         body,
+      //         columnStyles
+      //       })
+      //     }
+      //   }
+      // });  
+      
       doc.save("FolderCover.pdf");
     },
     newLine(oldLine){

@@ -37,6 +37,9 @@
       </el-table>
       <el-row></el-row>
     </div>
+    <div style="text-align: right">
+      <GenerateBill :fotherItemData = 'itemData'></GenerateBill>
+    </div>
   </div>
 </template>
 
@@ -47,12 +50,13 @@ import { firebaseApp } from '@/db.js'
 import '@/styles/common.css'
 import * as moment from "moment/moment";
 import { formatTime } from '@/utils';
+import GenerateBill from '@/components/GenerateBill.vue';
 
 
 
 export default {
   components: {
-
+    GenerateBill
   },
   
   data() {
