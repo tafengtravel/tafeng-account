@@ -87,7 +87,13 @@
       <el-table-column prop="week" label="星期" width='140%' sortable :sort-method = "(a,b)=>{return a.date - b.date}"></el-table-column>
       <el-table-column prop="name" label="姓名" sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
       <el-table-column prop="entryTime" label="上班時間" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
+      <el-table-column prop="entryDevice.device.type" label="設備" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
+      <el-table-column prop="entryDevice.device.barnd" label="裝置" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
+      <el-table-column prop="entryDevice.device.model" label="型號" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
       <el-table-column prop="quitTime" label="下班時間" width='140%' sortable :sort-method = "(a,b)=>{return a.quitTime - b.quitTime}"></el-table-column>
+      <el-table-column prop="quitDevice.device.type" label="設備" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
+      <el-table-column prop="quitDevice.device.barnd" label="裝置" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
+      <el-table-column prop="quitDevice.device.model" label="型號" width='140%' sortable :sort-method = "(a,b)=>{return a.entryTime - b.entryTime}"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -100,6 +106,7 @@ import { firebaseApp } from '@/db.js'
 import axios from 'axios'
 import * as moment from "moment/moment";
 import '@/styles/common.css'
+import DeviceDetector from "device-detector-js";
 
 
 export default {
@@ -116,6 +123,8 @@ export default {
         name:'',
         entryTimeDisable:'',
         quitTimeDisable:'',
+        entryDevice:{},
+        quitDevice:{},
       },
       listLoading:true,
       date:moment(new Date()).format('YYYY-MM-DD'),
@@ -171,11 +180,13 @@ export default {
           this.formRecord = {...this.formRecord,
             entryTimeDisable:true,
             entryTime:moment(new Date()).format('HH:mm:ss'),
+            entryDevice:new DeviceDetector().parse(window.navigator.userAgent),
           }
         }else if(type == 'quit'){
           this.formRecord = {...this.formRecord,
             quitTimeDisable:true,
             quitTime:moment(new Date()).format('HH:mm:ss'),
+            quitDevice:new DeviceDetector().parse(window.navigator.userAgent),
           }
         }
         this.formRecord = {...this.formRecord,
@@ -218,7 +229,6 @@ export default {
       this.readRecord()
       this.searchRecord()
     });
-    
   }
 }
 </script>
