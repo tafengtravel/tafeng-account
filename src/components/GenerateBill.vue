@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" @click="generatePdf">輸出資料夾</el-button>
+    <el-button type="primary" @click="generatePdf">輸出報帳單</el-button>
   </div>
 </template>
 

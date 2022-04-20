@@ -12,7 +12,7 @@
     <el-button type="primary" @click="search">搜尋</el-button>
     <el-row></el-row>
     <div class ="el-col-24">
-      <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
+      <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'company',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
         <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
         <el-table-column prop="number" label="團號" width='140%' sortable :sort-method = "(a,b)=>{return a.number - b.number}"></el-table-column>
         <el-table-column prop="cs" label="客服" width='75%'></el-table-column>

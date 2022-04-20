@@ -12,7 +12,7 @@
     <el-button type="primary" @click="search">搜尋</el-button>
     <el-row></el-row>
     <div class ="el-col-24">
-      <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
+      <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'company',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
         <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
         <el-table-column prop="number" label="團號" width='140%' sortable :sort-method = "(a,b)=>{return a.number - b.number}"></el-table-column>
         <el-table-column prop="cs" label="客服" width='75%'></el-table-column>
@@ -37,6 +37,9 @@
       </el-table>
       <el-row></el-row>
     </div>
+    <div style="text-align: right">
+      <GenerateBill :fotherItemData = 'itemData' :fotherDate = 'date'></GenerateBill>
+    </div>
   </div>
 </template>
 
@@ -47,12 +50,12 @@ import { firebaseApp } from '@/db.js'
 import '@/styles/common.css'
 import * as moment from "moment/moment";
 import { formatTime } from '@/utils';
-
+import GenerateBill from '@/components/GenerateBill.vue';
 
 
 export default {
   components: {
-
+    GenerateBill
   },
   
   data() {
@@ -101,6 +104,7 @@ export default {
                   'dl2':doc.data().payDetailDl2[j],
                   'dlpay2':doc.data().payDetailDlPay2[j],
                   'dlpaydate2':doc.data().payDetailDlPayDate2[j],
+                  'detail':doc.data().payDetailDetail[j],
                 })
               }
             }
@@ -124,6 +128,7 @@ export default {
                   'dl2':doc.data().payDetailDl2[j],
                   'dlpay2':doc.data().payDetailDlPay2[j],
                   'dlpaydate2':doc.data().payDetailDlPayDate2[j],
+                  'detail':doc.data().payDetailDetail[j],
                 })
               }
             }
