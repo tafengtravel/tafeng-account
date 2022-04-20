@@ -38,7 +38,7 @@
       <el-row></el-row>
     </div>
     <div style="text-align: right">
-      <GenerateBill :fotherItemData = 'itemData'></GenerateBill>
+      <GenerateBill :fotherItemData = 'itemData' :fotherDate = 'date'></GenerateBill>
     </div>
   </div>
 </template>
@@ -105,6 +105,7 @@ export default {
                   'dl2':doc.data().payDetailDl2[j],
                   'dlpay2':doc.data().payDetailDlPay2[j],
                   'dlpaydate2':doc.data().payDetailDlPayDate2[j],
+                  'detail':doc.data().payDetailDetail[j],
                 })
               }
             }
@@ -128,6 +129,8 @@ export default {
                   'dl2':doc.data().payDetailDl2[j],
                   'dlpay2':doc.data().payDetailDlPay2[j],
                   'dlpaydate2':doc.data().payDetailDlPayDate2[j],
+                  'dlpaydate2':doc.data().payDetailDlPayDate2[j],
+                  'detail':doc.data().payDetailDetail[j],
                 })
               }
             }

@@ -14,6 +14,7 @@ import autoTable from 'jspdf-autotable';
 export default {
   props:{
     fotherItemData:Array,
+    fotherDate:String ,
   },
   data() {
     return {
@@ -25,16 +26,14 @@ export default {
   },
   methods: {
     async generatePdf() {
-      console.log(this.fotherItemData)
-      
       const doc = new jsPDF({orientation: 'landscape'});
       doc.addFont('https://tafengtravel.github.io/tafengtravel/index/font/chinese.ttf', 'chinese', 'normal');
       doc.setFont('chinese')
       doc.setFontSize(8)
 
-      let columns = ['團號', '出發日期', '結束日期', '團名', '代表人', '廠商', '品項', '支出', '第一筆DL', '第一筆金額', '付款日期', '第二筆DL', '第二筆金額', '付款日期'];
-      let body = []
-      let columnStyles = {
+      let columns1 = ['團號','出發日期','結束日期','團名','代表人','廠商','品項','明細'];
+      let columns2 = ['支出','第一筆DL','第一筆金額','付款日期','第二筆DL','第二筆金額','付款日期'];
+      let columnStyles1 = {
         0: {
             cellWidth: 22
         },
@@ -51,39 +50,44 @@ export default {
             cellWidth: 13
         },
         5: {
-            cellWidth: 20
+            cellWidth: 30
+        },
+        6: {
+            cellWidth: 40
+        },
+        7: {
+            cellWidth: 'auto'
+        },
+      }
+      let columnStyles2 = {
+        0: {
+            cellWidth: 38
+        },
+        1: {
+            cellWidth: 38
+        },
+        2: {
+            cellWidth: 38
+        },
+        3: {
+            cellWidth: 38
+        },
+        4: {
+            cellWidth: 38
+        },
+        5: {
+            cellWidth: 38
         },
         6: {
             cellWidth: 'auto'
         },
-        7: {
-            cellWidth: 15
-        },
-        8: {
-            cellWidth: 20
-        },
-        9: {
-            cellWidth: 15
-        },
-        10: {
-            cellWidth: 20
-        },
-        11: {
-            cellWidth: 20
-        },
-        12: {
-            cellWidth: 15
-        },
-        13: {
-            cellWidth: 20
-        }
       }
       this.fotherItemData.sort((a,b)=>{ return a.company.localeCompare(b.company)})
 
       const companyArr = this.fotherItemData.map(item=>item.company)
       const allCompany = new Set(companyArr)
       allCompany.forEach(itemCompany=>{
-        const arr = this.fotherItemData.filter(itemData=>itemData.company===itemCompany).map(itemData=>[
+        let arr = this.fotherItemData.filter(itemData=>itemData.company===itemCompany).map(itemData=>[
           itemData.number,
           itemData.depDate,
           itemData.endDate,
@@ -91,6 +95,9 @@ export default {
           itemData.people,
           itemData.company,
           itemData.item,
+          itemData.detail,
+        ])
+        let arr1 = this.fotherItemData.filter(itemData=>itemData.company===itemCompany).map(itemData=>[
           itemData.pay,
           itemData.dl1,
           itemData.dlpay1,
@@ -99,24 +106,54 @@ export default {
           itemData.dlpay2,
           itemData.dlpaydate2
         ])
-        addTable(arr)
+        addTable(arr,arr1,this.fotherDate)
       })
 
-      function addTable(body){
-        doc.autoTable({
-          theme : 'grid',
-          headStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
-          bodyStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
-          styles: {
-            font: 'chinese',
-            fontStyle: 'normal',
-            fontSize: 8,
-          },
-          theme : 'grid',
-          columns,
-          body,
-          columnStyles
+      function addTable(body1,body2,date){
+        let todayPay = 0
+        doc.setFontSize(15)
+        doc.text('廠商：'+body1[0][5], 132, 11)
+        body1.forEach((item,index)=>{
+          doc.autoTable({
+            theme : 'grid',
+            headStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
+            bodyStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
+            styles: {
+              font: 'chinese',
+              fontStyle: 'normal',
+              fontSize: 8,
+            },
+            theme : 'grid',
+            columns:columns1,
+            body:[body1[index]],
+            columnStyles:columnStyles1,
+          })
+          doc.autoTable({
+            theme : 'grid',
+            headStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
+            bodyStyles :{fillColor : '#FFFFFF',textColor :'#000000',lineColor:'#000000',lineWidth:0.1},
+            startY: doc.lastAutoTable.finalY, 
+            styles: {
+              font: 'chinese',
+              fontStyle: 'normal',
+              fontSize: 8,
+            },
+            theme : 'grid',
+            columns:columns2,
+            body:[body2[index]],
+            columnStyles:columnStyles2,
+          })
+          if(body2[index][1] == date){
+            let number = parseInt(body2[index][2])|| 0
+            todayPay = todayPay + number
+          }else if(body2[index][4] == date){
+            let number = parseInt(body2[index][5])|| 0
+            todayPay = todayPay + number
+          }
         })
+        doc.text('DL日期：'+date, 20, doc.lastAutoTable.finalY+10)
+        doc.text('當日總支出：'+todayPay, 20, doc.lastAutoTable.finalY+20)
+        doc.text('主管：　　　　　'+'出納：　　　　　'+'登錄：　　　　　'+'OP：　　　　　'+'業務：　　　　　'+'報帳人：　　　　　', 20, doc.lastAutoTable.finalY+30)
         doc.addPage()
       }
 

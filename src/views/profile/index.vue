@@ -168,7 +168,7 @@ export default {
       }).catch(function (error) {
         console.error(error);
       });
-      if(userIP == '1.173.121.137'){
+      if(userIP == '1.173.89.91'){
         if(type == 'entry'){
           this.formRecord = {...this.formRecord,
             entryTimeDisable:true,
