@@ -5,7 +5,7 @@
       v-model="date"
       type="date"
       placeholder="選擇DL日期"
-      style="width:170px"
+      style="width:160px"
       value-format="yyyy-MM-dd"
       >
     </el-date-picker>
@@ -19,6 +19,7 @@
         <el-table-column prop="depDate" label="出發日期" width='120%' sortable :sort-method = "(a,b) =>a.depDate.localeCompare(b.depDate)"></el-table-column>
         <el-table-column prop="endDate" label="結束日期" width='120%' sortable :sort-method = "(a,b) =>a.endDate.localeCompare(b.endDate)"></el-table-column>
         <el-table-column prop="name" label="團名"  sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
+        <el-table-column prop="company" label="公司名稱"  sortable :sort-method = "(a,b)=>a.company.localeCompare(b.company)"></el-table-column>
         <el-table-column prop="people" label="代表人" sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
         <el-table-column prop="payCompany" label="廠商" sortable :sort-method = "(a,b)=>a.payCompany.localeCompare(b.payCompany)"></el-table-column>
         <el-table-column prop="item" label="品項" sortable :sort-method = "(a,b)=>{return a.phone - b.phone}"></el-table-column>
@@ -53,7 +54,6 @@ import { formatTime } from '@/utils';
 import GenerateBill from '@/components/GenerateBill.vue';
 
 
-
 export default {
   components: {
     GenerateBill
@@ -86,10 +86,10 @@ export default {
       this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom
 
       for(let k=0;k<24;k++){
-        ref = db.collection(month);
+        ref = db.collection(month+'G');
         console.log(month)
 
-        ref.where('payDetailDl1','array-contains',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
+        ref.where('payDetailDl1','array-contains',this.date).onSnapshot((querySnapshot => { //資料編排改變後 客服需改變
           querySnapshot.forEach(doc => {  
 
             for(let j=0;j<doc.data().payDetailDl1.length;j++){
@@ -111,7 +111,7 @@ export default {
             }
             // console.log(doc.data().number)
           }); 
-        });
+        }));
 
         ref.where('payDetailDl2','array-contains',this.date).get().then(querySnapshot => { //資料編排改變後 客服需改變
           querySnapshot.forEach(doc => {  
@@ -129,7 +129,6 @@ export default {
                   'dl2':doc.data().payDetailDl2[j],
                   'dlpay2':doc.data().payDetailDlPay2[j],
                   'dlpaydate2':doc.data().payDetailDlPayDate2[j],
-                  'dlpaydate2':doc.data().payDetailDlPayDate2[j],
                   'detail':doc.data().payDetailDetail[j],
                 })
               }
@@ -146,7 +145,7 @@ export default {
       console.log(row)
       
       let route = this.$router.resolve({
-        path: '/admin/edit/fit',
+        path: '/group/edit',
         query: { number:row.number,depDate:moment(row.depDate).format('YYYY-MM-DD')}
       })
       window.open(route.href, '_blank');

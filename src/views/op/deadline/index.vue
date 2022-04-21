@@ -12,7 +12,7 @@
     <el-button type="primary" @click="search">搜尋</el-button>
     <el-row></el-row>
     <div class ="el-col-24">
-      <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'company',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
+      <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'payCompany',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
         <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
         <el-table-column prop="number" label="團號" width='140%' sortable :sort-method = "(a,b)=>{return a.number - b.number}"></el-table-column>
         <el-table-column prop="cs" label="客服" width='75%'></el-table-column>
@@ -20,7 +20,7 @@
         <el-table-column prop="endDate" label="結束日期" width='120%' sortable :sort-method = "(a,b) =>a.endDate.localeCompare(b.endDate)"></el-table-column>
         <el-table-column prop="name" label="團名"  sortable :sort-method = "(a,b)=>a.name.localeCompare(b.name)"></el-table-column>
         <el-table-column prop="people" label="代表人" sortable :sort-method = "(a,b)=>a.people.localeCompare(b.people)"></el-table-column>
-        <el-table-column prop="company" label="廠商"></el-table-column>
+        <el-table-column prop="payCompany" label="廠商" sortable :sort-method = "(a,b)=>a.payCompany.localeCompare(b.payCompany)"></el-table-column>
         <el-table-column prop="item" label="品項" sortable :sort-method = "(a,b)=>{return a.phone - b.phone}"></el-table-column>
         <el-table-column prop="pay" label="支出" width='80%'></el-table-column>
         <el-table-column prop="dl1" label="第一筆DL" width='120%' ></el-table-column>
@@ -95,7 +95,7 @@ export default {
               if(doc.data().payDetailDl1[j] == this.date){
                 this.itemData.push({
                   ...doc.data(),
-                  'company':doc.data().payDetailCompany[j],
+                  'payCompany':doc.data().payDetailCompany[j],
                   'item':doc.data().payDetailItem[j],
                   'pay':doc.data().payDetailPay[j],
                   'dl1':doc.data().payDetailDl1[j],
@@ -119,7 +119,7 @@ export default {
               if(doc.data().payDetailDl2[j] == this.date){
                 this.itemData.push({
                   ...doc.data(),
-                  'company':doc.data().payDetailCompany[j],
+                  'payCompany':doc.data().payDetailCompany[j],
                   'item':doc.data().payDetailItem[j],
                   'pay':doc.data().payDetailPay[j],
                   'dl1':doc.data().payDetailDl1[j],

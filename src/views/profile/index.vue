@@ -163,12 +163,10 @@ export default {
       });
     },
     async submit(type){
-      const userIP = await axios.request('https://api.ipify.org?format=json').then(response => {
-        return response.data.ip
-      }).catch(function (error) {
-        console.error(error);
-      });
-      if(userIP == '1.173.89.91'){
+      const userIP = await fetch('https://api.ipify.org/').then(res=>res.text()).catch(error => alert(error))
+      console.log(userIP)
+
+      if(userIP == '1.173.89.91'||userIP == '1.173.121.137'){
         if(type == 'entry'){
           this.formRecord = {...this.formRecord,
             entryTimeDisable:true,
