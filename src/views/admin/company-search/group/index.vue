@@ -116,7 +116,7 @@ export default {
 
       let route = this.$router.resolve({
         path: '/admin/edit/group',
-        query: { number:row.number,depDate:this.month }
+        query: { number:row.number,depDate:moment(row.depDate).format('YYYY-MM') }
       })
       window.open(route.href, '_blank');
     }
