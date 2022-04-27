@@ -98,7 +98,6 @@ export default {
         { value: '北海岸'      ,other:'非月結'},
         { value: '玖伍小築'    ,other:'非月結'},
         { value: '田園山莊'    ,other:'非月結'},
-        { value: '宏瑞'        ,other:'非月結'},
         { value: '故鄉'        ,other:'非月結'},
         { value: '幸福居'      ,other:'非月結'},
         { value: '藍洋洋的家'  ,other:'非月結' },
