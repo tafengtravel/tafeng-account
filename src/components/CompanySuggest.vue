@@ -180,6 +180,7 @@ export default {
         { value: '海岸情'         ,other:'非月結'},
         { value: '海悅'           ,other:'非月結'},
         { value: '安泊'           ,other:'非月結'},
+        { value: '大姐'           ,other:'非月結'},
         //交通
         { value: '綠島之星'       ,other:'非月結'},
         { value: '滿天星'         ,other:'非月結'},
