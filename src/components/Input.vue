@@ -351,7 +351,13 @@
             </el-form-item>
             <el-form-item label="廠商">
               <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailCompany[index]}}</span>
-              <el-input v-model.trim="ruleForm.payDetailCompany[index]" v-else style="width: 160px;" @input="(val) => (ruleForm.payDetailCompany[index] = ruleForm.payDetailCompany[index].toUpperCase())"></el-input>
+              <el-autocomplete v-model.trim="ruleForm.payDetailCompany[index]" v-else style="width: 160px;" @input="(val) => (ruleForm.payDetailCompany[index] = ruleForm.payDetailCompany[index].toUpperCase())" :fetch-suggestions="queryCompanySuggest">
+                <template slot-scope="{ item }" style="">
+                  <div class="name">{{ item.value }}</div>
+                  <span class="addr">{{ item.other }}</span>
+                  <!-- 自動選擇及備註欄位 -->
+                </template>
+              </el-autocomplete>
             </el-form-item> 
             <el-form-item label="品項">
               <span class="form-font-xl" v-if="(ruleForm.lock||ruleForm.payDetailOpCheck[index]||ruleForm.payDetailAdminCheck[index])&&!adminShow">{{ruleForm.payDetailItem[index]}}</span>
@@ -732,7 +738,7 @@
         </el-form-item>
       </el-form>
 
-
+      <CompanySuggest ref="child"></CompanySuggest>
       <!-- 估價單 收入 支出 保險 label 已完成 -->
       <!-- 各分頁權限(op 財務核實)尚未完成 -->
   </div>
@@ -742,8 +748,12 @@
 import { db } from '@/db.js'
 import { firebaseApp } from '@/db.js'
 import * as moment from "moment/moment";
+import CompanySuggest from '@/components/CompanySuggest.vue';
 
 export default {
+  components: {
+    CompanySuggest
+  },
   data() {
     return {
       submitNew:false,
@@ -1088,6 +1098,17 @@ export default {
      
   },
   methods: {
+    queryCompanySuggest(queryString, cb) {
+      let companys = this.$refs.child.companySuggest;
+      let results = queryString ? companys.filter(this.createFilter(queryString)) : companys;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
+    },
+    createFilter(queryString) {
+      return (company) => {
+        return (company.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
     endDateCheck(){
       if(this.ruleForm.endDate < this.ruleForm.depDate){
         this.ruleForm.endDate = this.ruleForm.depDate
@@ -1452,7 +1473,32 @@ export default {
   }
 }
 
-</style>
+.el-autocomplete-suggestion li {
+    padding: 0 20px;
+    margin: 0;
+    line-height: normal;
+    cursor: pointer;
+    color: #606266;
+    font-size: 14px;
+    list-style: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+.name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.addr {
+  font-size: 12px;
+  color: #b4b4b4;
+}
 
+.highlighted .addr {
+  color: #ddd;
+}
+</style>
 
 
