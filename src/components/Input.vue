@@ -1098,6 +1098,7 @@ export default {
      
   },
   methods: {
+    //廠商輸入建議
     queryCompanySuggest(queryString, cb) {
       let companys = this.$refs.child.companySuggest;
       let results = queryString ? companys.filter(this.createFilter(queryString)) : companys;
