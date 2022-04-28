@@ -29,7 +29,6 @@ export default {
         { value: '鎮蘭居'     ,other:'非月結'},
         { value: '八代灣'     ,other:'非月結'},
         { value: '海人魚'     ,other:'非月結'},
-        { value: '海王子'     ,other:'非月結'},
         { value: 'TALALA的家' ,other:'非月結'},
         { value: '悠遊蘭嶼'   ,other:'非月結'},
         { value: '避風港'     ,other:'非月結'},
@@ -122,7 +121,6 @@ export default {
         { value: '馬悠驛館'    ,other:'非月結' },
         { value: '望海樓'      ,other:'非月結'},
         { value: '新華航業'    ,other:'非月結'},
-        { value: '白日夢'      ,other:'非月結'},
         { value: '碧雲天'      ,other:'非月結'},         
         { value: '台馬之星'    ,other:'非月結'},
         //金門
@@ -283,7 +281,7 @@ export default {
 
   },
   mounted(){
-    
+
   }
 }
 </script>
