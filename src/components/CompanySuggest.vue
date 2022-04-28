@@ -30,7 +30,7 @@ export default {
         { value: '八代灣'     ,other:'非月結'},
         { value: '海人魚'     ,other:'非月結'},
         { value: '海王子'     ,other:'非月結'},
-        { value: 'TaTaLa的家' ,other:'非月結'},
+        { value: 'TALALA的家' ,other:'非月結'},
         { value: '悠遊蘭嶼'   ,other:'非月結'},
         { value: '避風港'     ,other:'非月結'},
         { value: '兩隻魚'     ,other:'非月結'},
@@ -155,6 +155,7 @@ export default {
         { value: '金湖'          ,other:'非月結'},
         { value: '番茄紅了'      ,other:'非月結'},
         { value: '海灣VILLA會館' ,other:'非月結'},
+        { value: '麟閣旅店'      ,other:'非月結'},
         //澎湖
         { value: '金沙灘'         ,other:'月結'},
         { value: '南海'           ,other:'月結'},
@@ -268,6 +269,10 @@ export default {
         { value: 'EXPEDIA'        ,other:'非月結' },
         { value: 'TRIP'           ,other:'非月結' },
         { value: 'BOOKING'        ,other:'非月結' },
+        //小琉球
+        { value: '琉夏萊'          ,other:'非月結'},
+        { value: '黑皮會館'        ,other:'非月結'},
+        { value: '阿惠'            ,other:'非月結'},
       ],
     }
   },
