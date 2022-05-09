@@ -131,7 +131,7 @@ export default {
         { value: '海豚灣(鎮西)'  ,other:'月結'},
         { value: '金豐'          ,other:'非月結'},
         { value: '吉品'          ,other:'非月結'},
-        { value: '三德'          ,other:'非月結'},
+        { value: '三德'          ,other:'月結'},
         { value: '823行館'       ,other:'非月結'},
         { value: '小金門'        ,other:'非月結'},
         { value: '四海會館'      ,other:'非月結'}, 
@@ -153,7 +153,7 @@ export default {
         { value: '金湖'          ,other:'非月結'},
         { value: '番茄紅了'      ,other:'非月結'},
         { value: '海灣VILLA會館' ,other:'非月結'},
-        { value: '麟閣旅店'      ,other:'非月結'},
+        { value: '麟閣旅店'      ,other:'月結'},
         { value: '圓頭'          ,other:'雙週結'},
         //澎湖
         { value: '金沙灘'         ,other:'月結'},
@@ -204,6 +204,7 @@ export default {
         { value: '陽光沙灘'       ,other:'非月結'},
         { value: '海安'           ,other:'非月結'},
         { value: '海洋城'         ,other:'非月結'},
+        { value: '蠔野人'         ,other:'非月結'},
         //交通
         { value: '綠島之星'       ,other:'非月結'},
         { value: '滿天星'         ,other:'非月結'},
