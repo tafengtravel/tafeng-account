@@ -155,6 +155,7 @@ export default {
         { value: '海灣VILLA會館' ,other:'非月結'},
         { value: '麟閣旅店'      ,other:'月結'},
         { value: '圓頭'          ,other:'雙週結'},
+        { value: '歐特文旅'      ,other:'非月結'},
         //澎湖
         { value: '金沙灘'         ,other:'月結'},
         { value: '南海'           ,other:'月結'},
@@ -205,6 +206,9 @@ export default {
         { value: '海安'           ,other:'非月結'},
         { value: '海洋城'         ,other:'非月結'},
         { value: '蠔野人'         ,other:'非月結'},
+        { value: '綠的旅店'       ,other:'非月結'},
+        { value: '夏之星'         ,other:'非月結'},
+        { value: '旅行中民宿'     ,other:'非月結'},
         //交通
         { value: '綠島之星'       ,other:'非月結'},
         { value: '滿天星'         ,other:'非月結'},
@@ -274,6 +278,7 @@ export default {
         { value: '琉夏萊'          ,other:'非月結'},
         { value: '黑皮會館'        ,other:'非月結'},
         { value: '阿惠'            ,other:'非月結'},
+        { value: '琉球茶室復古館'   ,other:'非月結'},
       ],
     }
   },
