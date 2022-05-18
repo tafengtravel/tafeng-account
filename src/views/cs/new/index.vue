@@ -24,8 +24,8 @@ export default {
   },
   methods:{
     async readParentEvent(){
-      if(this.$refs.child.ruleForm.cs == null || this.$refs.child.ruleForm.depDate == null){
-        this.$message.error('請選擇客服及出發日期')
+      if(this.$refs.child.ruleForm.cs == null || this.$refs.child.ruleForm.depDate == null || this.$refs.child.ruleForm.people == null){
+        this.$message.error('請輸入客服、出發日期、代表人')
         return 0
       }
       let ref = db.collection(moment(this.$refs.child.ruleForm.depDate).format('YYYY-MM'));
@@ -88,6 +88,24 @@ export default {
           }   
         }
       });
+
+      //檢查是否為舊客戶
+      let endMonth = moment(moment(this.$refs.child.ruleForm.depDate).format('YYYY-MM'));
+      let startMonth = moment(endMonth).subtract(120,'months').format('YYYY-MM')
+      let monthLength = endMonth.diff(startMonth, 'month')+1;  
+
+      for(let j=0;j<monthLength;j++){
+        console.log(startMonth)
+        ref = db.collection(startMonth);
+        ref.where('people','==',this.$refs.child.ruleForm.people).get().then(querySnapshot => { 
+          querySnapshot.forEach(doc => {  
+            this.$refs.child.ruleForm.regularCustomer = true
+            console.log(doc.data().people)
+            this.$refs.child.$forceUpdate()
+          }); 
+        });
+        startMonth = moment(startMonth).add(1,'months').format('YYYY-MM')
+      }
 
       this.$refs.child.submitShow = true
       this.$refs.child.$forceUpdate() // 重新渲染dom
