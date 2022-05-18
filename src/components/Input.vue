@@ -62,7 +62,7 @@
 
           <el-row></el-row>
 
-          <el-form-item label="年齡" prop="age" label-width="90px">
+          <el-form-item label="年齡" label-width="90px">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.age}}</span>
             <el-select v-model="ruleForm.age" placeholder="主辦人年齡" style="width: 250px;" v-else>
               <el-option label="0-18" value="0-18"></el-option>
