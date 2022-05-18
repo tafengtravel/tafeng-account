@@ -1108,9 +1108,6 @@ export default {
           createDate:[
               { required: true, message: '必填', trigger: 'blur'},
           ],
-          age:[
-            { required: true, message: '必填', trigger: 'blur'},
-          ]
       },
       readNumber:false,
       opShow:true,
