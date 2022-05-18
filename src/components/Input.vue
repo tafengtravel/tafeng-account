@@ -62,6 +62,28 @@
 
           <el-row></el-row>
 
+          <el-form-item label="年齡" prop="age" label-width="90px">
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.age}}</span>
+            <el-select v-model="ruleForm.age" placeholder="年齡" style="width: 250px;" v-else>
+              <el-option label="0-18" value="0-18"></el-option>
+              <el-option label="18-29" value="18-29"></el-option>
+              <el-option label="30-39" value="30-39"></el-option>
+              <el-option label="40-49" value="40-49"></el-option>
+              <el-option label="50-59" value="50-59"></el-option>
+              <el-option label="60-99" value="60-99"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="舊客戶" label-width="70px">
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.regularCustomer}}</span>
+            <el-select v-model="ruleForm.regularCustomer" placeholder="無須選擇，系統自動判別" style="width: 250px;" v-else>
+              <el-option label="否" :value= false></el-option>
+              <el-option label="是" :value= true></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-row></el-row>
+
           <el-form-item label="出發日期" prop="depDate" label-width="110px">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.depDate}}</span>
             <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.depDate" v-else style="width: 190px;" @change="endDateCheck"></el-date-picker>
@@ -387,6 +409,7 @@
                 <el-option label="現金" value="現金"></el-option>
                 <el-option label="支票" value="支票"></el-option>
                 <el-option label="儲值金" value="儲值金"></el-option>
+                <el-option label="轉團金" value="轉團金"></el-option>
                 <el-option label="其他" value="其他"></el-option>
               </el-select>
             </el-form-item>
@@ -419,31 +442,31 @@
               <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck1[index]||ruleForm.payDetailDlAdminCheck1[index])&&!adminShow">{{ruleForm.payDetailFee1[index]}}</span>
               <el-checkbox v-model="ruleForm.payDetailFee1[index]" v-else @input="count"></el-checkbox>
             </el-form-item>
-            <el-row></el-row>
             <el-form-item label="付款日期" label-width="100px">
               <span class="form-font-md" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck1[index]||ruleForm.payDetailDlAdminCheck1[index])&&!adminShow">{{ruleForm.payDetailDlPayDate1[index]}}</span>
-              <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDlPayDate1[index]" v-else style="width: 160px;"></el-date-picker>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDlPayDate1[index]" v-else style="width: 160px;"></el-date-picker>
             </el-form-item>
-            <el-form-item label="金額">
+            <el-row></el-row>
+            <el-form-item label="金額" label-width="100px">
               <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck1[index]||ruleForm.payDetailDlAdminCheck1[index])&&!adminShow">{{ruleForm.payDetailDlPay1[index]}}</span>
-              <el-input v-model="ruleForm.payDetailDlPay1[index]" @input="count" v-else style="width: 130px;" ></el-input>
+              <el-input v-model="ruleForm.payDetailDlPay1[index]" @input="count" v-else style="width: 160px;" ></el-input>
             </el-form-item> 
             <el-form-item label="付款方式" label-width="100px">
               <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck1[index]||ruleForm.payDetailDlAdminCheck1[index])&&!adminShow">{{ruleForm.payDetailDlType1[index]}}</span>
-              <el-select v-model="ruleForm.payDetailDlType1[index]" placeholder="付款方式" v-else style="width: 110px;">
+              <el-select v-model="ruleForm.payDetailDlType1[index]" placeholder="付款方式" v-else style="width: 130px;">
                 <el-option label="轉帳" value="轉帳"></el-option>
                 <el-option label="郵局" value="郵局"></el-option>
                 <el-option label="刷卡" value="刷卡"></el-option>
                 <el-option label="現金" value="現金"></el-option>
                 <el-option label="支票" value="支票"></el-option>
                 <el-option label="儲值金" value="儲值金"></el-option>
+                <el-option label="轉團金" value="轉團金"></el-option>
                 <el-option label="其他" value="其他"></el-option>
               </el-select>
             </el-form-item>
-            
             <el-form-item label="付款證明" label-width="100px">
               <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck1[index]||ruleForm.payDetailDlAdminCheck1[index])&&!adminShow">{{ruleForm.payDetailDlProve1[index]}}</span>
-              <el-input v-model="ruleForm.payDetailDlProve1[index]" @input="count" v-else style="width: 110px;"></el-input>
+              <el-input v-model="ruleForm.payDetailDlProve1[index]" @input="count" v-else></el-input>
             </el-form-item>
             <el-form-item label="OP核實" label-width="100px" class="op">
               <span class="form-font-sm" v-if="(!opShow||ruleForm.lock||ruleForm.payDetailDlAdminCheck1[index])&&!adminShow">{{ruleForm.payDetailDlOpCheck1[index]}}</span>
@@ -469,30 +492,31 @@
               <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck2[index]||ruleForm.payDetailDlAdminCheck2[index])&&!adminShow">{{ruleForm.payDetailFee2[index]}}</span>
               <el-checkbox v-model="ruleForm.payDetailFee2[index]" @input="count" v-else></el-checkbox>
             </el-form-item>
-            <el-row></el-row> 
             <el-form-item label="付款日期" label-width="100px">
               <span class="form-font-md" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck2[index]||ruleForm.payDetailDlAdminCheck2[index])&&!adminShow">{{ruleForm.payDetailDlPayDate2[index]}}</span>
               <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.payDetailDlPayDate2[index]" v-else style="width: 160px;"></el-date-picker>
             </el-form-item>
-            <el-form-item label="金額">
+            <el-row></el-row> 
+            <el-form-item label="金額" label-width="100px">
               <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck2[index]||ruleForm.payDetailDlAdminCheck2[index])&&!adminShow">{{ruleForm.payDetailDlPay2[index]}}</span>
-              <el-input v-model="ruleForm.payDetailDlPay2[index]" v-else style="width: 130px;" ></el-input>
+              <el-input v-model="ruleForm.payDetailDlPay2[index]" v-else style="width: 160px;" ></el-input>
             </el-form-item> 
             <el-form-item label="付款方式" label-width="100px">
               <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck2[index]||ruleForm.payDetailDlAdminCheck2[index])&&!adminShow">{{ruleForm.payDetailDlType2[index]}}</span>
-              <el-select v-model="ruleForm.payDetailDlType2[index]" placeholder="付款方式" v-else style="width: 110px;">
+              <el-select v-model="ruleForm.payDetailDlType2[index]" placeholder="付款方式" v-else style="width: 130px;">
                 <el-option label="轉帳" value="轉帳"></el-option>
                 <el-option label="郵局" value="郵局"></el-option>
                 <el-option label="刷卡" value="刷卡"></el-option>
                 <el-option label="現金" value="現金"></el-option>
                 <el-option label="支票" value="支票"></el-option>
                 <el-option label="儲值金" value="儲值金"></el-option>
+                <el-option label="轉團金" value="轉團金"></el-option>
                 <el-option label="其他" value="其他"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="付款證明" label-width="100px">
               <span class="form-font-sm" v-if="(ruleForm.lock||ruleForm.payDetailDlOpCheck2[index]||ruleForm.payDetailDlAdminCheck2[index])&&!adminShow">{{ruleForm.payDetailDlProve2[index]}}</span>
-              <el-input v-model="ruleForm.payDetailDlProve2[index]" v-else style="width: 110px;"></el-input>
+              <el-input v-model="ruleForm.payDetailDlProve2[index]" v-else></el-input>
             </el-form-item>
             <el-form-item label="OP核實" label-width="100px" class="op">
               <span class="form-font-sm" v-if="(!opShow||ruleForm.lock||ruleForm.payDetailDlAdminCheck2[index])&&!adminShow">{{ruleForm.payDetailDlOpCheck2[index]}}</span>
@@ -1083,6 +1107,9 @@ export default {
           ],
           createDate:[
               { required: true, message: '必填', trigger: 'blur'},
+          ],
+          age:[
+            { required: true, message: '必填', trigger: 'blur'},
           ]
       },
       readNumber:false,
