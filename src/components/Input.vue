@@ -64,7 +64,7 @@
 
           <el-form-item label="年齡" prop="age" label-width="90px">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.age}}</span>
-            <el-select v-model="ruleForm.age" placeholder="年齡" style="width: 250px;" v-else>
+            <el-select v-model="ruleForm.age" placeholder="主辦人年齡" style="width: 250px;" v-else>
               <el-option label="0-18" value="0-18"></el-option>
               <el-option label="18-29" value="18-29"></el-option>
               <el-option label="30-39" value="30-39"></el-option>
@@ -86,15 +86,15 @@
 
           <el-form-item label="出發日期" prop="depDate" label-width="110px">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.depDate}}</span>
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.depDate" v-else style="width: 190px;" @change="endDateCheck"></el-date-picker>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.depDate" v-else style="width: 210px;" @change="endDateCheck"></el-date-picker>
           </el-form-item>
           <el-form-item label="結束日期" prop="endDate" label-width="110px">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.endDate}}</span>
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.endDate" v-else style="width: 190px;" :picker-options="endDateDisable" :disabled="ruleForm.depDate == null"></el-date-picker>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.endDate" v-else style="width: 210px;" :picker-options="endDateDisable" :disabled="ruleForm.depDate == null"></el-date-picker>
           </el-form-item>
           <el-form-item label="報帳日期" prop="createDate" label-width="110px">
             <span class="form-font-xl" v-if="(ruleForm.lock||createDate)&&!adminShow">{{ruleForm.createDate}}</span>
-            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.createDate" v-else style="width: 190px;" :picker-options="createDateDisable"></el-date-picker>
+            <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="選擇日期" v-model="ruleForm.createDate" v-else style="width: 210px;" :picker-options="createDateDisable"></el-date-picker>
           </el-form-item>
           <el-row></el-row>
 
