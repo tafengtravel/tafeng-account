@@ -89,10 +89,17 @@ export default {
         }
       });
 
-      //檢查是否為舊客戶
+      this.$refs.child.submitShow = true
+      this.$refs.child.$forceUpdate() // 重新渲染dom
+      this.regularCustomerCheck()
+    },
+    regularCustomerCheck(){
       let endMonth = moment(moment(this.$refs.child.ruleForm.depDate).format('YYYY-MM'));
       let startMonth = moment(endMonth).subtract(120,'months').format('YYYY-MM')
-      let monthLength = endMonth.diff(startMonth, 'month')+1;  
+      let monthLength = endMonth.diff(startMonth, 'month')+1; 
+      let ref
+      this.$refs.child.ruleForm.regularCustomer = false 
+      this.$refs.child.$forceUpdate()
 
       for(let j=0;j<monthLength;j++){
         console.log(startMonth)
@@ -106,9 +113,6 @@ export default {
         });
         startMonth = moment(startMonth).add(1,'months').format('YYYY-MM')
       }
-
-      this.$refs.child.submitShow = true
-      this.$refs.child.$forceUpdate() // 重新渲染dom
     }
   },
   computed: {
