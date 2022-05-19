@@ -74,6 +74,14 @@
             </el-select>
           </el-form-item>
 
+          <el-form-item label="性別" label-width="70px">
+            <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.gender}}</span>
+            <el-select v-model="ruleForm.gender" placeholder="主辦人性別" style="width: 250px;" v-else>
+              <el-option label="男" value="male"></el-option>
+              <el-option label="女" value="female"></el-option>
+            </el-select>
+          </el-form-item>
+
           <el-form-item label="舊客戶" label-width="70px">
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.regularCustomer}}</span>
             <el-select v-model="ruleForm.regularCustomer" placeholder="無須選擇，系統自動判別" style="width: 250px;" v-else>
