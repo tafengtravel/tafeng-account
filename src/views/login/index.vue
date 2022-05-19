@@ -45,10 +45,26 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
       <div class="tips">
-        <span style="margin-right:20px;">若無法登入，請聯繫管理員</span>
+        <div style="margin-right:20px;" @click="resetPassword">若您忘記密碼，請先輸入信箱，在點此重設</div>
+        <br>
+        <div style="margin-right:20px;">系統會發送連結至您的信箱</div>
       </div>
 
+      <!-- <el-dialog title="重設密碼" class = "sub_title" :visible.sync="dialogResetPassword">
+        <el-row>
+          <el-form-item label="信箱" label-width="85px">
+            <el-input v-model.trim="loginForm.email"></el-input>
+          </el-form-item>   
+        </el-row>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogEditRecord = false">取 消</el-button>
+          <el-button type="primary" @click="submitRecord()">送 出</el-button>
+        </span>
+      </el-dialog> -->
+      
     </el-form>
+
+    
   </div>
 </template>
 
@@ -70,7 +86,8 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
+      dialogResetPassword:false
     }
   },
   watch: {
@@ -110,6 +127,15 @@ export default {
           return false
         }
       })
+    },
+    resetPassword(){
+      firebaseApp.auth().sendPasswordResetEmail(this.loginForm.email).then(() => {
+        this.$message.success('已發送連結至您的信箱');
+        console.log('OK');
+      }).catch((error) => {
+        this.$message.error('查無信箱');
+        console.log(error.message);
+      });
     }
   }
 }
