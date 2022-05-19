@@ -1463,6 +1463,7 @@ export default {
               });
             } else {
               console.log('error submit!!');
+              this.$message.error('必要項目未填，請重新檢查！')
               return false;
             }
           });
