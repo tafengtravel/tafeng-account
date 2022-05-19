@@ -82,22 +82,22 @@ export default {
             cellWidth: 'auto'
         },
       }
-      this.fotherItemData.sort((a,b)=>{ return a.company.localeCompare(b.company)})
+      this.fotherItemData.sort((a,b)=>{ return a.payCompany.localeCompare(b.payCompany)})
 
-      const companyArr = this.fotherItemData.map(item=>item.company)
+      const companyArr = this.fotherItemData.map(item=>item.payCompany)
       const allCompany = new Set(companyArr)
       allCompany.forEach(itemCompany=>{
-        let arr = this.fotherItemData.filter(itemData=>itemData.company===itemCompany).map(itemData=>[
+        let arr = this.fotherItemData.filter(itemData=>itemData.payCompany===itemCompany).map(itemData=>[
           itemData.number,
           itemData.depDate,
           itemData.endDate,
           itemData.name,
           itemData.people,
-          itemData.company,
+          itemData.payCompany,
           itemData.item,
           itemData.detail,
         ])
-        let arr1 = this.fotherItemData.filter(itemData=>itemData.company===itemCompany).map(itemData=>[
+        let arr1 = this.fotherItemData.filter(itemData=>itemData.payCompany===itemCompany).map(itemData=>[
           itemData.pay,
           itemData.dl1,
           itemData.dlpay1,
