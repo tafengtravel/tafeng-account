@@ -554,7 +554,21 @@ export const adminRoutes = [
         path: 'deadline',
         name: '當日DL',
         component: () => import('@/views/admin/deadline/index'),
-        meta: { title: '當日DL', icon: '' }
+        meta: { title: '當日DL', icon: '' },
+        children: [
+          {
+            path: 'fit',
+            component: () => import('@/views/admin/deadline/fit'),
+            name: '散客',
+            meta: { title: '散客' }
+          },
+          {
+            path: 'group',
+            component: () => import('@/views/admin/deadline/group'),
+            name: '團體',
+            meta: { title: '團體' }
+          }
+        ]
       },
       {
         path: 'lock',
