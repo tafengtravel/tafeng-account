@@ -66,7 +66,7 @@
             <span class="form-font-xl" v-if="ruleForm.lock&&!adminShow">{{ruleForm.age}}</span>
             <el-select v-model="ruleForm.age" placeholder="主辦人年齡" style="width: 250px;" v-else>
               <el-option label="0-18" value="0-18"></el-option>
-              <el-option label="18-29" value="18-29"></el-option>
+              <el-option label="19-29" value="19-29"></el-option>
               <el-option label="30-39" value="30-39"></el-option>
               <el-option label="40-49" value="40-49"></el-option>
               <el-option label="50-59" value="50-59"></el-option>
