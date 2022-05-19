@@ -5,8 +5,8 @@
       v-model="date"
       type="daterange"
       range-separator="至"
-      start-placeholder="開始月份"
-      end-placeholder="結束月份"
+      start-placeholder="開始日期"
+      end-placeholder="結束日期"
       value-format="yyyy-MM-dd">
     </el-date-picker>
     <el-input v-model="name" style="width:250px" placeholder="請輸入團名"></el-input>

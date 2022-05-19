@@ -4,7 +4,7 @@
     <el-date-picker
       v-model="date"
       type="date"
-      placeholder="選擇報帳日期"
+      placeholder="報帳日期"
       style="width:160px"
       value-format="yyyy-MM-dd"
       >
