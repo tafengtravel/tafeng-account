@@ -128,7 +128,7 @@ export default {
     },
     resetPassword(){
       if(this.loginForm.email == null ||this.loginForm.email == ''){
-        this.$message.error('請填入信箱');
+        this.$message.error('請輸入信箱');
         return 0
       }
       firebaseApp.auth().sendPasswordResetEmail(this.loginForm.email).then(() => {
