@@ -22,6 +22,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const firebaseApp =  firebase.initializeApp(firebaseConfig);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL) //LOCAL SESSION NONE
 export const db = firebaseApp.firestore()
 
 
