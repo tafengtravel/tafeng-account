@@ -203,7 +203,7 @@ export default {
         { value: '海岸情'               ,other:'非月結'},
         { value: '海悅'                 ,other:'非月結'},
         { value: '安泊'                 ,other:'非月結'},
-        { value: '大姐'                 ,other:'非月結'},
+        { value: '大姐'                 ,other:'月結'},
         { value: '陽光沙灘'             ,other:'非月結'},
         { value: '海安'                 ,other:'非月結'},
         { value: '海洋城'               ,other:'非月結'},
