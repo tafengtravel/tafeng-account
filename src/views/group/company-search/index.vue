@@ -17,10 +17,6 @@ export default {
   
   data() {
     return {
-      listLoading: false,
-      itemData:[],
-      company:'',
-      payTotal:0,
     }
   },
   created() {
