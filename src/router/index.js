@@ -251,6 +251,12 @@ export const opRoutes = [
         component: () => import('@/views/group/deadline/index'),
         meta: { title: '當日DL', icon: '' }
       },
+      {
+        path: 'company-search',
+        name: '廠商搜尋',
+        component: () => import('@/views/group/company-search/index'),
+        meta: { title: '廠商搜尋', icon: '' }
+      },
     ]
   },
   
@@ -449,6 +455,12 @@ export const adminRoutes = [
         name: '當日DL',
         component: () => import('@/views/group/deadline/index'),
         meta: { title: '當日DL', icon: '' }
+      },
+      {
+        path: 'company-search',
+        name: '廠商搜尋',
+        component: () => import('@/views/group/company-search/index'),
+        meta: { title: '廠商搜尋', icon: '' }
       },
     ]
   },

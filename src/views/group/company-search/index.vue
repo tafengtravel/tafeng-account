@@ -30,7 +30,7 @@ export default {
     edit(row){
       console.log(row)
       let route = this.$router.resolve({
-        path: '/admin/edit/group',
+        path: '/group/edit',
         query: { number:row.number,depDate:moment(row.depDate).format('YYYY-MM') }
       })
       window.open(route.href, '_blank');
