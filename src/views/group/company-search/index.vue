@@ -1,5 +1,5 @@
 <template>
-  <CompanySuggestGroup @editChildEvent="edit" ref="child"></CompanySuggestGroup>
+  <CompanySearchGroup @editChildEvent="edit" ref="child"></CompanySearchGroup>
 </template>
 
 <script>
@@ -8,11 +8,11 @@ import { db } from '@/db.js'
 import { firebaseApp } from '@/db.js'
 import '@/styles/common.css'
 import * as moment from "moment/moment";
-import CompanySuggestGroup from '@/components/CompanySuggestGroup.vue'
+import CompanySearchGroup from '@/components/CompanySearchGroup.vue'
 
 export default {
   components: {
-    CompanySuggestGroup
+    CompanySearchGroup
   },
   
   data() {
