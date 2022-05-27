@@ -156,8 +156,10 @@ export default {
         { value: '番茄紅了'      ,other:'非月結'},
         { value: '海灣VILLA會館' ,other:'非月結'},
         { value: '麟閣旅店'      ,other:'月結'},
-        { value: '圓頭'          ,other:'雙週結'},
+        { value: '圓頭'          ,other:'非雙週結'},
         { value: '歐特文旅'      ,other:'非月結'},
+        { value: '雲峰精品文旅'  ,other:'非月結'},
+        { value: '金環球'        ,other:'非月結'},
         //澎湖
         { value: '金沙灘'               ,other:'月結'},
         { value: '南海'                 ,other:'月結'},
@@ -212,6 +214,10 @@ export default {
         { value: '夏之星'               ,other:'非月結'},
         { value: '旅行中民宿'           ,other:'非月結'},
         { value: '福爾摩沙帆船民宿'     ,other:'非月結'},
+        { value: '特米諾1號館'          ,other:'非月結'},
+        { value: '星光'                ,other:'月結'},
+        { value: '日日潛水'            ,other:'非月結'},
+        { value: '型藍美旅民宿'        ,other:'非月結'},
         //交通
         { value: '綠島之星'       ,other:'非月結'},
         { value: '滿天星'         ,other:'非月結'},
@@ -256,7 +262,7 @@ export default {
         //TS
         { value: '佳期'           ,other:'月結'},
         { value: '金明生'         ,other:'月結'},
-        { value: '星凱'           ,other:'月結'},
+        { value: '星凱'           ,other:'非月結'},
         { value: '八八'           ,other:'月結'},
         { value: '天海'           ,other:'非月結'},
         { value: '寶豐'           ,other:'非月結'},
