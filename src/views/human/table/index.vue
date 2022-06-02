@@ -62,7 +62,7 @@
       </el-dialog>
 
       <div class ="el-col-24">
-        <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'number',order: 'ascending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
+        <el-table v-loading="listLoading" :data="itemData" style="width: 100%" :default-sort = "{prop: 'active',order: 'descending'}" :row-class-name="tableRowClassName" empty-text="沒有資料">
           <el-table-column type="index" label="筆數" width='75%' fixed></el-table-column>
           <el-table-column prop="number" label="編號" width='100%' sortable :sort-method = "(a,b)=>{return a.number - b.number}"></el-table-column>
           <el-table-column prop="name" label="姓名" width='140%'  sortable :sort-method = "(a,b)=>{return a.name - b.name}"></el-table-column>
@@ -73,7 +73,7 @@
           <el-table-column prop="mail" label="信箱" width='300%'></el-table-column>
           <el-table-column prop="entryDate" label="入職日期" width='140%' sortable :sort-method = "(a,b) =>a.entryDate.localeCompare(b.entryDate)"></el-table-column>
           <el-table-column prop="quitDate" label="離職日期" width='140%' sortable :sort-method = "(a,b) =>a.quitDate.localeCompare(b.quitDate)"></el-table-column>
-          <el-table-column prop="active" label="是否在職" :formatter="check" width='120%' sortable :sort-method = "(a,b) =>a.active.localeCompare(b.active)"></el-table-column>
+          <el-table-column prop="active" label="是否在職" :formatter="check" width='120%' sortable :sort-method = "(a,b) =>{return a.active - b.active}"></el-table-column>
           <el-table-column prop="" label="編輯">
             <template slot-scope="scope">
               <el-button @click="editHuman(scope.row)" type="text" >編輯</el-button>
