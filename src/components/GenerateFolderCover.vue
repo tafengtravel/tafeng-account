@@ -39,7 +39,7 @@ export default {
           case 'B2':csName = 'Joy'     ;break
           case 'B4':csName = 'Carine'  ;break
           case 'B6':csName = 'Alin'    ;break
-          case 'B8':csName = 'Jenny'   ;break
+          case 'B8':csName = 'Kitty'   ;break
           case 'B10':csName = 'Eating' ;break
           case 'A4':csName = 'Jude'    ;break
         }
