@@ -294,6 +294,8 @@ export default {
         { value: '黑皮會館'        ,other:'非月結'},
         { value: '阿惠'            ,other:'非月結'},
         { value: '琉球茶室復古館'   ,other:'非月結'},
+        //國旅
+        { value: '司馬庫斯'        ,other:'非月結'},
       ],
     }
   },
