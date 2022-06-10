@@ -125,6 +125,8 @@ export default {
         { value: '碧雲天'      ,other:'非月結'},         
         { value: '台馬之星'    ,other:'非月結'},
         { value: '芹壁愛情海'  ,other:'非月結'},
+        { value: '龍福山莊'  ,other:'非月結'},
+        { value: '幸福藍眼淚'  ,other:'非月結'},
         //金門
         { value: '叮叮車'        ,other:'月結'},
         { value: '金翔'          ,other:'月結'},
@@ -218,6 +220,8 @@ export default {
         { value: '星光'                ,other:'月結'},
         { value: '日日潛水'            ,other:'非月結'},
         { value: '型藍美旅民宿'        ,other:'非月結'},
+        { value: '瑞欣大飯店'         ,other:'非月結'},
+        { value: '金八達'             ,other:'非月結'},
         //交通
         { value: '綠島之星'       ,other:'非月結'},
         { value: '滿天星'         ,other:'非月結'},
