@@ -802,9 +802,9 @@ export default {
       createDateDisable:{
         disabledDate(time) {
           if(moment().hours() >= 18 && moment().minutes() > 30){
-            return time.getTime() < new Date().getTime() || time.getTime() > new Date().getTime() + 24*60*60*1000
+            return time.getTime() < new Date().getTime() 
           }
-          return time.getTime() < new Date().getTime() - 24*60*60*1000 || time.getTime() > new Date().getTime()
+          return time.getTime() < new Date().getTime() - 24*60*60*1000 
         }
       },
       dlDisable:{
