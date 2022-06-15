@@ -296,6 +296,9 @@ export default {
         { value: '琉球茶室復古館'   ,other:'非月結'},
         //國旅
         { value: '司馬庫斯'        ,other:'非月結'},
+        //國外廠商
+        { value: '曼谷阿一租車'      ,other:'非月結'},
+        { value: '宿霧JETHRO'       ,other:'非月結'},
       ],
     }
   },
