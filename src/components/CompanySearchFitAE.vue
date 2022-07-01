@@ -100,67 +100,42 @@ export default {
       let startDate 
       let endDate
       let dateLength
-      let month
+      let month = '2021-11'
 
-      if(this.$refs.child.month != ''&&this.$refs.child.month != null){
-        ref = db.collection(this.$refs.child.month);
-        this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom
+      
+      this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom
 
-        ref.where('payDetailCompany','array-contains',this.$refs.child.company).get().then((querySnapshot => { //資料編排改變後 客服需改變
-          querySnapshot.forEach(doc => {  
-            for(let j=0;j<doc.data().payDetailCompany.length;j++){
-              if(doc.data().payDetailCompany[j] == this.$refs.child.company){
-                this.itemData.push({
-                  ...doc.data(),
-                  'payDetailCompany':doc.data().payDetailCompany[j],
-                  'item':doc.data().payDetailItem[j],
-                  'pay':doc.data().payDetailPay[j],
-                  'payDate':doc.data().payDetailPayDate[j],
-                  'dl1':doc.data().payDetailDl1[j],
-                  'dlpay1':doc.data().payDetailDlPay1[j],
-                  'dl2':doc.data().payDetailDl2[j],
-                  'dlpay2':doc.data().payDetailDlPay2[j],
-                })
-              }
-            }
-          }); 
-        }));
-      }else if(this.$refs.child.date != ''&&this.$refs.child.date != null){
-        month = moment(this.$refs.child.date[0]).format('YYYY-MM')
-        startDate = moment(this.$refs.child.date[0]);
-        endDate = moment(this.$refs.child.date[1]);
-        dateLength = endDate.diff(startDate, 'days')+1;
-        this.itemData.splice(0,this.itemData.length) //用splice清空 就無須reverse刷新dom
-
-        for(let j=0;j<18;j++){ //先往後搜尋18個月
+        for(let i=0;i<5;i++){
           ref = db.collection(month);
-            ref.where('payDetailCompany','array-contains',this.$refs.child.company).get().then((querySnapshot => { //廠商相符
-              querySnapshot.forEach(doc => {  
-                startDate = this.$refs.child.date[0] //初始日期
-                for(let i=0;i<dateLength;i++){ //付款日期長度
-                  for(let j=0;j<doc.data().payDetailCompany.length;j++){
-                    if(doc.data().payDetailPayDate[j] == startDate && doc.data().payDetailCompany[j] == this.$refs.child.company){ //付款日期相符
-                      this.itemData.push({
-                        ...doc.data(),
-                        'payDetailCompany':doc.data().payDetailCompany[j],
-                        'item':doc.data().payDetailItem[j],
-                        'pay':doc.data().payDetailPay[j],
-                        'payDate':doc.data().payDetailPayDate[j],
-                        'dl1':doc.data().payDetailDl1[j],
-                        'dlpay1':doc.data().payDetailDlPay1[j],
-                        'dl2':doc.data().payDetailDl2[j],
-                        'dlpay2':doc.data().payDetailDlPay2[j],
-                      })
-                    }
-                  }
-                  startDate = moment(startDate).add(1,'days').format('YYYY-MM-DD')
+          
+
+          ref.where('payDetailCompany','array-contains-any',['立榮','華信','易飛網','長汎']).get().then((querySnapshot => { //資料編排改變後 客服需改變
+            querySnapshot.forEach(doc => {  
+              for(let j=0;j<doc.data().payDetailCompany.length;j++){
+                if((doc.data().payDetailCompany[j] == '立榮' || doc.data().payDetailCompany[j] == '華信' || doc.data().payDetailCompany[j] == '易飛網' || doc.data().payDetailCompany[j] == '長汎') && doc.data().location != '馬祖'){
+                  this.itemData.push({
+                    ...doc.data(),
+                    'payDetailCompany':doc.data().payDetailCompany[j],
+                    'item':doc.data().payDetailItem[j],
+                    'pay':doc.data().payDetailPay[j],
+                    'payDate':doc.data().payDetailPayDate[j],
+                    'dl1':doc.data().payDetailDl1[j],
+                    'dlpay1':doc.data().payDetailDlPay1[j],
+                    'dl2':doc.data().payDetailDl2[j],
+                    'dlpay2':doc.data().payDetailDlPay2[j],
+                  })
                 }
-              }); 
-            }));
+              }
+            }); 
+          }));
+          console.log(i)
+          console.log(month)
+
           month = moment(month).add(1,'months').format('YYYY-MM')
         }
 
-      } 
+        
+      
       
       this.listLoading = false
     },
