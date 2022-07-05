@@ -163,7 +163,7 @@ export default {
         { value: '歐特文旅'      ,other:'非月結'},
         { value: '雲峰精品文旅'  ,other:'非月結'},
         { value: '金環球'        ,other:'非月結'},
-        { value: '三元'          ,other:'非月結'},
+        { value: '三元民宿'      ,other:'非月結'},
         //澎湖
         { value: '金沙灘'               ,other:'月結'},
         { value: '南海'                 ,other:'月結'},
@@ -222,8 +222,9 @@ export default {
         { value: '星光'                ,other:'月結'},
         { value: '日日潛水'            ,other:'非月結'},
         { value: '型藍美旅民宿'        ,other:'非月結'},
-        { value: '瑞欣大飯店'         ,other:'非月結'},
-        { value: '金八達'             ,other:'非月結'},
+        { value: '瑞欣大飯店'          ,other:'非月結'},
+        { value: '南海金八達'          ,other:'非月結'},
+        { value: '北海金八達'          ,other:'非月結'},
         //交通
         { value: '綠島之星'       ,other:'非月結'},
         { value: '滿天星'         ,other:'非月結'},
@@ -265,6 +266,8 @@ export default {
         { value: '葉志成'         ,other:'非月結'},
         { value: '永佳'           ,other:'月結'},
         { value: '台馬之星'       ,other:'非月結'},
+        { value: '華信B2B'       ,other:'非月結'},
+        { value: '虎航B2B'       ,other:'非月結'},
         //TS
         { value: '佳期'           ,other:'月結'},
         { value: '金明生'         ,other:'月結'},
