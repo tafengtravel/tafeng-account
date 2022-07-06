@@ -164,6 +164,7 @@ export default {
         { value: '雲峰精品文旅'  ,other:'非月結'},
         { value: '金環球'        ,other:'非月結'},
         { value: '三元民宿'      ,other:'非月結'},
+        { value: '宜家民宿'      ,other:'非月結'},
         //澎湖
         { value: '金沙灘'               ,other:'月結'},
         { value: '南海'                 ,other:'月結'},
