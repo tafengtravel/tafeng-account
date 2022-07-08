@@ -110,6 +110,45 @@ export const csRoutes = [
       }
     ]
   },
+  {
+    path: '/ticket',
+    component: Layout,
+    redirect: '/ticket/uni',
+    name: '開票程式',
+    meta: {title: '開票程式', icon: 'ticket'},
+    children: [
+      {
+        path: 'uni',
+        name: '立榮線上訂位',
+        component: () => import('@/views/ticket/uni/index'),
+        meta: { title: '立榮線上訂位', icon: '' }
+      },
+      {
+        path: 'uni-phone',
+        name: '立榮電話訂位',
+        component: () => import('@/views/ticket/uni-phone/index'),
+        meta: { title: '立榮電話訂位', icon: '' }
+      },
+      {
+        path: 'mandarin',
+        name: '華信線上訂位',
+        component: () => import('@/views/ticket/mandarin/index'),
+        meta: { title: '華信線上訂位', icon: '' }
+      },
+      {
+        path: 'mandarin-phone',
+        name: '華信電話訂位',
+        component: () => import('@/views/ticket/mandarin-phone/index'),
+        meta: { title: '華信電話訂位', icon: '' }
+      },
+      {
+        path: 'mandarin-b2b',
+        name: '華信B2B訂位',
+        component: () => import('@/views/ticket/mandarin-b2b/index'),
+        meta: { title: '華信B2B訂位', icon: '' }
+      },
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
@@ -256,6 +295,45 @@ export const opRoutes = [
         name: '廠商搜尋',
         component: () => import('@/views/group/company-search/index'),
         meta: { title: '廠商搜尋', icon: '' }
+      },
+    ]
+  },
+  {
+    path: '/ticket',
+    component: Layout,
+    redirect: '/ticket/uni',
+    name: '開票程式',
+    meta: {title: '開票程式', icon: 'ticket'},
+    children: [
+      {
+        path: 'uni',
+        name: '立榮線上訂位',
+        component: () => import('@/views/ticket/uni/index'),
+        meta: { title: '立榮線上訂位', icon: '' }
+      },
+      {
+        path: 'uni-phone',
+        name: '立榮電話訂位',
+        component: () => import('@/views/ticket/uni-phone/index'),
+        meta: { title: '立榮電話訂位', icon: '' }
+      },
+      {
+        path: 'mandarin',
+        name: '華信線上訂位',
+        component: () => import('@/views/ticket/mandarin/index'),
+        meta: { title: '華信線上訂位', icon: '' }
+      },
+      {
+        path: 'mandarin-phone',
+        name: '華信電話訂位',
+        component: () => import('@/views/ticket/mandarin-phone/index'),
+        meta: { title: '華信電話訂位', icon: '' }
+      },
+      {
+        path: 'mandarin-b2b',
+        name: '華信B2B訂位',
+        component: () => import('@/views/ticket/mandarin-b2b/index'),
+        meta: { title: '華信B2B訂位', icon: '' }
       },
     ]
   },
