@@ -787,10 +787,16 @@ export const adminRoutes = [
         meta: { title: '華信電話訂位', icon: '' }
       },
       {
-        path: 'mandarin-b2b',
-        name: '華信B2B訂位',
-        component: () => import('@/views/ticket/mandarin-b2b/index'),
-        meta: { title: '華信B2B訂位', icon: '' }
+        path: 'mandarin-b2b-fit',
+        name: '華信B2B散客訂位',
+        component: () => import('@/views/ticket/mandarin-b2b-fit/index'),
+        meta: { title: '華信B2B散客訂位', icon: '' }
+      },
+      {
+        path: 'mandarin-b2b-group',
+        name: '華信B2B團體訂位',
+        component: () => import('@/views/ticket/mandarin-b2b-group/index'),
+        meta: { title: '華信B2B散客訂位', icon: '' }
       },
     ]
   },
