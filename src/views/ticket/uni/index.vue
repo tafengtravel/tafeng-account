@@ -49,8 +49,9 @@ export default {
           genderValue = 'MR'
         }else if (data.id.substring(1,2) == '2'){
           genderValue = 'MS'
+        }else{
+          genderValue = ''
         }
-
         consoleStr = consoleStr +
         country + index.toString() + value + quote + countryValue + quote + '\n' +
         lastName + index.toString() + value + quote + data.name.substring(0,1) + quote + '\n' +
@@ -61,6 +62,7 @@ export default {
         id + index.toString() + value + quote + data.id + quote + '\n' 
       });
      
+      consoleStr = consoleStr + 'CPH_Body_tb_Email.value = "tafengtravel@gmail.com"'
       console.log(consoleStr)
       this.$refs.child.passengerConsole = consoleStr
     }

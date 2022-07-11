@@ -42,7 +42,7 @@ export default {
         id + (index+1).toString() + value + quote + data.id + quote + '\n' 
       });
       
-      consoleStr = consoleStr + 'contactNameMobile.value =' + quote + passengerData[0].name + quote
+      consoleStr = consoleStr + 'contactNameMobile.value =' + quote + passengerData[0].name + quote + '\ndocument.getElementsByName("email")[0].value  = "tafengtravel@gmail.com"'
       console.log(consoleStr)
       this.$refs.child.passengerConsole = consoleStr
     }

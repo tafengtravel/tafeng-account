@@ -26,23 +26,21 @@ export default {
     passengerToConsole(passengerData){
       console.log(passengerData)
       let consoleStr = ''
-      let lastName = 'lastName_'
-      let firstName = 'firstName_'
-      let birth = 'birthyDate_'
-      let id = 'Idnum_'
+      let lastName = 'lastName'
+      let firstName = 'firstName'
+      let birth = 'birthday'
+      let id = 'id'
       let value = '.value ='
       let quote = '"'
       
 
       passengerData.forEach((data, index, object) => {
         consoleStr = consoleStr +
-        lastName + index.toString() + value + quote + data.name.substring(0,1) + quote + '\n' +
-        firstName + index.toString() + value + quote + data.name.substring(1,data.name.length) + quote + '\n' +
-        birth + index.toString() + value + quote + data.birth + quote + '\n' +
-        id + index.toString() + value + quote + data.id + quote + '\n' 
+        birth + (index+1).toString() + value + quote + data.birth + quote + '\n' +
+        id + (index+1).toString() + value + quote + data.id + quote + '\n' 
       });
       
-      consoleStr = consoleStr + 'contname.value = "呂孟庭" \ncontpsgname.value = "呂孟庭" \nNightphone_Code.value = "0933341445"' 
+      consoleStr = consoleStr + 'contactNameMobile.value =' + quote + passengerData[0].name + quote + '\ndocument.getElementsByName("email")[0].value  = "tafengtravel@gmail.com"'
       console.log(consoleStr)
       this.$refs.child.passengerConsole = consoleStr
     }
