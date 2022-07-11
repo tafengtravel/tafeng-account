@@ -25,6 +25,7 @@ export default {
   methods: {
     async generatePdf() {
       console.log(this.fotherItemData)
+      let createDate = this.fotherItemData[0].createDate
       let offsetY = 93
       
       const doc = new jsPDF();
@@ -142,7 +143,7 @@ export default {
 
         
       }); 
-      doc.save("FolderCover.pdf");
+      doc.save("資料夾封面_"+createDate+".pdf");
     },
     newLine(oldLine){
       let regExp = /[a-z]/i;

@@ -26,6 +26,8 @@ export default {
   },
   methods: {
     async generatePdf() {
+      let createDate = this.fotherItemData[0].createDate
+
       const doc = new jsPDF({orientation: 'landscape'});
       doc.addFont('https://tafengtravel.github.io/tafengtravel/index/font/chinese.ttf', 'chinese', 'normal');
       doc.setFont('chinese')
@@ -157,7 +159,7 @@ export default {
         doc.addPage()
       }
 
-      doc.save("Bill.pdf");
+      doc.save("報帳單_"+this.fotherDate+".pdf");
     },
     newLine(oldLine){
       let regExp = /[a-z]/i;
