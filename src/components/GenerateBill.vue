@@ -157,8 +157,8 @@ export default {
           if(body2[index][1] == date){
             let number = parseInt(body2[index][2])|| 0
             todayPay = todayPay + number
-          }else if(body2[index][4] == date){
-            let number = parseInt(body2[index][5])|| 0
+          }else if(body2[index][5] == date){
+            let number = parseInt(body2[index][6])|| 0
             todayPay = todayPay + number
           }
         })
