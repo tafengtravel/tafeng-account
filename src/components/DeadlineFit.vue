@@ -24,11 +24,13 @@
         <el-table-column prop="item" label="品項" sortable :sort-method = "(a,b)=>{return a.phone - b.phone}"></el-table-column>
         <el-table-column prop="pay" label="支出" width='80%'></el-table-column>
         <el-table-column prop="dl1" label="第一筆DL" width='120%' ></el-table-column>
-        <el-table-column prop="dlpay1" label="第一筆金額" width='120%' ></el-table-column>
-        <el-table-column prop="dlpaydate1" label="付款日期" width='120%' ></el-table-column>
+        <el-table-column prop="dlPay1" label="第一筆金額" width='120%' ></el-table-column>
+        <el-table-column prop="dlPayType1" label="付款方式" width='120%' ></el-table-column>
+        <el-table-column prop="dlPayDate1" label="付款日期" width='120%' ></el-table-column>
         <el-table-column prop="dl2" label="第二筆DL" width='120%' ></el-table-column>
-        <el-table-column prop="dlpay2" label="第二筆金額" width='120%' ></el-table-column>
-        <el-table-column prop="dlpaydate2" label="付款日期" width='120%' ></el-table-column>
+        <el-table-column prop="dlPay2" label="第二筆金額" width='120%' ></el-table-column>
+        <el-table-column prop="dlPayType2" label="付款方式" width='120%' ></el-table-column>
+        <el-table-column prop="dlPayDate2" label="付款日期" width='120%' ></el-table-column>
         <el-table-column prop="" label="編輯" width='60%'>
           <template slot-scope="scope">
             <el-button @click="edit(scope.row)" type="text" >編輯</el-button>
@@ -100,11 +102,13 @@ export default {
                   'item':doc.data().payDetailItem[j],
                   'pay':doc.data().payDetailPay[j],
                   'dl1':doc.data().payDetailDl1[j],
-                  'dlpay1':doc.data().payDetailDlPay1[j],
-                  'dlpaydate1':doc.data().payDetailDlPayDate1[j],
+                  'dlPay1':doc.data().payDetailDlPay1[j],
+                  'dlPayType1':doc.data().payDetailDlType1[j],
+                  'dlPayDate1':doc.data().payDetailDlPayDate1[j],
                   'dl2':doc.data().payDetailDl2[j],
-                  'dlpay2':doc.data().payDetailDlPay2[j],
-                  'dlpaydate2':doc.data().payDetailDlPayDate2[j],
+                  'dlPay2':doc.data().payDetailDlPay2[j],
+                  'dlPayType2':doc.data().payDetailDlType2[j],
+                  'dlPayDate2':doc.data().payDetailDlPayDate2[j],
                   'detail':doc.data().payDetailDetail[j],
                 })
               }
@@ -124,12 +128,13 @@ export default {
                   'item':doc.data().payDetailItem[j],
                   'pay':doc.data().payDetailPay[j],
                   'dl1':doc.data().payDetailDl1[j],
-                  'dlpay1':doc.data().payDetailDlPay1[j],
-                  'dlpaydate1':doc.data().payDetailDlPayDate1[j],
+                  'dlPay1':doc.data().payDetailDlPay1[j],
+                  'dlPayType1':doc.data().payDetailDlType1[j],
+                  'dlPayDate1':doc.data().payDetailDlPayDate1[j],
                   'dl2':doc.data().payDetailDl2[j],
-                  'dlpay2':doc.data().payDetailDlPay2[j],
-                  'dlpaydate2':doc.data().payDetailDlPayDate2[j],
-                  'dlpaydate2':doc.data().payDetailDlPayDate2[j],
+                  'dlPay2':doc.data().payDetailDlPay2[j],
+                  'dlPayType2':doc.data().payDetailDlType2[j],
+                  'dlPayDate2':doc.data().payDetailDlPayDate2[j],
                   'detail':doc.data().payDetailDetail[j],
                 })
               }

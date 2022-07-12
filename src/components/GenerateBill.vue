@@ -34,7 +34,7 @@ export default {
       doc.setFontSize(8)
 
       let columns1 = ['團號','出發日期','結束日期','團名','代表人','廠商','品項','明細'];
-      let columns2 = ['支出','第一筆DL','第一筆金額','付款日期','第二筆DL','第二筆金額','付款日期'];
+      let columns2 = ['支出','第一筆DL','第一筆金額','付款類型','付款日期','第二筆DL','第二筆金額','付款類型','付款日期'];
       let columnStyles1 = {
         0: {
             cellWidth: 22
@@ -72,19 +72,26 @@ export default {
             cellWidth: 38
         },
         3: {
-            cellWidth: 38
+            cellWidth: 26
         },
         4: {
-            cellWidth: 38
+            cellWidth: 26
         },
         5: {
-            cellWidth: 38
+            cellWidth: 26
         },
         6: {
+            cellWidth: 26
+        },
+        7: {
+            cellWidth: 26
+        },
+        8: {
             cellWidth: 'auto'
         },
       }
       this.fotherItemData.sort((a,b)=>{ return a.payCompany.localeCompare(b.payCompany)})
+      console.log(this.fotherItemData)
 
       const companyArr = this.fotherItemData.map(item=>item.payCompany)
       const allCompany = new Set(companyArr)
@@ -102,11 +109,13 @@ export default {
         let arr1 = this.fotherItemData.filter(itemData=>itemData.payCompany===itemCompany).map(itemData=>[
           itemData.pay,
           itemData.dl1,
-          itemData.dlpay1,
-          itemData.dlpaydate1,
+          itemData.dlPay1,
+          itemData.dlPayType1,
+          itemData.dlPayDate1,
           itemData.dl2,
-          itemData.dlpay2,
-          itemData.dlpaydate2
+          itemData.dlPay2,
+          itemData.dlPayType2,
+          itemData.dlPayDate2
         ])
         addTable(arr,arr1,this.fotherDate)
       })
