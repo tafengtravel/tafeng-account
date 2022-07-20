@@ -30,6 +30,7 @@ const leoUID = 'bnICmkLxO0OTHTbOopiNtWwTKY83'
 const martinaUID = 'mPaUjWY6SjfX52nEXjGKQy1XXav2'
 const amyUID = '9my42qdbUFUYqQO4WNykOTgzekY2'
 const opUID = 'XyQb85iWzIRYS7JtrJU0B6FVGCG3'
+const op2UID = 'BaPwrAUdmpX9Qeet3DwH4hYUzX73'
 
 export const csRoutes = [
   {
@@ -198,7 +199,7 @@ export const opRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID) {
+          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID || user.uid == op2UID) {
             next();
           }else{
             next('/404')
@@ -260,7 +261,7 @@ export const opRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID) {
+          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID || user.uid == op2UID) {
             next();
           }else{
             next('/404')
@@ -448,7 +449,7 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID) {
+          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID || user.uid == op2UID) {
             next();
           }else{
             next('/404')
@@ -510,7 +511,7 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID) {
+          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID || user.uid == op2UID) {
             next();
           }else{
             next('/404')
@@ -844,7 +845,7 @@ router.beforeResolve((to, from, next) => {
         console.log('admin')
         router.options.routes = adminRoutes
         next()
-      }else if(user.uid ==opUID){
+      }else if(user.uid ==opUID || user.uid == op2UID){
         router.options.routes = opRoutes
         next()
       }
