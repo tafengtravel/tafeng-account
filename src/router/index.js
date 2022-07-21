@@ -28,7 +28,6 @@ import { firebaseApp } from '@/db.js'
  */
 
 const adminUID = [
-  
   {
     user:"Martina",
     uid:"mPaUjWY6SjfX52nEXjGKQy1XXav2",
@@ -54,7 +53,6 @@ const adminUID = [
     uid:"BaPwrAUdmpX9Qeet3DwH4hYUzX73",
     type:"op"
   },
-
 ]
 
 export const csRoutes = [
