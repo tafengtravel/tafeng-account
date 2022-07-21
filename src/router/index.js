@@ -721,10 +721,17 @@ export const adminRoutes = [
         beforeEnter: (to, from, next) => {
           firebaseApp.auth().onAuthStateChanged(user=>{
             if (user) {
-              if (user.uid == leoUID) {
-                next();
+              if (user) {
+                let adminCheck =  adminUID.some(data =>{
+                  return user.uid == data.uid && data.type == "admin" && data.user == "Leo"
+                })
+                if(adminCheck){
+                  next()
+                }else{
+                  next('/404')
+                }
               }else{
-                next('/404')
+                next('/login')
               }
             }else{
               next('/login')
