@@ -26,11 +26,36 @@ import { firebaseApp } from '@/db.js'
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
  */
-const leoUID = 'bnICmkLxO0OTHTbOopiNtWwTKY83'
-const martinaUID = 'mPaUjWY6SjfX52nEXjGKQy1XXav2'
-const amyUID = '9my42qdbUFUYqQO4WNykOTgzekY2'
-const opUID = 'XyQb85iWzIRYS7JtrJU0B6FVGCG3'
-const op2UID = 'BaPwrAUdmpX9Qeet3DwH4hYUzX73'
+
+const adminUID = [
+  
+  {
+    user:"Martina",
+    uid:"mPaUjWY6SjfX52nEXjGKQy1XXav2",
+    type:"admin"
+  },
+  {
+    user:"Leo",
+    uid:"bnICmkLxO0OTHTbOopiNtWwTKY83",
+    type:"admin"
+  },
+  {
+    user:"Amy",
+    uid:"9my42qdbUFUYqQO4WNykOTgzekY2",
+    type:"admin"
+  },
+  {
+    user:"OP1",
+    uid:"XyQb85iWzIRYS7JtrJU0B6FVGCG3",
+    type:"op"
+  },
+  {
+    user:"OP2",
+    uid:"BaPwrAUdmpX9Qeet3DwH4hYUzX73",
+    type:"op"
+  },
+
+]
 
 export const csRoutes = [
   {
@@ -199,8 +224,11 @@ export const opRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID || user.uid == op2UID) {
-            next();
+          let adminCheck =  adminUID.some(data =>{
+            return user.uid == data.uid && data.type == "op"
+          })
+          if(adminCheck){
+            next()
           }else{
             next('/404')
           }
@@ -261,8 +289,11 @@ export const opRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID || user.uid == op2UID) {
-            next();
+          let adminCheck =  adminUID.some(data =>{
+            return user.uid == data.uid && data.type == "op"
+          })
+          if(adminCheck){
+            next()
           }else{
             next('/404')
           }
@@ -449,8 +480,11 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID || user.uid == op2UID) {
-            next();
+          let adminCheck =  adminUID.some(data =>{
+            return user.uid == data.uid && (data.type == "admin" || data.type == "op")
+          })
+          if(adminCheck){
+            next()
           }else{
             next('/404')
           }
@@ -511,8 +545,11 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID || user.uid == opUID || user.uid == op2UID) {
-            next();
+          let adminCheck =  adminUID.some(data =>{
+            return user.uid == data.uid && (data.type == "admin" || data.type == "op")
+          })
+          if(adminCheck){
+            next()
           }else{
             next('/404')
           }
@@ -563,8 +600,11 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID) {
-            next();
+          let adminCheck =  adminUID.some(data =>{
+            return user.uid == data.uid && data.type == "admin"
+          })
+          if(adminCheck){
+            next()
           }else{
             next('/404')
           }
@@ -708,8 +748,11 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (leoUID || user.uid == martinaUID || user.uid == amyUID) {
-            next();
+          let adminCheck =  adminUID.some(data =>{
+            return user.uid == data.uid && data.type == "admin"
+          })
+          if(adminCheck){
+            next()
           }else{
             next('/404')
           }
@@ -742,8 +785,11 @@ export const adminRoutes = [
     beforeEnter: (to, from, next) => {
       firebaseApp.auth().onAuthStateChanged(user=>{
         if (user) {
-          if (user.uid == leoUID) {
-            next();
+          let adminCheck =  adminUID.some(data =>{
+            return user.uid == data.uid && data.type == "admin"
+          })
+          if(adminCheck){
+            next()
           }else{
             next('/404')
           }
@@ -841,18 +887,21 @@ router.beforeResolve((to, from, next) => {
   firebaseApp.auth().onAuthStateChanged(user=>{
     if (user) {
       console.log('user')
-      if(user.uid == leoUID || user.uid == martinaUID || user.uid == amyUID){
-        console.log('admin')
-        router.options.routes = adminRoutes
-        next()
-      }else if(user.uid ==opUID || user.uid == op2UID){
-        router.options.routes = opRoutes
-        next()
-      }
-      else{
-        router.options.routes = csRoutes
-        next()
-      }
+      router.options.routes = csRoutes
+      next()
+      adminUID.some(data =>{
+        if (user.uid == data.uid && data.type == "admin"){
+          console.log('admin')
+          router.options.routes = adminRoutes
+          next();
+          return true
+        }else if(user.uid == data.uid && data.type == "op"){
+          console.log('op')
+          router.options.routes = opRoutes
+          next();
+          return true
+        }
+      })
     }else{
       console.log('no user')
       next()
